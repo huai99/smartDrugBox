@@ -4,4 +4,6 @@
     <string name="order_medicine">Order Medicine</string>
     <string name="title_activity_user_set_reminder">Set Reminder</string>
     <string name="view_medicine">View Medicine</string>
+    <string name="set_alarm">Set Alarm</string>
+    <string name="off_alarm">Off Alarm</string>
 </resources>

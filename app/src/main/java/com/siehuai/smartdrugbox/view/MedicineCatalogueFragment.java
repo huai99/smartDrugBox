@@ -23,7 +23,9 @@ public class MedicineCatalogueFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_medicine_catalogue, container, false);
+
         setUpGridView(view);
+
         return view;
     }
 
@@ -32,7 +34,7 @@ public class MedicineCatalogueFragment extends Fragment {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getActivity());
         setRecycleViewLayoutManager();
-        mCatalogueRenderAdapter=new CatalogueRenderAdapter();
+        mCatalogueRenderAdapter = new CatalogueRenderAdapter();
         mRecyclerView.setAdapter(mCatalogueRenderAdapter);
     }
 
