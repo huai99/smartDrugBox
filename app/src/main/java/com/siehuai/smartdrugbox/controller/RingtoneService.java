@@ -54,12 +54,16 @@ public class RingtoneService extends Service {
                 mNmanager.notify(0, mNotify);
                 break;
             case "no":
-                mMediaPlayer.stop();
-                mMediaPlayer.reset();
+                if(mMediaPlayer!=null){
+                    mMediaPlayer.stop();
+                    mMediaPlayer.reset();
+                }
                 break;
             default:
-                mMediaPlayer.stop();
-                mMediaPlayer.reset();
+                if(mMediaPlayer!=null){
+                    mMediaPlayer.stop();
+                    mMediaPlayer.reset();
+                }
                 break;
         }
 
