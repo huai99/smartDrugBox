@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.siehuai.smartdrugbox.R;
@@ -29,7 +28,6 @@ public class AlarmDialog extends TimePickerDialog {
     private Calendar mCalendar;
     private Intent mIntent;
     private Context mContext;
-    private TextView mTextView;
     private int alarmNum;
 
     public AlarmDialog(Context context, OnTimeSetListener listener, int hourOfDay, int minute, boolean is24HourView) {
@@ -86,7 +84,6 @@ public class AlarmDialog extends TimePickerDialog {
                 mIntent.putExtra("extra", "yes");
                 mPendingIntent = PendingIntent.getBroadcast(mContext, 0 , mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 mAlarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mPendingIntent);
-                mTextView.setText("The alarm is set: "+ hour_string + " : " + minute_string );
                 dismiss();
             }
         });
@@ -104,7 +101,6 @@ public class AlarmDialog extends TimePickerDialog {
                 }
 
                 mAlarmManager.cancel(mPendingIntent);
-                mTextView.setText("The alarm is cancel");
                 dismiss();
             }
         });
@@ -112,14 +108,6 @@ public class AlarmDialog extends TimePickerDialog {
 
     public TimePicker getTimePicker() {
         return mTimePicker;
-    }
-
-    public TextView getTextView() {
-        return mTextView;
-    }
-
-    public void setTextView(TextView textView) {
-        mTextView = textView;
     }
 
     public int getAlarmNum() {
