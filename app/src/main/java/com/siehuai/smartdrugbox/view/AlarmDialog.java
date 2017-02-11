@@ -1,5 +1,6 @@
 package com.siehuai.smartdrugbox.view;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -7,13 +8,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.AlarmReceiver;
+import com.siehuai.smartdrugbox.data.MyTime;
 
 import java.util.Calendar;
 
@@ -23,12 +24,13 @@ public class AlarmDialog extends TimePickerDialog {
 
     AlarmManager mAlarmManager;
     private TimePicker mTimePicker;
-    private Button onAlarmBtn, offAlarmBtn;
+    private Button okBtn, cancelButton;
     private PendingIntent mPendingIntent;
     private Calendar mCalendar;
     private Intent mIntent;
     private Context mContext;
     private int alarmNum;
+    private MyTime mMyTime;
 
     public AlarmDialog(Context context, OnTimeSetListener listener, int hourOfDay, int minute, boolean is24HourView) {
         super(context, listener, hourOfDay, minute, is24HourView);
@@ -41,9 +43,9 @@ public class AlarmDialog extends TimePickerDialog {
 
         setContentView(R.layout.dialog_user_set_reminder);
 
-        onAlarmBtn = (Button) findViewById(R.id.btn_setAlarm);
+        okBtn = (Button) findViewById(R.id.btn_ok);
 
-        offAlarmBtn = (Button) findViewById(R.id.btn_offAlarm);
+        cancelButton = (Button) findViewById(R.id.btn_cancel);
 
         mTimePicker = (TimePicker) findViewById(R.id.timepicker_reminder);
 
@@ -53,9 +55,6 @@ public class AlarmDialog extends TimePickerDialog {
 
         mIntent = new Intent(this.mContext, AlarmReceiver.class);
 
-        setOnAlarmBtn(mCalendar);
-
-        turnOffAlarmBtn();
     }
 
     @Override
@@ -68,39 +67,20 @@ public class AlarmDialog extends TimePickerDialog {
         super.updateTime(hourOfDay, minuteOfHour);
     }
 
-    protected void setOnAlarmBtn(final Calendar calendar) {
-        onAlarmBtn.setOnClickListener(new View.OnClickListener() {
+    @TargetApi(23)
+    protected void setConfirmBtn(final Calendar calendar) {
+        okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //setting the alarm time to the timepicker time
-                calendar.set(Calendar.HOUR_OF_DAY, mTimePicker.getCurrentHour());
-                calendar.set(Calendar.MINUTE, mTimePicker.getCurrentMinute());
-
-                String hour_string = String.valueOf(mTimePicker.getCurrentHour());
-                String minute_string = String.valueOf(mTimePicker.getCurrentMinute());
+                calendar.set(Calendar.HOUR_OF_DAY, mTimePicker.getHour());
+                calendar.set(Calendar.MINUTE, mTimePicker.getMinute());
 
                 //Pass in the state of the request, yes for activate alarm
                 mIntent.putExtra("extra", "yes");
-                mPendingIntent = PendingIntent.getBroadcast(mContext, 0 , mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                mPendingIntent = PendingIntent.getBroadcast(mContext, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 mAlarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mPendingIntent);
-                dismiss();
-            }
-        });
-    }
-
-    private void turnOffAlarmBtn() {
-        offAlarmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mIntent.putExtra("extra", "no");
-                mContext.sendBroadcast(mIntent);
-
-                if (mPendingIntent == null) {
-                    Log.d("UserReminder", "This pendingIntent is null");
-                }
-
-                mAlarmManager.cancel(mPendingIntent);
                 dismiss();
             }
         });
@@ -110,11 +90,11 @@ public class AlarmDialog extends TimePickerDialog {
         return mTimePicker;
     }
 
-    public int getAlarmNum() {
-        return alarmNum;
+    public Button getOkBtn() {
+        return okBtn;
     }
 
-    public void setAlarmNum(int alarmNum) {
-        this.alarmNum = alarmNum;
+    public Button getCancelButton() {
+        return cancelButton;
     }
 }

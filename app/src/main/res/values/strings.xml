@@ -6,4 +6,6 @@
     <string name="view_medicine">View Medicine</string>
     <string name="set_alarm">Set Alarm</string>
     <string name="off_alarm">Off Alarm</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

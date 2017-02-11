@@ -1,34 +1,27 @@
 package com.siehuai.smartdrugbox.view;
 
+import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TimePicker;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.CustomTimePickerDialogListener;
 import com.siehuai.smartdrugbox.controller.ReminderListViewAdapter;
-
-import java.util.ArrayList;
+import com.siehuai.smartdrugbox.data.AlarmData;
+import com.siehuai.smartdrugbox.data.MyTime;
 
 public class UserSetReminderActivity extends AppCompatActivity {
 
-    TimePicker mTimePicker;
     FloatingActionButton mFloatingActionButton;
+    ReminderListViewAdapter reminderListViewAdapter;
     AlarmDialog mAlarmDialog;
     CustomTimePickerDialogListener mCustomTimePickerDialogListener;
     ExpandableListView mExpandableListView;
-
-    ArrayList<String> testingList = new ArrayList<String>() {
-        {
-            add("Testing 1");
-            add("Testing 2");
-            add("Testing 3");
-        }
-    };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +33,7 @@ public class UserSetReminderActivity extends AppCompatActivity {
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.expandList_reminder);
 
-        ReminderListViewAdapter reminderListViewAdapter = new ReminderListViewAdapter(this,mExpandableListView,testingList);
+        reminderListViewAdapter = new ReminderListViewAdapter(this, mExpandableListView, AlarmData.alarmData);
 
         mExpandableListView.setAdapter(reminderListViewAdapter);
 
@@ -56,12 +49,42 @@ public class UserSetReminderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mAlarmDialog = new AlarmDialog(UserSetReminderActivity.this, mCustomTimePickerDialogListener, 5, 20, true);
 
-                mTimePicker = mAlarmDialog.getTimePicker();
-
                 mAlarmDialog.show();
 
+                setDialogBtn(mAlarmDialog);
             }
         });
     }
 
+    @TargetApi(23)
+    protected void setDialogOkButton(Button okBtn) {
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePicker mTimePicker = mAlarmDialog.getTimePicker();
+                MyTime myTime = new MyTime(mTimePicker.getHour(), mTimePicker.getMinute());
+                AlarmData.alarmData.add(myTime);
+                notifyDataChange();
+                mAlarmDialog.dismiss();
+            }
+        });
+    }
+
+    protected void setDialogCancelBtn(Button cancelBtn) {
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlarmDialog.dismiss();
+            }
+        });
+    }
+
+    protected void setDialogBtn(AlarmDialog alarmDialog) {
+        setDialogOkButton(alarmDialog.getOkBtn());
+        setDialogCancelBtn(alarmDialog.getCancelButton());
+    }
+
+    public void notifyDataChange() {
+        reminderListViewAdapter.notifyDataSetChanged();
+    }
 }
