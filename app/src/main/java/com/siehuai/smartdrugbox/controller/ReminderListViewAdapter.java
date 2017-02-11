@@ -88,8 +88,8 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
         mTextClock = (TextView) convertView.findViewById(R.id.textClock_parent_view);
 
-        String hour_string = String.valueOf(mParentList.get(groupPosition).getHour());
-        String minute_string = String.valueOf(mParentList.get(groupPosition).getMinute());
+        String hour_string = changeTimeToString(mParentList.get(groupPosition).getHour());
+        String minute_string = changeTimeToString(mParentList.get(groupPosition).getMinute());
         mTextClock.setText(hour_string + ":" + minute_string);
 
         mSwitch = (Switch) convertView.findViewById(R.id.switch_parent_view);
@@ -183,6 +183,13 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         }
 
         mAlarmManager.cancel(mPendingIntent);
+    }
+
+    private String changeTimeToString(int time){
+        if(time < 10){
+            return "0"+String.valueOf(time);
+        }else
+            return  String.valueOf(time);
     }
 
 }
