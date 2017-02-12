@@ -11,8 +11,10 @@ import android.widget.TimePicker;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.CustomTimePickerDialogListener;
+import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
 import com.siehuai.smartdrugbox.controller.ReminderListViewAdapter;
 import com.siehuai.smartdrugbox.data.AlarmData;
+import com.siehuai.smartdrugbox.data.AlarmDataList;
 import com.siehuai.smartdrugbox.data.MyTime;
 
 public class UserSetReminderActivity extends AppCompatActivity {
@@ -22,6 +24,8 @@ public class UserSetReminderActivity extends AppCompatActivity {
     AlarmDialog mAlarmDialog;
     CustomTimePickerDialogListener mCustomTimePickerDialogListener;
     ExpandableListView mExpandableListView;
+    PostsDatabaseHelper postsDbHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +33,13 @@ public class UserSetReminderActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_user_set_reminder);
 
+        postsDbHelper= PostsDatabaseHelper.getInstance(this);
+
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_alarm);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.expandList_reminder);
 
-        reminderListViewAdapter = new ReminderListViewAdapter(this, mExpandableListView, AlarmData.alarmData);
+        reminderListViewAdapter = new ReminderListViewAdapter(this, mExpandableListView, AlarmDataList.alarmData);
 
         mExpandableListView.setAdapter(reminderListViewAdapter);
 
@@ -63,7 +69,9 @@ public class UserSetReminderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 TimePicker mTimePicker = mAlarmDialog.getTimePicker();
                 MyTime myTime = new MyTime(mTimePicker.getHour(), mTimePicker.getMinute());
-                AlarmData.alarmData.add(myTime);
+                AlarmData alarmData = new AlarmData(myTime,0,-1);
+                postsDbHelper.addOrUpdateAlarmEntry(alarmData);
+                AlarmDataList.alarmData.add(alarmData);
                 notifyDataChange();
                 mAlarmDialog.dismiss();
             }

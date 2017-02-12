@@ -24,18 +24,17 @@ import java.util.Calendar;
 
 public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
-    private ArrayList<MyTime> mParentList;
+    private ArrayList<AlarmData> mParentList;
     private ExpandableListView mExpandableListView;
     private int lastExpandedGroupPosition;
     private Context mContext;
     private TextView mTextClock;
     private Switch mSwitch;
     private Calendar mCalendar;
-    private View mView;
     private Intent mIntent;
     private AlarmManager mAlarmManager;
 
-    public ReminderListViewAdapter(Context context, ExpandableListView expandableListView, ArrayList<MyTime> parentList) {
+    public ReminderListViewAdapter(Context context, ExpandableListView expandableListView, ArrayList<AlarmData> parentList) {
         mContext = context;
         mExpandableListView = expandableListView;
         mParentList = parentList;
@@ -88,19 +87,14 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
         mTextClock = (TextView) convertView.findViewById(R.id.textClock_parent_view);
 
-        String hour_string = changeTimeToString(mParentList.get(groupPosition).getHour());
-        String minute_string = changeTimeToString(mParentList.get(groupPosition).getMinute());
-        mTextClock.setText(hour_string + ":" + minute_string);
-
         mSwitch = (Switch) convertView.findViewById(R.id.switch_parent_view);
 
         mCalendar = Calendar.getInstance();
 
-        long mathRandom = Math.round(Math.random());
-
+        //TODO: Set tag using alarm ID
         mSwitch.setTag(groupPosition);
 
-        switchToggleAction(mSwitch,groupPosition);
+        switchToggleAction(mSwitch, groupPosition);
 
         setTextClock(groupPosition);
 
@@ -140,8 +134,8 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    setAlarmOn(mCalendar,position);
-                }else{
+                    setAlarmOn(mCalendar, position);
+                } else {
                     turnOffAlarm(position);
                 }
             }
@@ -150,16 +144,20 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
     public void setTextClock(int position) {
 
-        String hour_string = String.valueOf(mParentList.get(position).getHour());
-        String minute_string = String.valueOf(mParentList.get(position).getMinute());
+        MyTime aMyTime = mParentList.get(position).getMyTime();
+        String hour_string = changeTimeToString(aMyTime.getHour());
+        String minute_string = changeTimeToString(aMyTime.getMinute());
         mTextClock.setText(hour_string + ":" + minute_string);
 
     }
 
     @TargetApi(23)
     protected void setAlarmOn(final Calendar calendar, int position) {
-        int hour = AlarmData.alarmData.get(position).getHour();
-        int minute = AlarmData.alarmData.get(position).getMinute();
+
+        MyTime aMyTime = mParentList.get(position).getMyTime();
+
+        int hour = aMyTime.getHour();
+        int minute = aMyTime.getMinute();
 
         //setting the alarm time to the timepicker time
         calendar.set(Calendar.HOUR_OF_DAY, hour);
@@ -185,11 +183,11 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         mAlarmManager.cancel(mPendingIntent);
     }
 
-    private String changeTimeToString(int time){
-        if(time < 10){
-            return "0"+String.valueOf(time);
-        }else
-            return  String.valueOf(time);
+    private String changeTimeToString(int time) {
+        if (time < 10) {
+            return "0" + String.valueOf(time);
+        } else
+            return String.valueOf(time);
     }
 
 }

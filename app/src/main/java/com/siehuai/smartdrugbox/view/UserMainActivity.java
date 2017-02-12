@@ -7,23 +7,33 @@ import android.view.View;
 import android.widget.Button;
 
 import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
 
 public class UserMainActivity extends AppCompatActivity {
 
-    Button setReminderBtn,orderMedBtn;
+    Button setReminderBtn, orderMedBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_user_main);
-        setReminderBtn=(Button) findViewById(R.id.btn_setReminder);
-        orderMedBtn=(Button) findViewById(R.id.btn_orderMed);
+
+        PostsDatabaseHelper postsDbHelper = PostsDatabaseHelper.getInstance(this);
+
+        postsDbHelper.getAllAlarm();
+
+        setReminderBtn = (Button) findViewById(R.id.btn_setReminder);
+
+        orderMedBtn = (Button) findViewById(R.id.btn_orderMed);
+
         setReminderBtn();
+
         setOrderMedicineBtn();
     }
 
-    public void setReminderBtn(){
+    public void setReminderBtn() {
 
         setReminderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +43,7 @@ public class UserMainActivity extends AppCompatActivity {
         });
     }
 
-    public void setOrderMedicineBtn(){
+    public void setOrderMedicineBtn() {
         orderMedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,13 +52,13 @@ public class UserMainActivity extends AppCompatActivity {
         });
     }
 
-    public void setReminder(){
-        Intent intent=new Intent(UserMainActivity.this,UserSetReminderActivity.class);
+    public void setReminder() {
+        Intent intent = new Intent(UserMainActivity.this, UserSetReminderActivity.class);
         startActivity(intent);
     }
 
-    public void orderMedicine(){
-        Intent intent=new Intent(UserMainActivity.this,UserViewMedicineTabActivity.class);
+    public void orderMedicine() {
+        Intent intent = new Intent(UserMainActivity.this, UserViewMedicineTabActivity.class);
         startActivity(intent);
 
     }

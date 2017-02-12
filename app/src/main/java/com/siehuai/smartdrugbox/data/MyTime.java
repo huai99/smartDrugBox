@@ -1,9 +1,5 @@
 package com.siehuai.smartdrugbox.data;
 
-/**
- * Created by Asus on 2/9/2017.
- */
-
 public class MyTime {
     private int hour;
     private int minute;

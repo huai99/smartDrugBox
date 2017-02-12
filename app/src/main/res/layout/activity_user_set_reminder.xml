@@ -8,12 +8,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="300dp">
 
         <ExpandableListView
             android:id="@+id/expandList_reminder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="424dp"
             android:childDivider="@color/white"
             android:dividerHeight="2dp"
             android:groupIndicator="@null"
@@ -31,15 +31,17 @@
         android:layout_marginBottom="100dp"
         android:gravity="center_horizontal">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="5dp"
-            android:src="@drawable/plus_icon"
-            tools:targetApi="N"
-            />
-
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:src="@drawable/plus_icon"
+        tools:targetApi="N"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp"/>
 
 </RelativeLayout>
