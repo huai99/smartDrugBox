@@ -26,20 +26,19 @@ public class UserSetReminderActivity extends AppCompatActivity {
     ExpandableListView mExpandableListView;
     PostsDatabaseHelper postsDbHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_user_set_reminder);
 
-        postsDbHelper= PostsDatabaseHelper.getInstance(this);
+        postsDbHelper = PostsDatabaseHelper.getInstance(this);
 
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_alarm);
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.expandList_reminder);
 
-        reminderListViewAdapter = new ReminderListViewAdapter(this, mExpandableListView, AlarmDataList.alarmData);
+        reminderListViewAdapter = new ReminderListViewAdapter(this, mExpandableListView, AlarmDataList.mAlarmDataList);
 
         mExpandableListView.setAdapter(reminderListViewAdapter);
 
@@ -69,13 +68,20 @@ public class UserSetReminderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 TimePicker mTimePicker = mAlarmDialog.getTimePicker();
                 MyTime myTime = new MyTime(mTimePicker.getHour(), mTimePicker.getMinute());
-                AlarmData alarmData = new AlarmData(myTime,0,-1);
-                postsDbHelper.addOrUpdateAlarmEntry(alarmData);
-                AlarmDataList.alarmData.add(alarmData);
-                notifyDataChange();
+                AlarmData alarmData = new AlarmData(myTime, 0, -1);
+                addOrUpdateAlarm(alarmData);
+                //TODO: Think of a way to design that the reminderAdapter is not inside the database helper
                 mAlarmDialog.dismiss();
             }
         });
+    }
+
+    public void addOrUpdateAlarm(AlarmData alarmData) {
+        boolean result;
+        int resultNum = postsDbHelper.addOrUpdateAlarmFrmDb(alarmData);
+        result = (resultNum > 0) ? true : false;
+        postsDbHelper.addOrUpdateAlarmLocal(alarmData, result);
+        postsDbHelper.notifyAdapterDataChange(reminderListViewAdapter);
     }
 
     protected void setDialogCancelBtn(Button cancelBtn) {
@@ -92,7 +98,4 @@ public class UserSetReminderActivity extends AppCompatActivity {
         setDialogCancelBtn(alarmDialog.getCancelButton());
     }
 
-    public void notifyDataChange() {
-        reminderListViewAdapter.notifyDataSetChanged();
-    }
 }

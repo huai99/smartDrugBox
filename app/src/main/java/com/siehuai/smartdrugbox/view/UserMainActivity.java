@@ -8,6 +8,9 @@ import android.widget.Button;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
+import com.siehuai.smartdrugbox.data.AlarmData;
+
+import java.util.ArrayList;
 
 public class UserMainActivity extends AppCompatActivity {
 
@@ -22,7 +25,7 @@ public class UserMainActivity extends AppCompatActivity {
 
         PostsDatabaseHelper postsDbHelper = PostsDatabaseHelper.getInstance(this);
 
-        postsDbHelper.getAllAlarm();
+        initAlarmData(postsDbHelper);
 
         setReminderBtn = (Button) findViewById(R.id.btn_setReminder);
 
@@ -60,6 +63,12 @@ public class UserMainActivity extends AppCompatActivity {
     public void orderMedicine() {
         Intent intent = new Intent(UserMainActivity.this, UserViewMedicineTabActivity.class);
         startActivity(intent);
+    }
 
+    public void initAlarmData(PostsDatabaseHelper helper) {
+
+        ArrayList<AlarmData> alarmArrayList = helper.getAllAlarmFrmDb();
+
+        helper.updateAlarmInLocal(alarmArrayList);
     }
 }

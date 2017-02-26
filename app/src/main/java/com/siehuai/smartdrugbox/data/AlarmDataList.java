@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public class AlarmDataList {
 
-   public static ArrayList<AlarmData> alarmData = new ArrayList<AlarmData>() {};
-
+    public static ArrayList<AlarmData> mAlarmDataList = new ArrayList<AlarmData>() {
+    };
 }
