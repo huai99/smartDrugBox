@@ -1,7 +1,6 @@
 package com.siehuai.smartdrugbox.controller;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ public class CatalogueRenderAdapter extends RecyclerView.Adapter<CatalogueRender
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Catalogue", String.valueOf(getAdapterPosition()));
                 }
             });
         }

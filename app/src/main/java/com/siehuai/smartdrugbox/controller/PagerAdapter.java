@@ -3,7 +3,6 @@ package com.siehuai.smartdrugbox.controller;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
 import com.siehuai.smartdrugbox.view.MedicineCatalogueFragment;
 import com.siehuai.smartdrugbox.view.UserCartFragment;
@@ -62,7 +61,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             switch (position) {
                 case 0:
                     title = "Medicine Catalogue";
-                    Log.d("PagerAdapter", title);
                     break;
                 case 1:
                     title = "Cart";

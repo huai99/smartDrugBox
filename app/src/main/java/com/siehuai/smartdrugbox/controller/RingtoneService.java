@@ -10,7 +10,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.view.UserSetReminderActivity;
@@ -44,7 +43,6 @@ public class RingtoneService extends Service {
                 .build();
 
         String state = intent.getExtras().getString("extra");
-        Log.d("Ringtone Service",state);
 
         assert state != null;
         switch (state) {
