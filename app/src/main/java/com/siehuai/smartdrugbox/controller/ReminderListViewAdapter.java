@@ -86,7 +86,10 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(int groupPosition,
+                             boolean isExpanded,
+                             View convertView,
+                             ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.design_parent_list_view_reminder, parent, false);
             mIntent = new Intent(this.mContext, AlarmReceiver.class);
@@ -107,8 +110,6 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
         int status = alarmDataArrayList.get(groupPosition).isStatus();
 
-        Log.d("ReminderList : ", String.valueOf(mAlarmId));
-
         setSwitchInitialStatus(mSwitch, status);
 
         mSwitch.setTag(mAlarmId);
@@ -122,7 +123,11 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition,
+                             int childPosition,
+                             boolean isLastChild,
+                             View convertView,
+                             ViewGroup parent) {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.design_child_list_view_reminder, parent, false);
@@ -154,14 +159,17 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     }
 
     @TargetApi(17)
-    public void switchToggleAction(final Switch aSwitch, final int alarmId, final int position, final PostsDatabaseHelper dbHelper) {
+    public void switchToggleAction(final Switch aSwitch,
+                                   final int alarmId,
+                                   final int position,
+                                   final PostsDatabaseHelper dbHelper) {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AlarmData alarmData = AlarmDataList.mAlarmDataList.get(position);
                 if (isChecked) {
                     setAlarmOn(mCalendar, position);
-                    //Set alarm on in db
+//                    Set alarm on in db
                     alarmData.setStatus(1);
                 } else {
                     turnOffAlarm(alarmId);
@@ -182,6 +190,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
     }
 
+    //TODO: The alarm will go off immediately if the time is past already
     @TargetApi(23)
     protected void setAlarmOn(final Calendar calendar, int position) {
 
@@ -200,6 +209,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         //Pass in the state of the request, yes for activate alarm
         mIntent.putExtra("extra", "yes");
         PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, alarmId, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+       Log.d("Reminder",String.valueOf(calendar.getTimeInMillis()));
         mAlarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mPendingIntent);
     }
 

@@ -70,7 +70,6 @@ public class UserSetReminderActivity extends AppCompatActivity {
                 MyTime myTime = new MyTime(mTimePicker.getHour(), mTimePicker.getMinute());
                 AlarmData alarmData = new AlarmData(myTime, 0, -1);
                 addOrUpdateAlarm(alarmData);
-                //TODO: Think of a way to design that the reminderAdapter is not inside the database helper
                 mAlarmDialog.dismiss();
             }
         });
@@ -81,6 +80,7 @@ public class UserSetReminderActivity extends AppCompatActivity {
         int resultNum = postsDbHelper.addOrUpdateAlarmFrmDb(alarmData);
         result = (resultNum > 0) ? true : false;
         postsDbHelper.addOrUpdateAlarmLocal(alarmData, result);
+        //TODO: Think of a way to design that the reminderAdapter is not inside the database helper
         postsDbHelper.notifyAdapterDataChange(reminderListViewAdapter);
     }
 
