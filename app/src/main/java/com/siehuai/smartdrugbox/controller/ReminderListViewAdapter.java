@@ -206,11 +206,13 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
 
+        //Get current time
+        Calendar now = Calendar.getInstance();
+
         //Pass in the state of the request, yes for activate alarm
         mIntent.putExtra("extra", "yes");
         PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, alarmId, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-       Log.d("Reminder",String.valueOf(calendar.getTimeInMillis()));
-        mAlarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mPendingIntent);
+        setRepeatAlarmClock(now,calendar,mPendingIntent);
     }
 
     private void turnOffAlarm(int alarmId) {
@@ -275,6 +277,24 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         result = (resultNum > 0) ? true : false;
         postsDbHelper.addOrUpdateAlarmLocal(mAlarmData, result);
         notifyDataSetChanged();
+    }
+
+    private void setRepeatAlarmClock(Calendar now,
+                                     Calendar timeSet,
+                                     PendingIntent aPendingIntent){
+        if(timeSet.getTimeInMillis()<now.getTimeInMillis()){
+            mAlarmManager.setInexactRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    timeSet.getTimeInMillis()+AlarmManager.INTERVAL_DAY,
+                    AlarmManager.INTERVAL_DAY,
+                    aPendingIntent);
+        }else{
+            mAlarmManager.setInexactRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    timeSet.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY,
+                    aPendingIntent);
+        }
     }
 
 }
