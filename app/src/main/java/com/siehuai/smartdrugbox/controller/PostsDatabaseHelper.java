@@ -66,6 +66,9 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /*
+    Need to set db.setTransactionSuccessful to successful update
+     */
     public int addOrUpdateAlarmFrmDb(AlarmData alarmData) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -83,10 +86,10 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
                     values, DataBaseContract.AlarmEntry.COLUMN_NAME_ID + "= ?",
                     new String[]{String.valueOf(alarmData.getAlarmID())});
             if (rows > 0) {
+                db.setTransactionSuccessful();
                 return rows;
             } else {
                 alarmId = db.insertOrThrow(DataBaseContract.AlarmEntry.TABLE_NAME, null, values);
-                Log.d("PostDatabase: Add ", String.valueOf(alarmId));
                 alarmData.setAlarmID(alarmId);
                 db.setTransactionSuccessful();
             }
