@@ -1,11 +1,7 @@
 package com.siehuai.smartdrugbox.controller;
 
 import android.annotation.TargetApi;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +16,8 @@ import android.widget.Toast;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.data.AlarmData;
 import com.siehuai.smartdrugbox.data.AlarmDataList;
-import com.siehuai.smartdrugbox.data.MyTime;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
@@ -33,13 +27,8 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private TextView mTextClock;
     private Switch mSwitch;
-    private Calendar mCalendar;
-    private Intent mIntent;
-    private AlarmManager mAlarmManager;
     private PostsDatabaseHelper postsDbHelper;
-    private static boolean DELETE_SUCCESS = true;
-    private static boolean DELETE_FAIL = false;
-    private PostsDatabaseHelper postDbHelper;
+    private AlarmService mAlarmService;
 
     public ReminderListViewAdapter(Context context,
                                    ExpandableListView expandableListView,
@@ -48,6 +37,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         mExpandableListView = expandableListView;
         mParentList = parentList;
         postsDbHelper = PostsDatabaseHelper.getInstance(context);
+        mAlarmService = new AlarmService(context);
     }
 
     @Override
@@ -92,31 +82,26 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
                              ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.design_parent_list_view_reminder, parent, false);
-            mIntent = new Intent(this.mContext, AlarmReceiver.class);
-            mAlarmManager = (AlarmManager) this.mContext.getSystemService(Context.ALARM_SERVICE);
-
         }
         convertView.setTag(this.getGroup(groupPosition).toString());
 
-        ArrayList<AlarmData> alarmDataArrayList = AlarmDataList.mAlarmDataList;
+        AlarmData alarmData = AlarmDataList.mAlarmDataList.get(groupPosition);
 
         mTextClock = (TextView) convertView.findViewById(R.id.textClock_parent_view);
 
         mSwitch = (Switch) convertView.findViewById(R.id.switch_parent_view);
 
-        mCalendar = Calendar.getInstance();
+        int mAlarmId = (int) alarmData.getAlarmID();
 
-        int mAlarmId = (int) alarmDataArrayList.get(groupPosition).getAlarmID();
-
-        int status = alarmDataArrayList.get(groupPosition).isStatus();
+        int status = alarmData.isStatus();
 
         setSwitchInitialStatus(mSwitch, status);
 
         mSwitch.setTag(mAlarmId);
 
-        switchToggleAction(mSwitch, mAlarmId, groupPosition, postDbHelper);
+        switchToggleAction(mSwitch, groupPosition);
 
-        setTextClock(groupPosition);
+        setTextClock(alarmData);
 
         return convertView;
 
@@ -133,11 +118,11 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.design_child_list_view_reminder, parent, false);
         }
 
-        int mAlarmId = (int) AlarmDataList.mAlarmDataList.get(groupPosition).getAlarmID();
+        AlarmData alarmData = AlarmDataList.mAlarmDataList.get(groupPosition);
 
         Button deleteBtn = (Button) convertView.findViewById(R.id.btn_delete);
 
-        setDeleteBtn(deleteBtn, mAlarmId);
+        setDeleteBtn(deleteBtn, alarmData);
         return convertView;
 
     }
@@ -160,19 +145,17 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
     @TargetApi(17)
     public void switchToggleAction(final Switch aSwitch,
-                                   final int alarmId,
-                                   final int position,
-                                   final PostsDatabaseHelper dbHelper) {
+                                   final int position) {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AlarmData alarmData = AlarmDataList.mAlarmDataList.get(position);
                 if (isChecked) {
-                    setAlarmOn(mCalendar, position);
+                    setAlarmOn(alarmData);
 //                    Set alarm on in db
                     alarmData.setStatus(1);
                 } else {
-                    turnOffAlarm(alarmId);
+                    turnOffAlarm(alarmData);
                     //Set alarm off in db
                     alarmData.setStatus(0);
                 }
@@ -181,53 +164,24 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         });
     }
 
-    public void setTextClock(int position) {
+    public void setTextClock(AlarmData alarmData) {
 
-        MyTime aMyTime = mParentList.get(position).getMyTime();
-        String hour_string = changeTimeToString(aMyTime.getHour());
-        String minute_string = changeTimeToString(aMyTime.getMinute());
+        String hour_string = changeTimeToString(alarmData.getHour());
+        String minute_string = changeTimeToString(alarmData.getMinute());
         mTextClock.setText(hour_string + ":" + minute_string);
 
     }
 
     //TODO: The alarm will go off immediately if the time is past already
     @TargetApi(23)
-    protected void setAlarmOn(final Calendar calendar, int position) {
-
-        AlarmData sAlarmData = mParentList.get(position);
-        MyTime aMyTime = sAlarmData.getMyTime();
-
-        int alarmId = (int) sAlarmData.getAlarmID();
-
-        int hour = aMyTime.getHour();
-        int minute = aMyTime.getMinute();
-
-        //setting the alarm time to the timepicker time
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-
-        //Get current time
-        Calendar now = Calendar.getInstance();
-
-        //Pass in the state of the request, yes for activate alarm
-        mIntent.putExtra("extra", "yes");
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, alarmId, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        setRepeatAlarmClock(now,calendar,mPendingIntent);
+    protected void setAlarmOn(AlarmData alarmData) {
+        mAlarmService.setAlarmOn(alarmData);
     }
 
-    private void turnOffAlarm(int alarmId) {
-
-        mIntent.putExtra("extra", "no");
-        mContext.sendBroadcast(mIntent);
-
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, alarmId, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        if (mPendingIntent == null) {
-            Log.d("UserReminder", "This pendingIntent is null");
-        }
-
-        mAlarmManager.cancel(mPendingIntent);
+    private void turnOffAlarm(AlarmData alarmData) {
+        mAlarmService.turnOffAlarm(alarmData);
     }
+
 
     private String changeTimeToString(int time) {
         if (time < 10) {
@@ -236,16 +190,17 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
             return String.valueOf(time);
     }
 
-    private void setDeleteBtn(Button mDeleteBtn, final int alarmId) {
-        mDeleteBtn.setOnClickListener(new View.OnClickListener() {
+    private void setDeleteBtn(Button deleteBtn, final AlarmData alarmData) {
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int alarmId = (int) alarmData.getAlarmID();
                 if (postsDbHelper.deleteAlarmFromDb(alarmId)) {
-                    deleteAlarmLocal(alarmId);
+                    deleteAlarmLocal(alarmData);
                     Toast.makeText(mContext, "Delete Successfully", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                     if (mSwitch.isChecked()) {
-                        turnOffAlarm(alarmId);
+                        turnOffAlarm(alarmData);
                     }
                 } else {
                     Toast.makeText(mContext, "Delete Fail: " + String.valueOf(alarmId), Toast.LENGTH_SHORT).show();
@@ -254,19 +209,12 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         });
     }
 
-    private boolean deleteAlarmLocal(int alarmId) {
-        //TODO: Very ugly
-        for (AlarmData alarmData : AlarmDataList.mAlarmDataList) {
-            if ((int) alarmData.getAlarmID() == alarmId) {
-                AlarmDataList.mAlarmDataList.remove(alarmData);
-                return DELETE_SUCCESS;
-            }
-        }
-        return DELETE_FAIL;
+    private boolean deleteAlarmLocal(AlarmData alarmData) {
+        return AlarmDataList.mAlarmDataList.remove(alarmData);
     }
 
     private void setSwitchInitialStatus(Switch aSwitch, int status) {
-        boolean switchStatus = (status == 0) ? false : true;
+        boolean switchStatus = status != 0;
 
         aSwitch.setChecked(switchStatus);
     }
@@ -274,27 +222,9 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     private void addOrUpdateAlarmData(AlarmData mAlarmData) {
         boolean result;
         int resultNum = postsDbHelper.addOrUpdateAlarmFrmDb(mAlarmData);
-        result = (resultNum > 0) ? true : false;
+        result = (resultNum > 0);
         postsDbHelper.addOrUpdateAlarmLocal(mAlarmData, result);
         notifyDataSetChanged();
-    }
-
-    private void setRepeatAlarmClock(Calendar now,
-                                     Calendar timeSet,
-                                     PendingIntent aPendingIntent){
-        if(timeSet.getTimeInMillis()<now.getTimeInMillis()){
-            mAlarmManager.setInexactRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    timeSet.getTimeInMillis()+AlarmManager.INTERVAL_DAY,
-                    AlarmManager.INTERVAL_DAY,
-                    aPendingIntent);
-        }else{
-            mAlarmManager.setInexactRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    timeSet.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY,
-                    aPendingIntent);
-        }
     }
 
 }

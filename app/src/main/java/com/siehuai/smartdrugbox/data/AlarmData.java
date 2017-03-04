@@ -3,22 +3,19 @@ package com.siehuai.smartdrugbox.data;
 
 public class AlarmData {
 
-    private MyTime myTime;
+    private int hour;
+    private int minute;
     private int status;
     private long alarmID;
 
-    public AlarmData(MyTime myTime, int status, long alarmID) {
-        this.myTime = myTime;
+    public AlarmData(int hour,
+                     int minute,
+                     int status,
+                     long alarmID) {
         this.status = status;
         this.alarmID = alarmID;
-    }
-
-    public MyTime getMyTime() {
-        return myTime;
-    }
-
-    public void setMyTime(MyTime myTime) {
-        this.myTime = myTime;
+        this.hour = hour;
+        this.minute = minute;
     }
 
     public int isStatus() {
@@ -29,11 +26,32 @@ public class AlarmData {
         this.status = status;
     }
 
+
+    public int getStatus() {
+        return status;
+    }
+
     public long getAlarmID() {
         return alarmID;
     }
 
     public void setAlarmID(long alarmID) {
         this.alarmID = alarmID;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
     }
 }

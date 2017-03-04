@@ -23,24 +23,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.siehuai.smartdrugbox.view.UserMainActivity"/>
         </activity>
-
         <activity
             android:name=".view.UserViewMedicineTabActivity"
             android:label="@string/view_medicine"
-            android:parentActivityName=".view.UserMainActivity"
-            >
+            android:parentActivityName=".view.UserMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.siehuai.smartdrugbox.view.UserMainActivity"
-                /><!-- ATTENTION: This intent was auto-generated. Follow instructions at
-  https://g.co/AppIndexing/AndroidStudio to publish your URLs. -->
+                android:value="com.siehuai.smartdrugbox.view.UserMainActivity"/>
+            <!--
+ ATTENTION: This intent was auto-generated. Follow instructions at
+  https://g.co/AppIndexing/AndroidStudio to publish your URLs.
+            -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <!-- ATTENTION: This data URL was auto-generated. We recommend that you use the HTTP scheme.
-                  TODO: Change the host or pathPrefix as necessary. -->
+                <!--
+                  ATTENTION: This data URL was auto-generated. We recommend that you use the HTTP scheme.
+                  TODO: Change the host or pathPrefix as necessary.
+                -->
                 <data
                     android:host="[ENTER-YOUR-HTTP-HOST-HERE]"
                     android:pathPrefix="/userviewmedicinetab"
@@ -54,6 +56,9 @@
             android:name=".controller.RingtoneService"
             android:enabled="true">
         </service>
+
+        <activity android:name=".view.OffAlarmActivity">
+        </activity>
     </application>
 
 </manifest>

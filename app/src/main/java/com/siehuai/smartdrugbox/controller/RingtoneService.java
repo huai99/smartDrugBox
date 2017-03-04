@@ -12,7 +12,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.view.UserSetReminderActivity;
+import com.siehuai.smartdrugbox.view.OffAlarmActivity;
 
 public class RingtoneService extends Service {
 
@@ -31,7 +31,10 @@ public class RingtoneService extends Service {
 
         NotificationManager mNmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        mIntent = new Intent(this.getApplicationContext(), UserSetReminderActivity.class);
+        int alarmId = intent.getExtras().getInt("alarmId");
+
+        mIntent = new Intent(this.getApplicationContext(), OffAlarmActivity.class);
+        mIntent.putExtra("alarmId",alarmId);
         PendingIntent mPendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{mIntent}, 0);
 
         Notification mNotify = new Notification.Builder(this)
@@ -43,6 +46,7 @@ public class RingtoneService extends Service {
                 .build();
 
         String state = intent.getExtras().getString("extra");
+
 
         assert state != null;
         switch (state) {

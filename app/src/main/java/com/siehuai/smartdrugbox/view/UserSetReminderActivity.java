@@ -15,7 +15,6 @@ import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
 import com.siehuai.smartdrugbox.controller.ReminderListViewAdapter;
 import com.siehuai.smartdrugbox.data.AlarmData;
 import com.siehuai.smartdrugbox.data.AlarmDataList;
-import com.siehuai.smartdrugbox.data.MyTime;
 
 public class UserSetReminderActivity extends AppCompatActivity {
 
@@ -67,8 +66,9 @@ public class UserSetReminderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TimePicker mTimePicker = mAlarmDialog.getTimePicker();
-                MyTime myTime = new MyTime(mTimePicker.getHour(), mTimePicker.getMinute());
-                AlarmData alarmData = new AlarmData(myTime, 0, -1);
+                int hour = mTimePicker.getHour();
+                int minute = mTimePicker.getMinute();
+                AlarmData alarmData = new AlarmData(hour, minute, 0, -1);
                 addOrUpdateAlarm(alarmData);
                 mAlarmDialog.dismiss();
             }

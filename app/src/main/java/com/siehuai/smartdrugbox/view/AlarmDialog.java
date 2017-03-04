@@ -14,7 +14,6 @@ import android.widget.TimePicker;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.AlarmReceiver;
-import com.siehuai.smartdrugbox.data.MyTime;
 
 import java.util.Calendar;
 
@@ -30,7 +29,6 @@ public class AlarmDialog extends TimePickerDialog {
     private Intent mIntent;
     private Context mContext;
     private int alarmNum;
-    private MyTime mMyTime;
 
     public AlarmDialog(Context context, OnTimeSetListener listener, int hourOfDay, int minute, boolean is24HourView) {
         super(context, listener, hourOfDay, minute, is24HourView);

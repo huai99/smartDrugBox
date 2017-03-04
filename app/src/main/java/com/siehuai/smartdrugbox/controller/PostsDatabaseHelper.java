@@ -11,7 +11,6 @@ import android.util.Log;
 import com.siehuai.smartdrugbox.data.AlarmData;
 import com.siehuai.smartdrugbox.data.AlarmDataList;
 import com.siehuai.smartdrugbox.data.DataBaseContract;
-import com.siehuai.smartdrugbox.data.MyTime;
 
 import java.util.ArrayList;
 
@@ -72,14 +71,13 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
     public int addOrUpdateAlarmFrmDb(AlarmData alarmData) {
 
         SQLiteDatabase db = getWritableDatabase();
-        MyTime myTime = alarmData.getMyTime();
         db.beginTransaction();
         int rows = 0;
-        long alarmId = -1;
+        long alarmId;
         try {
             ContentValues values = new ContentValues();
-            values.put(DataBaseContract.AlarmEntry.COLUMN_NAME_A_HOUR, myTime.getHour());
-            values.put(DataBaseContract.AlarmEntry.COLUMN_NAME_A_MINUTE, myTime.getMinute());
+            values.put(DataBaseContract.AlarmEntry.COLUMN_NAME_A_HOUR, alarmData.getHour());
+            values.put(DataBaseContract.AlarmEntry.COLUMN_NAME_A_MINUTE, alarmData.getMinute());
             values.put(DataBaseContract.AlarmEntry.COLUMN_NAME_STATUS, alarmData.isStatus());
 
             rows = db.update(DataBaseContract.AlarmEntry.TABLE_NAME,
@@ -94,6 +92,7 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
                 db.setTransactionSuccessful();
             }
         } catch (Exception e) {
+            Log.d("PostDatabase",e.toString());
         } finally {
             db.endTransaction();
         }
@@ -116,7 +115,7 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
                 String.format("SELECT * FROM %s", DataBaseContract.AlarmEntry.TABLE_NAME);
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(POSTS_SELECT_QUERY, null);
-        ArrayList<AlarmData> alarmDataArrayList = new ArrayList<AlarmData>();
+        ArrayList<AlarmData> alarmDataArrayList = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
                 do {
@@ -124,15 +123,14 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
                     int minute = cursor.getInt(cursor.getColumnIndex(DataBaseContract.AlarmEntry.COLUMN_NAME_A_MINUTE));
                     int id = cursor.getInt(cursor.getColumnIndex(DataBaseContract.AlarmEntry.COLUMN_NAME_ID));
                     int status = cursor.getInt(cursor.getColumnIndex(DataBaseContract.AlarmEntry.COLUMN_NAME_STATUS));
-                    MyTime myTime = new MyTime(hour, minute);
-                    AlarmData alarmData = new AlarmData(myTime, status, id);
+                    AlarmData alarmData = new AlarmData(hour, minute, status, id);
 
                     alarmDataArrayList.add(alarmData);
 
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-
+            Log.d("PostDatabase",e.toString());
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -156,8 +154,8 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
             Log.d("PostDatabase + Delete", String.valueOf(result));
-            return (result == 0 ? false : true);
         }
+        return (result == 0 ? false : true);
     }
 
     public void notifyAdapterDataChange(ReminderListViewAdapter listAdapter) {
