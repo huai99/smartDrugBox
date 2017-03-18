@@ -14,7 +14,7 @@ import com.siehuai.smartdrugbox.controller.CustomTimePickerDialogListener;
 import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
 import com.siehuai.smartdrugbox.controller.ReminderListViewAdapter;
 import com.siehuai.smartdrugbox.data.AlarmData;
-import com.siehuai.smartdrugbox.data.AlarmDataList;
+import com.siehuai.smartdrugbox.data.AlarmDataService;
 
 public class UserSetReminderActivity extends AppCompatActivity {
 
@@ -37,7 +37,10 @@ public class UserSetReminderActivity extends AppCompatActivity {
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.expandList_reminder);
 
-        reminderListViewAdapter = new ReminderListViewAdapter(this, mExpandableListView, AlarmDataList.mAlarmDataList);
+        reminderListViewAdapter = new ReminderListViewAdapter(
+                this,
+                mExpandableListView,
+                AlarmDataService.getAlarmDataList());
 
         mExpandableListView.setAdapter(reminderListViewAdapter);
 
@@ -78,7 +81,7 @@ public class UserSetReminderActivity extends AppCompatActivity {
     public void addOrUpdateAlarm(AlarmData alarmData) {
         boolean result;
         int resultNum = postsDbHelper.addOrUpdateAlarmFrmDb(alarmData);
-        result = (resultNum > 0) ? true : false;
+        result = (resultNum > 0);
         postsDbHelper.addOrUpdateAlarmLocal(alarmData, result);
         //TODO: Think of a way to design that the reminderAdapter is not inside the database helper
         postsDbHelper.notifyAdapterDataChange(reminderListViewAdapter);

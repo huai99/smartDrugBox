@@ -9,4 +9,5 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="on">On</string>
+    <string name="drug_store_name">Drug Store Name:</string>
 </resources>

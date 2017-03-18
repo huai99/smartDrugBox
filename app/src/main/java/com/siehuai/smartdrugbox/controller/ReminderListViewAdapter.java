@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.data.AlarmData;
-import com.siehuai.smartdrugbox.data.AlarmDataList;
+import com.siehuai.smartdrugbox.data.AlarmDataService;
 
 import java.util.ArrayList;
 
@@ -85,7 +85,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         }
         convertView.setTag(this.getGroup(groupPosition).toString());
 
-        AlarmData alarmData = AlarmDataList.mAlarmDataList.get(groupPosition);
+        AlarmData alarmData = AlarmDataService.getAlarmDataList().get(groupPosition);
 
         mTextClock = (TextView) convertView.findViewById(R.id.textClock_parent_view);
 
@@ -118,7 +118,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.design_child_list_view_reminder, parent, false);
         }
 
-        AlarmData alarmData = AlarmDataList.mAlarmDataList.get(groupPosition);
+        AlarmData alarmData = AlarmDataService.getAlarmDataList().get(groupPosition);
 
         Button deleteBtn = (Button) convertView.findViewById(R.id.btn_delete);
 
@@ -149,7 +149,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                AlarmData alarmData = AlarmDataList.mAlarmDataList.get(position);
+                AlarmData alarmData = AlarmDataService.getAlarmDataList().get(position);
                 if (isChecked) {
                     setAlarmOn(alarmData);
 //                    Set alarm on in db
@@ -210,7 +210,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     }
 
     private boolean deleteAlarmLocal(AlarmData alarmData) {
-        return AlarmDataList.mAlarmDataList.remove(alarmData);
+        return AlarmDataService.removeAlarm(alarmData);
     }
 
     private void setSwitchInitialStatus(Switch aSwitch, int status) {

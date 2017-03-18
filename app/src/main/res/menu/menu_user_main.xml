@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <item
+        android:id="@+id/option_setMedicine"
+        android:title="Set Medicine"
+        ></item>
+    <item
+        android:id="@+id/option_viewMedicine"
+        android:title="View Medicine"
+        ></item>
+
+</menu>

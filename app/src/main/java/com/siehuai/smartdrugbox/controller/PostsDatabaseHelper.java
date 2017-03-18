@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.siehuai.smartdrugbox.data.AlarmData;
-import com.siehuai.smartdrugbox.data.AlarmDataList;
+import com.siehuai.smartdrugbox.data.AlarmDataService;
 import com.siehuai.smartdrugbox.data.DataBaseContract;
 
 import java.util.ArrayList;
@@ -92,7 +92,7 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
                 db.setTransactionSuccessful();
             }
         } catch (Exception e) {
-            Log.d("PostDatabase",e.toString());
+            Log.d("PostDatabase", e.toString());
         } finally {
             db.endTransaction();
         }
@@ -103,7 +103,7 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
         if (result) {
             updateAlarmData(alarmData);
         } else {
-            AlarmDataList.mAlarmDataList.add(alarmData);
+            AlarmDataService.addAlarm(alarmData);
         }
 
     }
@@ -130,7 +130,7 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d("PostDatabase",e.toString());
+            Log.d("PostDatabase", e.toString());
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -155,7 +155,7 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
             Log.d("PostDatabase + Delete", String.valueOf(result));
         }
-        return (result == 0 ? false : true);
+        return (result != 0);
     }
 
     public void notifyAdapterDataChange(ReminderListViewAdapter listAdapter) {
@@ -164,15 +164,11 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
 
     public void updateAlarmInLocal(ArrayList<AlarmData> alarmArrayList) {
         //TODO: Set up a service that get alarmData
-        AlarmDataList.mAlarmDataList = alarmArrayList;
+        AlarmDataService.setAlarmDataList(alarmArrayList);
     }
 
-    private void updateAlarmData(AlarmData alarmData) {
-        for (AlarmData mAlarmData : AlarmDataList.mAlarmDataList) {
-            if (alarmData.getAlarmID() == mAlarmData.getAlarmID()) {
-                mAlarmData = alarmData;
-            }
-        }
+    private void updateAlarmData(AlarmData newAlarmData) {
+        AlarmDataService.modifyAlarmData(newAlarmData);
     }
 
 }

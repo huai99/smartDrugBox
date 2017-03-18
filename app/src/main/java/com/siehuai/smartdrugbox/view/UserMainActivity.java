@@ -5,6 +5,9 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.android.volley.AuthFailureError;
@@ -19,6 +22,8 @@ import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
 import com.siehuai.smartdrugbox.data.AlarmData;
 import com.siehuai.smartdrugbox.data.NetworkAddress;
 import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
+import com.siehuai.smartdrugbox.view.userSetMedicine.UserSetMedicineActivity;
+import com.siehuai.smartdrugbox.view.userViewMedicine.UserViewMedicineActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,5 +121,44 @@ public class UserMainActivity extends AppCompatActivity {
         ArrayList<AlarmData> alarmArrayList = helper.getAllAlarmFrmDb();
 
         helper.updateAlarmInLocal(alarmArrayList);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_user_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (itemClickHandler(item)) {
+            return false;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public boolean itemClickHandler(MenuItem item) {
+        switch (item.getItemId()) {
+            case (R.id.option_setMedicine):
+                userSetMedicine();
+                return true;
+            case (R.id.option_viewMedicine):
+                userViewMedicine();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public void userSetMedicine() {
+        Intent intent = new Intent(UserMainActivity.this, UserSetMedicineActivity.class);
+        startActivity(intent);
+    }
+
+    public void userViewMedicine() {
+        Intent intent = new Intent(UserMainActivity.this, UserViewMedicineActivity.class);
+        startActivity(intent);
     }
 }
