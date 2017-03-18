@@ -9,5 +9,14 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="on">On</string>
-    <string name="drug_store_name">Drug Store Name:</string>
+    <string name="drug_store">Drug Store:</string>
+    <string name="medicine">Medicine:</string>
+    <string name="pill_number">Pill Number:</string>
+    <string name="confirm">Confirm</string>
+    <string name="example_drugstore">ABC drugstore</string>
+    <string name="example_medicine">ABC medicine</string>
+    <string name="example_pill_number">5</string>
+    <string name="frequency_of_taking">Frequency of taking:</string>
+    <string name="frequency_per_day">Frequency Per Day</string>
+    <string name="interval">Interval</string>
 </resources>

@@ -293,5 +293,6 @@
     <color name="primary">@color/indigo_500</color>
     <color name="primary_dark">@color/indigo_700</color>
     <color name="accent">@color/pink_A200</color>
+    <color name="hint">@color/grey_500</color>
 
 </resources>
