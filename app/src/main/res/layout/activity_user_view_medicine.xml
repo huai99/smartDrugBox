@@ -11,10 +11,10 @@
         >
 
         <fragment
-            android:name="com.siehuai.smartdrugbox.view.userSetMedicine.GetDrugStoreFragment"
+            android:name="com.siehuai.smartdrugbox.view.userSetMedicine.SetDetailFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_get_drug_store"/>
+            tools:layout="@layout/fragment_set_detail"/>
 
     </LinearLayout>
 

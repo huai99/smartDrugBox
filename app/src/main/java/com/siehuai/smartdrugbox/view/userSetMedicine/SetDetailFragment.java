@@ -11,17 +11,12 @@ import android.widget.AutoCompleteTextView;
 
 import com.siehuai.smartdrugbox.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class GetDrugStoreFragment extends Fragment {
+public class SetDetailFragment extends Fragment {
 
 
-    //    FragmentGetDrugStoreBinding mBinding;
     View mView;
 
-    public GetDrugStoreFragment() {
-        // Required empty public constructor
+    public SetDetailFragment() {
     }
 
 
@@ -32,10 +27,10 @@ public class GetDrugStoreFragment extends Fragment {
 //        TODO:Find out why autocomplete does not work with binding
 //        mBinding = DataBindingUtil.inflate(
 //                inflater,
-//                R.layout.fragment_get_drug_store,
+//                R.layout.fragment_set_detail,
 //                container,
 //                false);
-        mView = inflater.inflate(R.layout.fragment_get_drug_store, container, false);
+        mView = inflater.inflate(R.layout.fragment_set_detail, container, false);
         setEditTextFilter();
 
 

@@ -7,7 +7,7 @@
         android:id="@+id/fragment_getDrugStore"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.siehuai.smartdrugbox.view.userSetMedicine.GetDrugStoreFragment"
+        tools:context="com.siehuai.smartdrugbox.view.userSetMedicine.SetDetailFragment"
         >
 
         <LinearLayout
