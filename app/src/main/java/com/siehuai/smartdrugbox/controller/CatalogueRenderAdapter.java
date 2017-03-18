@@ -1,6 +1,7 @@
 package com.siehuai.smartdrugbox.controller;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class CatalogueRenderAdapter extends RecyclerView.Adapter<CatalogueRender
 
         ImageView mImage;
         TextView mTextView;
+        int position;
 
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -27,6 +29,7 @@ public class CatalogueRenderAdapter extends RecyclerView.Adapter<CatalogueRender
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d("Catalogue Renderer", "Reach here" + position);
                 }
             });
         }
@@ -38,6 +41,10 @@ public class CatalogueRenderAdapter extends RecyclerView.Adapter<CatalogueRender
         public void setTextView(String text) {
             mTextView.setText(text);
         }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
     }
 
     @Override
@@ -48,8 +55,10 @@ public class CatalogueRenderAdapter extends RecyclerView.Adapter<CatalogueRender
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        //Setting initial state
         holder.setImageSource(R.drawable.medicine_box_icon);
         holder.setTextView("Testing");
+        holder.setPosition(position);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class RingtoneService extends Service {
         int alarmId = intent.getExtras().getInt("alarmId");
 
         mIntent = new Intent(this.getApplicationContext(), OffAlarmActivity.class);
-        mIntent.putExtra("alarmId",alarmId);
+        mIntent.putExtra("alarmId", alarmId);
         PendingIntent mPendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{mIntent}, 0);
 
         Notification mNotify = new Notification.Builder(this)
@@ -47,7 +47,6 @@ public class RingtoneService extends Service {
 
         String state = intent.getExtras().getString("extra");
 
-
         assert state != null;
         switch (state) {
             case "yes":
@@ -56,13 +55,13 @@ public class RingtoneService extends Service {
                 mNmanager.notify(0, mNotify);
                 break;
             case "no":
-                if(mMediaPlayer!=null){
+                if (mMediaPlayer != null) {
                     mMediaPlayer.stop();
                     mMediaPlayer.reset();
                 }
                 break;
             default:
-                if(mMediaPlayer!=null){
+                if (mMediaPlayer != null) {
                     mMediaPlayer.stop();
                     mMediaPlayer.reset();
                 }
