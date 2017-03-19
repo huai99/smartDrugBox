@@ -75,10 +75,6 @@ public class UserMainActivity extends AppCompatActivity {
     }
 
     public void orderMedicine() {
-        Intent intent = new Intent(UserMainActivity.this, UserViewMedicineTabActivity.class);
-        // Instantiate the RequestQueue.
-
-        startActivity(intent);
     }
 
     public void activateAlarm() {
@@ -94,8 +90,7 @@ public class UserMainActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                String rsp = response.toString();
-                                Log.d("UserMainActivity", rsp);
+                                Log.d("UserMainActivity", response);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -104,7 +99,7 @@ public class UserMainActivity extends AppCompatActivity {
                 }) {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
+                        Map<String, String> params = new HashMap<>();
                         params.put("Hello world", "/BUZ");
                         return params;
                     }
@@ -132,11 +127,7 @@ public class UserMainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (itemClickHandler(item)) {
-            return false;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
+        return !itemClickHandler(item) && super.onOptionsItemSelected(item);
     }
 
     public boolean itemClickHandler(MenuItem item) {
