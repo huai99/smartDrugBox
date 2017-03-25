@@ -1,8 +1,6 @@
 package com.siehuai.smartdrugbox.controller;
 
 import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -12,6 +10,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.controller.HardwareController.HardwareControllerImpl.BuzzerController;
 import com.siehuai.smartdrugbox.view.OffAlarmActivity;
 
 public class RingtoneService extends Service {
@@ -29,7 +28,7 @@ public class RingtoneService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        NotificationManager mNmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        BuzzerController buzzerController = new BuzzerController(this.getApplicationContext());
 
         int alarmId = intent.getExtras().getInt("alarmId");
 
@@ -37,13 +36,12 @@ public class RingtoneService extends Service {
         mIntent.putExtra("alarmId", alarmId);
         PendingIntent mPendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{mIntent}, 0);
 
-        Notification mNotify = new Notification.Builder(this)
-                .setContentTitle("Alarm is ringing")
-                .setContentText("Click Me")
-                .setContentIntent(mPendingIntent)
-                .setAutoCancel(true)
-                .setSmallIcon(R.drawable.medicine_box_icon)
-                .build();
+        NotificationService notificationService = new NotificationService(this);
+        notificationService.createNotification(this,
+                "Alarm is Ringing",
+                "Click Me", mPendingIntent,
+                true,
+                R.drawable.medicine_box_icon);
 
         String state = intent.getExtras().getString("extra");
 
@@ -52,13 +50,17 @@ public class RingtoneService extends Service {
             case "yes":
                 mMediaPlayer = MediaPlayer.create(this, R.raw.alarm_ringtone);
                 mMediaPlayer.start();
-                mNmanager.notify(0, mNotify);
+                notificationService.dispatchNotification();
+                buzzerController.turnOn();
                 break;
             case "no":
                 if (mMediaPlayer != null) {
                     mMediaPlayer.stop();
                     mMediaPlayer.reset();
                 }
+
+                buzzerController.turnOff();
+
                 break;
             default:
                 if (mMediaPlayer != null) {

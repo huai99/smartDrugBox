@@ -16,8 +16,6 @@ public class OffAlarmActivity extends AppCompatActivity {
     TextView mTextView;
     int mAlarmId;
 
-
-//TODO : Pass alarmData object here and delete
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,17 +33,27 @@ public class OffAlarmActivity extends AppCompatActivity {
 
     public void setStatusText() {
         String status;
-        status = mAlarmStatus ? "On":"Off";
+        status = mAlarmStatus ? "On" : "Off";
         mTextView.setText(status);
     }
 
-    public void setFloatingActionBtnClick(FloatingActionButton fab){
+    public void setFloatingActionBtnClick(FloatingActionButton fab) {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAlarmStatus = !mAlarmStatus;
                 setStatusText();
+                mAlarmService.turnOffAlarmMusic();
+                onBackPressed();
+//                Intent intent = new Intent(OffAlarmActivity.this, UserMainActivity.class);
+//                startActivity(intent);
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

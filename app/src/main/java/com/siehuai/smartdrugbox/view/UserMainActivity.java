@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
+import com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.TableDataHelper.MedicineDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.data.AlarmData;
 import com.siehuai.smartdrugbox.data.NetworkAddress;
 import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
@@ -30,7 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserMainActivity extends AppCompatActivity {
+
     ActivityUserMainBinding mBinding;
+    MedicineDetailsRemoteHelper mMedicineDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,8 @@ public class UserMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_main);
+
+        mMedicineDbHelper = new MedicineDetailsRemoteHelper();
 
         PostsDatabaseHelper postsDbHelper = PostsDatabaseHelper.getInstance(this);
 
@@ -48,6 +53,8 @@ public class UserMainActivity extends AppCompatActivity {
         setOrderMedicineBtn();
 
         activateAlarm();
+
+//        getMedicineDetailsFromDb();
     }
 
     public void setReminderBtn() {
@@ -83,14 +90,13 @@ public class UserMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 RequestQueue queue = Volley.newRequestQueue(UserMainActivity.this);
-                String url = NetworkAddress.ESP8266;
 
                 // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, NetworkAddress.ESP8266_BUZ,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Log.d("UserMainActivity", response);
+                                 Log.d("UserMainActivity", response);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -105,6 +111,7 @@ public class UserMainActivity extends AppCompatActivity {
                     }
                 };
                 // Add the request to the RequestQueue.
+
                 queue.add(stringRequest);
 
             }
@@ -152,4 +159,5 @@ public class UserMainActivity extends AppCompatActivity {
         Intent intent = new Intent(UserMainActivity.this, UserViewMedicineActivity.class);
         startActivity(intent);
     }
+
 }

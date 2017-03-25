@@ -63,14 +63,14 @@ public class UserSetReminderActivity extends AppCompatActivity {
         });
     }
 
-    @TargetApi(23)
+    @TargetApi(22)
     protected void setDialogOkButton(Button okBtn) {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePicker mTimePicker = mAlarmDialog.getTimePicker();
-                int hour = mTimePicker.getHour();
-                int minute = mTimePicker.getMinute();
+                int hour = mTimePicker.getCurrentHour();
+                int minute = mTimePicker.getCurrentMinute();
                 AlarmData alarmData = new AlarmData(hour, minute, 0, -1);
                 addOrUpdateAlarm(alarmData);
                 mAlarmDialog.dismiss();

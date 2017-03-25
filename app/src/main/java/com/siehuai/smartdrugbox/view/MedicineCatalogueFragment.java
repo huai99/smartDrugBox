@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.controller.CatalogueRenderAdapter;
+import com.siehuai.smartdrugbox.controller.GenericRenderAdapter;
 
 public class MedicineCatalogueFragment extends Fragment {
 
     protected RecyclerView mRecyclerView;
-    protected CatalogueRenderAdapter mCatalogueRenderAdapter;
+    protected GenericRenderAdapter mGenericRenderAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
 
 
@@ -34,8 +34,8 @@ public class MedicineCatalogueFragment extends Fragment {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getActivity());
         setRecycleViewLayoutManager();
-        mCatalogueRenderAdapter = new CatalogueRenderAdapter();
-        mRecyclerView.setAdapter(mCatalogueRenderAdapter);
+        mGenericRenderAdapter = new GenericRenderAdapter("Medicine Catalogue");
+        mRecyclerView.setAdapter(mGenericRenderAdapter);
     }
 
     public void setRecycleViewLayoutManager() {

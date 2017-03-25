@@ -65,15 +65,15 @@ public class AlarmDialog extends TimePickerDialog {
         super.updateTime(hourOfDay, minuteOfHour);
     }
 
-    @TargetApi(23)
+    @TargetApi(22)
     protected void setConfirmBtn(final Calendar calendar) {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //setting the alarm time to the timepicker time
-                calendar.set(Calendar.HOUR_OF_DAY, mTimePicker.getHour());
-                calendar.set(Calendar.MINUTE, mTimePicker.getMinute());
+                calendar.set(Calendar.HOUR_OF_DAY, mTimePicker.getCurrentHour());
+                calendar.set(Calendar.MINUTE, mTimePicker.getCurrentMinute());
 
                 //Pass in the state of the request, yes for activate alarm
                 mIntent.putExtra("extra", "yes");

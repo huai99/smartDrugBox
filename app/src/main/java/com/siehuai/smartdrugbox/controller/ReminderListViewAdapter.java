@@ -155,7 +155,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 //                    Set alarm on in db
                     alarmData.setStatus(1);
                 } else {
-                    turnOffAlarm(alarmData);
+                    cancelAlarm(alarmData);
                     //Set alarm off in db
                     alarmData.setStatus(0);
                 }
@@ -166,10 +166,16 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
     public void setTextClock(AlarmData alarmData) {
 
-        String hour_string = changeTimeToString(alarmData.getHour());
-        String minute_string = changeTimeToString(alarmData.getMinute());
-        mTextClock.setText(hour_string + ":" + minute_string);
+        if(alarmData.getHour()<12){
+            String hour_string = changeTimeToString(alarmData.getHour());
+            String minute_string = changeTimeToString(alarmData.getMinute());
+            mTextClock.setText(hour_string + ":" + minute_string+" a.m.");
 
+        }else{
+            String hour_string = changeTimeToString(alarmData.getHour()-12);
+            String minute_string = changeTimeToString(alarmData.getMinute());
+            mTextClock.setText(hour_string + ":" + minute_string+" p.m.");
+        }
     }
 
     //TODO: The alarm will go off immediately if the time is past already
@@ -178,8 +184,8 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         mAlarmService.setAlarmOn(alarmData);
     }
 
-    private void turnOffAlarm(AlarmData alarmData) {
-        mAlarmService.turnOffAlarm(alarmData);
+    private void cancelAlarm(AlarmData alarmData) {
+        mAlarmService.cancelAlarm(alarmData);
     }
 
 
@@ -200,7 +206,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
                     Toast.makeText(mContext, "Delete Successfully", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                     if (mSwitch.isChecked()) {
-                        turnOffAlarm(alarmData);
+                        cancelAlarm(alarmData);
                     }
                 } else {
                     Toast.makeText(mContext, "Delete Fail: " + String.valueOf(alarmId), Toast.LENGTH_SHORT).show();

@@ -11,9 +11,12 @@ import android.widget.TextView;
 import com.siehuai.smartdrugbox.R;
 
 
-public class CatalogueRenderAdapter extends RecyclerView.Adapter<CatalogueRenderAdapter.ViewHolder> {
+public class GenericRenderAdapter extends RecyclerView.Adapter<GenericRenderAdapter.ViewHolder> {
 
-    public CatalogueRenderAdapter() {
+    String menuItem;
+
+    public GenericRenderAdapter(String menuItem) {
+        this.menuItem = menuItem;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,10 +58,18 @@ public class CatalogueRenderAdapter extends RecyclerView.Adapter<CatalogueRender
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //Setting initial state
-        holder.setImageSource(R.drawable.medicine_box_icon);
-        holder.setTextView("Testing");
-        holder.setPosition(position);
+
+        if (menuItem.equals("MedicineDetails")) {
+            holder.setImageSource(R.drawable.medicine_box_icon);
+            holder.setTextView("Testing");
+            holder.setPosition(position);
+        } else {
+            //Setting initial state
+            holder.setImageSource(R.drawable.placeholder);
+            holder.setTextView("Testing");
+            holder.setPosition(position);
+        }
+
     }
 
     @Override

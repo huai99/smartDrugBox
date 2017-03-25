@@ -22,10 +22,9 @@ public class AlarmService {
         mContext = context;
         mIntent = new Intent(this.mContext, AlarmReceiver.class);
         mAlarmManager = (AlarmManager) this.mContext.getSystemService(Context.ALARM_SERVICE);
-
     }
 
-    @TargetApi(23)
+    @TargetApi(22)
     protected void setAlarmOn(AlarmData alarmData) {
         Calendar calendar = Calendar.getInstance();
 
@@ -57,12 +56,11 @@ public class AlarmService {
         }
     }
 
-    public void turnOffAlarm(AlarmData alarmData) {
+    public void cancelAlarm(AlarmData alarmData) {
 
         int alarmId = (int) alarmData.getAlarmID();
 
-        mIntent.putExtra("extra", "no");
-        mContext.sendBroadcast(mIntent);
+        turnOffAlarmMusic();
 
         PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, alarmId, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -71,6 +69,11 @@ public class AlarmService {
         }
 
         mAlarmManager.cancel(mPendingIntent);
+    }
+
+    public void turnOffAlarmMusic(){
+        mIntent.putExtra("extra", "no");
+        mContext.sendBroadcast(mIntent);
     }
 
 

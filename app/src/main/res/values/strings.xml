@@ -16,7 +16,12 @@
     <string name="example_drugstore">ABC drugstore</string>
     <string name="example_medicine">ABC medicine</string>
     <string name="example_pill_number">5</string>
-    <string name="frequency_of_taking">Frequency of taking:</string>
-    <string name="frequency_per_day">Frequency Per Day</string>
+    <string name="frequency_of_taking">Frequency:</string>
+    <string name="frequency_per_day">Frequency (Day)</string>
     <string name="interval">Interval</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="compartment_number">Number:</string>
+    <string name="compartment">Compartment:</string>
 </resources>

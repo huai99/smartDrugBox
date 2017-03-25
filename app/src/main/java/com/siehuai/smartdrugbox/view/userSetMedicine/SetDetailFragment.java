@@ -12,16 +12,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
-import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
-import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.data.MedicineDetails;
+import com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.TableDataHelper.MedicineDetailsRemoteHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 
 public class SetDetailFragment extends Fragment {
@@ -29,12 +25,11 @@ public class SetDetailFragment extends Fragment {
 
     View mView;
     AutoCompleteTextView drugStoreAutoEditText, medicineAutoEditText;
-    EditText pillNumberEditText, frequencyDayEditText, frequencyIntervalEditText;
+    EditText pillNumberEditText, frequencyDayEditText, frequencyIntervalEditText, compartmentEditText;
     Button mConfirmButton;
     String drugStore, medicineName;
-    int pillNumber, frequencyDay, frequencyInterval;
-    private MobileServiceClient mClient;
-
+    int pillNumber, frequencyDay, frequencyInterval, compartmentNumber;
+    MedicineDetailsRemoteHelper mMedicineDetailsRemoteHelper;
 
     public SetDetailFragment() {
     }
@@ -47,76 +42,87 @@ public class SetDetailFragment extends Fragment {
 //        TODO:Find out why autocomplete does not work with binding
         mView = inflater.inflate(R.layout.fragment_set_medicine_detail, container, false);
 
-        try {
-            mClient = new MobileServiceClient("https://smartdrugbox.azurewebsites.net", getContext());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        mMedicineDetailsRemoteHelper = new MedicineDetailsRemoteHelper();
 
         setDrugStoreFilter();
         setMedicineFilter();
         setPillNumberEditText();
         setFrequencyEditText();
         setConfirmBtn();
+        setCompartmentNumber();
 
         return mView;
 
     }
 
-    public void setDrugStoreFilter() {
+    private void setDrugStoreFilter() {
+        //TODO:Get data from the cloud properly
+
         String[] testing = new String[]{"Drugstore1", "Drugstore2", "Drugstore3", "Drugstore4", "Drugstore5",};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, testing);
         drugStoreAutoEditText = (AutoCompleteTextView) mView.findViewById(R.id.editText_drugStore);
         drugStoreAutoEditText.setAdapter(adapter);
     }
 
-    public void setMedicineFilter() {
-        String[] testing = new String[]{"Antibiotic", "Panadol", "Gastric", "Stomache", "Toothache"};
+    private void setMedicineFilter() {
+        //TODO:Get data from the cloud properly
+        String[] testing = new String[]{
+                "Antibiotic", "Panadol", "Gastric", "Stomache", "Toothache", "Medicine 6"
+        };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, testing);
         medicineAutoEditText = (AutoCompleteTextView) mView.findViewById(R.id.editText_medicine);
         medicineAutoEditText.setAdapter(adapter);
     }
 
-    public void setPillNumberEditText() {
+    private void setPillNumberEditText() {
         pillNumberEditText = (EditText) mView.findViewById(R.id.editText_pillNumber);
     }
 
-    public void setFrequencyEditText() {
+    private void setFrequencyEditText() {
         frequencyDayEditText = (EditText) mView.findViewById(R.id.editText_perDayNumber);
-        frequencyIntervalEditText = (EditText) mView.findViewById(R.id.editText_interval);
     }
 
-    public void getDrugStoreInfo() {
+    private void setCompartmentNumber() {
+        compartmentEditText = (EditText) mView.findViewById(R.id.editText_compartment_number);
+    }
+
+    private void getDrugStoreInfo() {
         drugStore = drugStoreAutoEditText.getText().toString();
     }
 
-    public void getMedicineInfo() {
+    private void getMedicineInfo() {
         medicineName = medicineAutoEditText.getText().toString();
     }
 
-    public void getPillNumberInfo() {
-        pillNumber = Integer.valueOf(pillNumberEditText.getText().toString());
+    private void getPillNumberInfo() {
+        pillNumber = safeParseInteger(pillNumberEditText.getText().toString());
     }
 
-    public void getFreqeuncyofTakingInfo() {
-        frequencyDay = Integer.valueOf(frequencyDayEditText.getText().toString());
-        frequencyInterval = Integer.valueOf(frequencyIntervalEditText.getText().toString());
+    private void getFreqeuncyofTakingInfo() {
+        frequencyDay = safeParseInteger(frequencyDayEditText.getText().toString());
+        frequencyInterval = safeParseInteger("0");
     }
 
-    public void getAllEditTextInfo() {
+    private void getCompartmentNumberInfo() {
+        compartmentNumber = safeParseInteger(compartmentEditText.getText().toString());
+    }
+
+
+    private void getAllEditTextInfo() {
         getDrugStoreInfo();
         getMedicineInfo();
         getPillNumberInfo();
         getFreqeuncyofTakingInfo();
+        getCompartmentNumberInfo();
     }
 
-    public void setConfirmBtn() {
+    private void setConfirmBtn() {
         mConfirmButton = (Button) mView.findViewById(R.id.btn_confirm);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getAllEditTextInfo();
-                sendDataToRemote();
+                insertMediceRemote();
                 Log.d("Set Detail Fragment", "DrugStore: " + drugStore);
                 Log.d("Set Detail Fragment", "Medicine Name: " + medicineName);
                 Log.d("Set Detail Fragment", "Pill Number: " + String.valueOf(pillNumber));
@@ -126,28 +132,7 @@ public class SetDetailFragment extends Fragment {
         });
     }
 
-    public void sendDataToRemote() {
-        MedicineDetails medicineDetails = new MedicineDetails();
-        medicineDetails.setDrugstore(drugStore);
-        medicineDetails.setMedicineName(medicineName);
-        medicineDetails.setPillNumberPurchase(pillNumber);
-        HashMap<String, Integer> hashMap = new HashMap<>();
-        hashMap.put("Day", frequencyDay);
-        hashMap.put("Interval", frequencyInterval);
-        medicineDetails.setTakeMedicineFrequency(convertToJsonString(hashMap));
-        mClient.getTable(MedicineDetails.class).insert(medicineDetails, new TableOperationCallback<MedicineDetails>() {
-            @Override
-            public void onCompleted(MedicineDetails entity, Exception exception, ServiceFilterResponse response) {
-                if (exception == null) {
-                    Log.d("SetDetailFragment", "Insert Successful");
-                } else {
-                    Log.d("SetDetailFragment", "Insert Fail");
-                }
-            }
-        });
-    }
-
-    public <T> String convertToJsonString(HashMap<String, T> hashMap) {
+    private <T> String convertToJsonString(HashMap<String, T> hashMap) {
         JSONObject jsonObject = new JSONObject();
         Object[] keys = hashMap.keySet().toArray();
         try {
@@ -160,6 +145,19 @@ public class SetDetailFragment extends Fragment {
             e.printStackTrace();
             return "Error Object";
         }
+    }
+
+    public Integer safeParseInteger(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            //TODO: Do validation for input afterwards
+            return -1;
+        }
+    }
+
+    public void insertMediceRemote(){
+        mMedicineDetailsRemoteHelper.insert("5",drugStore,medicineName,pillNumber,compartmentNumber,"everyday");
     }
 
 }
