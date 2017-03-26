@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.controller.AlarmService;
+import com.siehuai.smartdrugbox.controller.Service.UserAlarmService;
 
 public class OffAlarmActivity extends AppCompatActivity {
 
-    AlarmService mAlarmService;
+    UserAlarmService mUserAlarmService;
     boolean mAlarmStatus = true;
     TextView mTextView;
     int mAlarmId;
@@ -23,7 +23,7 @@ public class OffAlarmActivity extends AppCompatActivity {
 
         mAlarmId = getIntent().getExtras().getInt("alarmId");
 
-        mAlarmService = new AlarmService(OffAlarmActivity.this);
+        mUserAlarmService = new UserAlarmService(OffAlarmActivity.this);
         mTextView = (TextView) findViewById(R.id.text_status);
         setStatusText();
 
@@ -43,10 +43,8 @@ public class OffAlarmActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mAlarmStatus = !mAlarmStatus;
                 setStatusText();
-                mAlarmService.turnOffAlarmMusic();
+                mUserAlarmService.turnOffAlarmMusic();
                 onBackPressed();
-//                Intent intent = new Intent(OffAlarmActivity.this, UserMainActivity.class);
-//                startActivity(intent);
                 finish();
             }
         });

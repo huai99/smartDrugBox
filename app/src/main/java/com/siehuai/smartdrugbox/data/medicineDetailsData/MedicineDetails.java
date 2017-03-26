@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.data.medicineDetailsData;
+package com.siehuai.smartdrugbox.data.MedicineDetailsData;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

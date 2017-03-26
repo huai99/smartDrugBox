@@ -2,7 +2,7 @@ package com.siehuai.smartdrugbox.data;
 
 import java.util.ArrayList;
 
-public class AlarmDataService {
+public class AlarmDataHelper {
 
     static ArrayList<AlarmData> mAlarmDataList = new ArrayList<AlarmData>() {
     };

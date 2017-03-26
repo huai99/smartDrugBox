@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.controller.GenericRenderAdapter;
+import com.siehuai.smartdrugbox.controller.Adapter.GenericRenderAdapter;
 
 public class UserViewMedicineMenuFragment extends Fragment {
 

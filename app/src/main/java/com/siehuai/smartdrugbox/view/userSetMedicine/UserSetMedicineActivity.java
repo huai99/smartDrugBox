@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.view.userSetMedicine;
+package com.siehuai.smartdrugbox.view.UserSetMedicine;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.controller;
+package com.siehuai.smartdrugbox.controller.Adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -14,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
+import com.siehuai.smartdrugbox.controller.Service.UserAlarmService;
 import com.siehuai.smartdrugbox.data.AlarmData;
-import com.siehuai.smartdrugbox.data.AlarmDataService;
+import com.siehuai.smartdrugbox.data.AlarmDataHelper;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     private TextView mTextClock;
     private Switch mSwitch;
     private PostsDatabaseHelper postsDbHelper;
-    private AlarmService mAlarmService;
+    private UserAlarmService mUserAlarmService;
 
     public ReminderListViewAdapter(Context context,
                                    ExpandableListView expandableListView,
@@ -37,7 +39,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         mExpandableListView = expandableListView;
         mParentList = parentList;
         postsDbHelper = PostsDatabaseHelper.getInstance(context);
-        mAlarmService = new AlarmService(context);
+        mUserAlarmService = new UserAlarmService(context);
     }
 
     @Override
@@ -85,7 +87,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         }
         convertView.setTag(this.getGroup(groupPosition).toString());
 
-        AlarmData alarmData = AlarmDataService.getAlarmDataList().get(groupPosition);
+        AlarmData alarmData = AlarmDataHelper.getAlarmDataList().get(groupPosition);
 
         mTextClock = (TextView) convertView.findViewById(R.id.textClock_parent_view);
 
@@ -118,7 +120,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.design_child_list_view_reminder, parent, false);
         }
 
-        AlarmData alarmData = AlarmDataService.getAlarmDataList().get(groupPosition);
+        AlarmData alarmData = AlarmDataHelper.getAlarmDataList().get(groupPosition);
 
         Button deleteBtn = (Button) convertView.findViewById(R.id.btn_delete);
 
@@ -149,7 +151,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                AlarmData alarmData = AlarmDataService.getAlarmDataList().get(position);
+                AlarmData alarmData = AlarmDataHelper.getAlarmDataList().get(position);
                 if (isChecked) {
                     setAlarmOn(alarmData);
 //                    Set alarm on in db
@@ -181,11 +183,11 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     //TODO: The alarm will go off immediately if the time is past already
     @TargetApi(23)
     protected void setAlarmOn(AlarmData alarmData) {
-        mAlarmService.setAlarmOn(alarmData);
+        mUserAlarmService.setAlarmOn(alarmData);
     }
 
     private void cancelAlarm(AlarmData alarmData) {
-        mAlarmService.cancelAlarm(alarmData);
+        mUserAlarmService.cancelAlarm(alarmData);
     }
 
 
@@ -216,7 +218,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     }
 
     private boolean deleteAlarmLocal(AlarmData alarmData) {
-        return AlarmDataService.removeAlarm(alarmData);
+        return AlarmDataHelper.removeAlarm(alarmData);
     }
 
     private void setSwitchInitialStatus(Switch aSwitch, int status) {

@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.controller.PagerAdapter;
+import com.siehuai.smartdrugbox.controller.Adapter.PagerAdapter;
 
 public class UserViewMedicineTabActivity extends AppCompatActivity {
 
@@ -31,5 +31,4 @@ public class UserViewMedicineTabActivity extends AppCompatActivity {
         tabLayout.setTabsFromPagerAdapter(adapter);
 
     }
-
 }

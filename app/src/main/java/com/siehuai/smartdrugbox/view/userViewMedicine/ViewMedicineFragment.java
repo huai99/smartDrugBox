@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.view.userViewMedicine;
+package com.siehuai.smartdrugbox.view.UserViewMedicine;
 
 
 import android.os.Bundle;

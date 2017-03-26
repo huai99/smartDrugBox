@@ -8,9 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.siehuai.smartdrugbox.controller.Adapter.ReminderListViewAdapter;
 import com.siehuai.smartdrugbox.data.AlarmData;
-import com.siehuai.smartdrugbox.data.AlarmDataService;
-import com.siehuai.smartdrugbox.data.DataBaseContract;
+import com.siehuai.smartdrugbox.data.AlarmDataHelper;
+import com.siehuai.smartdrugbox.data.LocalDb.DataBaseContract;
 
 import java.util.ArrayList;
 
@@ -103,7 +104,7 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
         if (result) {
             updateAlarmData(alarmData);
         } else {
-            AlarmDataService.addAlarm(alarmData);
+            AlarmDataHelper.addAlarm(alarmData);
         }
 
     }
@@ -164,11 +165,11 @@ public class PostsDatabaseHelper extends SQLiteOpenHelper {
 
     public void updateAlarmInLocal(ArrayList<AlarmData> alarmArrayList) {
         //TODO: Set up a service that get alarmData
-        AlarmDataService.setAlarmDataList(alarmArrayList);
+        AlarmDataHelper.setAlarmDataList(alarmArrayList);
     }
 
     private void updateAlarmData(AlarmData newAlarmData) {
-        AlarmDataService.modifyAlarmData(newAlarmData);
+        AlarmDataHelper.modifyAlarmData(newAlarmData);
     }
 
 }

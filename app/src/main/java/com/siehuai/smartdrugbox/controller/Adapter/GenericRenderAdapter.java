@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.controller;
+package com.siehuai.smartdrugbox.controller.Adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;

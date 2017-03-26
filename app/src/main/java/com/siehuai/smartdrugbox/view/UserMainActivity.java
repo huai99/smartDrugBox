@@ -23,8 +23,8 @@ import com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.TableDataHelper.
 import com.siehuai.smartdrugbox.data.AlarmData;
 import com.siehuai.smartdrugbox.data.NetworkAddress;
 import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
-import com.siehuai.smartdrugbox.view.userSetMedicine.UserSetMedicineActivity;
-import com.siehuai.smartdrugbox.view.userViewMedicine.UserViewMedicineActivity;
+import com.siehuai.smartdrugbox.view.UserSetMedicine.UserSetMedicineActivity;
+import com.siehuai.smartdrugbox.view.UserViewMedicine.UserViewMedicineActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

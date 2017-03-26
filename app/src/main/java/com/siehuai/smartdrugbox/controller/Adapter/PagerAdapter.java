@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.controller;
+package com.siehuai.smartdrugbox.controller.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

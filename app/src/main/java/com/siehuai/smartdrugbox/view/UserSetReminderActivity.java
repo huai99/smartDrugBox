@@ -12,9 +12,9 @@ import android.widget.TimePicker;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.CustomTimePickerDialogListener;
 import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
-import com.siehuai.smartdrugbox.controller.ReminderListViewAdapter;
+import com.siehuai.smartdrugbox.controller.Adapter.ReminderListViewAdapter;
 import com.siehuai.smartdrugbox.data.AlarmData;
-import com.siehuai.smartdrugbox.data.AlarmDataService;
+import com.siehuai.smartdrugbox.data.AlarmDataHelper;
 
 public class UserSetReminderActivity extends AppCompatActivity {
 
@@ -40,7 +40,7 @@ public class UserSetReminderActivity extends AppCompatActivity {
         reminderListViewAdapter = new ReminderListViewAdapter(
                 this,
                 mExpandableListView,
-                AlarmDataService.getAlarmDataList());
+                AlarmDataHelper.getAlarmDataList());
 
         mExpandableListView.setAdapter(reminderListViewAdapter);
 
@@ -99,6 +99,10 @@ public class UserSetReminderActivity extends AppCompatActivity {
     protected void setDialogBtn(AlarmDialog alarmDialog) {
         setDialogOkButton(alarmDialog.getOkBtn());
         setDialogCancelBtn(alarmDialog.getCancelButton());
+    }
+
+    protected void resetNewTime() {
+
     }
 
 }

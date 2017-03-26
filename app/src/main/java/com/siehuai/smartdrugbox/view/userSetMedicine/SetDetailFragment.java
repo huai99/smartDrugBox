@@ -1,6 +1,8 @@
-package com.siehuai.smartdrugbox.view.userSetMedicine;
+package com.siehuai.smartdrugbox.view.UserSetMedicine;
 
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,12 +14,20 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.common.Utils;
+import com.siehuai.smartdrugbox.common.Validation;
+import com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.DatabaseConnectionHelper;
 import com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.TableDataHelper.MedicineDetailsRemoteHelper;
+import com.siehuai.smartdrugbox.controller.Service.AlertDialogService;
+import com.siehuai.smartdrugbox.view.UserMainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SetDetailFragment extends Fragment {
@@ -30,6 +40,9 @@ public class SetDetailFragment extends Fragment {
     String drugStore, medicineName;
     int pillNumber, frequencyDay, frequencyInterval, compartmentNumber;
     MedicineDetailsRemoteHelper mMedicineDetailsRemoteHelper;
+    ArrayList<String> errorMessageList = new ArrayList<String>();
+    AlertDialogService mAlertDialogService;
+    DatabaseConnectionHelper connectionHelper;
 
     public SetDetailFragment() {
     }
@@ -42,7 +55,11 @@ public class SetDetailFragment extends Fragment {
 //        TODO:Find out why autocomplete does not work with binding
         mView = inflater.inflate(R.layout.fragment_set_medicine_detail, container, false);
 
+        mAlertDialogService = new AlertDialogService(getContext());
+
         mMedicineDetailsRemoteHelper = new MedicineDetailsRemoteHelper();
+
+        connectionHelper = new DatabaseConnectionHelper();
 
         setDrugStoreFilter();
         setMedicineFilter();
@@ -122,7 +139,18 @@ public class SetDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getAllEditTextInfo();
-                insertMediceRemote();
+                if (isValidateInput() && isConnectedToDb()) {
+                    insertMedicineRemote();
+                } else {
+                    mAlertDialogService.provideDefaultErrorDialog(Utils.convertListToString(errorMessageList),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    errorMessageList.clear();
+                                    dialog.dismiss();
+                                }
+                            });
+                }
                 Log.d("Set Detail Fragment", "DrugStore: " + drugStore);
                 Log.d("Set Detail Fragment", "Medicine Name: " + medicineName);
                 Log.d("Set Detail Fragment", "Pill Number: " + String.valueOf(pillNumber));
@@ -156,8 +184,56 @@ public class SetDetailFragment extends Fragment {
         }
     }
 
-    public void insertMediceRemote(){
-        mMedicineDetailsRemoteHelper.insert("5",drugStore,medicineName,pillNumber,compartmentNumber,"everyday");
+    public void insertMedicineRemote() {
+        mMedicineDetailsRemoteHelper.attachOnCompleteListener(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    mAlertDialogService.provideDefaultErrorDialog("Database Error: " + databaseError.toString(),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                } else {
+                    mAlertDialogService.provideDefaultOkDialog("Please proceed",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getContext(), UserMainActivity.class);
+                                    startActivity(intent);
+                                    dialog.dismiss();
+                                }
+                            }, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                }
+            }
+        });
+        mMedicineDetailsRemoteHelper.insert(drugStore, medicineName, pillNumber, compartmentNumber, "everyday");
     }
+
+    public boolean isValidateInput() {
+        if (!Validation.isPositiveInteger(pillNumber)) {
+            errorMessageList.add("Pill Number: " + Validation.returnIsPositiveErrorMsg());
+            return false;
+        } else if (!Validation.isPositiveInteger(compartmentNumber)) {
+            errorMessageList.add("Compartment Number: " + Validation.returnIsPositiveErrorMsg());
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isConnectedToDb() {
+        if (!connectionHelper.isConnectionChecker()) {
+            errorMessageList.add("No Connection to the Internet");
+        }
+        return connectionHelper.isConnectionChecker();
+    }
+
 
 }

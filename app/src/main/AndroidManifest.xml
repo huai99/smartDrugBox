@@ -55,15 +55,15 @@
         <receiver android:name=".controller.AlarmReceiver"/>
 
         <service
-            android:name=".controller.RingtoneService"
+            android:name=".controller.Service.SystemAlarmService"
             android:enabled="true">
         </service>
 
         <activity android:name=".view.OffAlarmActivity">
         </activity>
-        <activity android:name=".view.userSetMedicine.UserSetMedicineActivity">
+        <activity android:name=".view.UserSetMedicine.UserSetMedicineActivity">
         </activity>
-        <activity android:name=".view.userViewMedicine.UserViewMedicineActivity">
+        <activity android:name=".view.UserViewMedicine.UserViewMedicineActivity">
         </activity>
     </application>
 
