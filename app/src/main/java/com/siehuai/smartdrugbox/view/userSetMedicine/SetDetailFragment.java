@@ -22,6 +22,7 @@ import com.siehuai.smartdrugbox.common.Validation;
 import com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.DatabaseConnectionHelper;
 import com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.TableDataHelper.MedicineDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.controller.Service.AlertDialogService;
+import com.siehuai.smartdrugbox.view.MedicineBoxDetails;
 import com.siehuai.smartdrugbox.view.UserMainActivity;
 
 import org.json.JSONException;
@@ -179,7 +180,6 @@ public class SetDetailFragment extends Fragment {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            //TODO: Do validation for input afterwards
             return -1;
         }
     }
@@ -221,8 +221,9 @@ public class SetDetailFragment extends Fragment {
         if (!Validation.isPositiveInteger(pillNumber)) {
             errorMessageList.add("Pill Number: " + Validation.returnIsPositiveErrorMsg());
             return false;
-        } else if (!Validation.isPositiveInteger(compartmentNumber)) {
-            errorMessageList.add("Compartment Number: " + Validation.returnIsPositiveErrorMsg());
+        } else if (!Validation.isInBetweenTwoInteger(compartmentNumber, 0, MedicineBoxDetails.COMPARTMENT_NUMBER)) {
+            errorMessageList.add("Compartment Number: " +
+                    Validation.returnIsInBetweenErrorMsg(0, MedicineBoxDetails.COMPARTMENT_NUMBER));
             return false;
         }
         return true;

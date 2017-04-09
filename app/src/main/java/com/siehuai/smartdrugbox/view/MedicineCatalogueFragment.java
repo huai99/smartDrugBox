@@ -11,17 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.controller.Adapter.GenericRenderAdapter;
+import com.siehuai.smartdrugbox.controller.Adapter.MedicineDetailsRenderAdapter;
+import com.siehuai.smartdrugbox.data.MenuResource.MenuResourceImpl.MedicineDetailsResource;
+
+import java.util.ArrayList;
 
 public class MedicineCatalogueFragment extends Fragment {
 
     protected RecyclerView mRecyclerView;
-    protected GenericRenderAdapter mGenericRenderAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_medicine_catalogue, container, false);
 
         setUpGridView(view);
@@ -29,13 +32,27 @@ public class MedicineCatalogueFragment extends Fragment {
         return view;
     }
 
-
     public void setUpGridView(View mView) {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView);
+
         mLayoutManager = new LinearLayoutManager(getActivity());
         setRecycleViewLayoutManager();
-        mGenericRenderAdapter = new GenericRenderAdapter("Medicine Catalogue");
-        mRecyclerView.setAdapter(mGenericRenderAdapter);
+        MedicineDetailsRenderAdapter adapter = new MedicineDetailsRenderAdapter();
+        MedicineDetailsResource resource = new MedicineDetailsResource();
+        resource.setResourceImgList(new ArrayList(){
+            {add(R.drawable.medicine_box_icon);}
+            {add(R.drawable.placeholder);}
+            {add(R.drawable.placeholder);}
+            {add(R.drawable.placeholder);}
+        });
+        resource.setResourceTextList(new ArrayList<String>(){
+            {add("Sie Huai");}
+            {add("Sie Huai");}
+            {add("Sie Huai");}
+            {add("Sie Huai");}
+        });
+        adapter.setResourceArrayList(resource);
+        mRecyclerView.setAdapter(adapter);
     }
 
     public void setRecycleViewLayoutManager() {

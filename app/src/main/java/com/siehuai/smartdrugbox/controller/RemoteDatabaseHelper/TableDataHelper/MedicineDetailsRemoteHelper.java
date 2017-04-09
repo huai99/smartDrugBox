@@ -2,7 +2,7 @@ package com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.TableDataHelper
 
 import com.google.firebase.database.DatabaseReference;
 import com.siehuai.smartdrugbox.controller.RemoteDatabaseHelper.RemoteDbHelper;
-import com.siehuai.smartdrugbox.data.MedicineDetailsData.MedicineDetails;
+import com.siehuai.smartdrugbox.data.LocalAppData.MedicineDetails;
 
 public class MedicineDetailsRemoteHelper extends RemoteDbHelper {
 

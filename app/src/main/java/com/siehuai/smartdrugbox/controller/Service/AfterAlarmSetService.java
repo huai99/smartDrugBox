@@ -14,13 +14,14 @@ import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.HardwareController.HardwareControllerImpl.BuzzerController;
 import com.siehuai.smartdrugbox.view.OffAlarmActivity;
 
-public class SystemAlarmService extends Service {
+public class AfterAlarmSetService extends Service {
 
     MediaPlayer mMediaPlayer;
     RingtoneService mRingtoneService;
     NotificationService mNotificationService;
     BuzzerController mBuzzerController;
     Intent mIntent;
+
 
     @Nullable
     @Override
@@ -36,22 +37,22 @@ public class SystemAlarmService extends Service {
 
         mRingtoneService = RingtoneService.getInstance();
 
-        mRingtoneService.createMediaPlayer(this,R.raw.alarm_ringtone);
-
         int alarmId = intent.getExtras().getInt("alarmId");
         mIntent = new Intent(this.getApplicationContext(), OffAlarmActivity.class);
         mIntent.putExtra("alarmId", alarmId);
+
+        mRingtoneService.createMediaPlayer(this, R.raw.alarm_ringtone);
 
         createNotification(mIntent);
 
         String state = intent.getExtras().getString("extra");
 
-        alarmStateHandler(state);
+        alarmStateHandler(state, String.valueOf(alarmId));
 
         return START_NOT_STICKY;
     }
 
-    private void createNotification(Intent intent){
+    private void createNotification(Intent intent) {
 
         PendingIntent mPendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{intent}, 0);
 
@@ -60,7 +61,7 @@ public class SystemAlarmService extends Service {
                 this, "Alarm is Ringing", "Click Me", mPendingIntent, true, R.drawable.medicine_box_icon);
     }
 
-    private void alarmStateHandler(String state){
+    private void alarmStateHandler(String state, String id) {
         assert state != null;
         switch (state) {
             case "yes":
@@ -70,17 +71,13 @@ public class SystemAlarmService extends Service {
                 startActivity(mIntent);
                 break;
             case "no":
-                if (mRingtoneService.getMediaPlayer() != null) {
-                    mRingtoneService.stopAndReset();
-                    Log.d("System Alarm","Reach here");
-                }
+                mRingtoneService.stopAndReset();
+                Log.d("System Alarm", "Reach here");
                 mBuzzerController.turnOff();
                 break;
 
             default:
-                if (mRingtoneService.getMediaPlayer() != null) {
-                    mRingtoneService.stopAndReset();
-                }
+                Log.d("System Alarm", "Error Happens");
                 break;
         }
     }

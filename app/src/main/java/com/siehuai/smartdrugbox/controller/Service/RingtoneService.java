@@ -2,19 +2,24 @@ package com.siehuai.smartdrugbox.controller.Service;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 public class RingtoneService {
 
-    private MediaPlayer mMediaPlayer;
 
     private static RingtoneService mInstance;
+    private MediaPlayer mMediaPlayer;
+    private boolean isMediaPlayerPrepare = false;
 
-    private RingtoneService() {}
+    private RingtoneService() {
+    }
 
     public void createMediaPlayer(Context context, int ringtoneResId) {
-        if (mMediaPlayer == null) {
+        if (!isMediaPlayerPrepare) {
             mMediaPlayer = MediaPlayer.create(context, ringtoneResId);
+            isMediaPlayerPrepare = !isMediaPlayerPrepare;
         }
+        Log.d("Ringtone", "Create: " + String.valueOf(mMediaPlayer));
     }
 
 
@@ -22,15 +27,22 @@ public class RingtoneService {
         mMediaPlayer.start();
     }
 
-    public MediaPlayer getMediaPlayer() {
-        return mMediaPlayer;
-    }
 
     public void stopAndReset() {
         if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-            mMediaPlayer.reset();
+            Log.d("Ringtone", "Stop: " + String.valueOf(mMediaPlayer));
+            stopMediaPlayer();
+            resetMediaPlayer();
         }
+    }
+
+    private void stopMediaPlayer(){
+        mMediaPlayer.stop();
+    }
+
+    private void resetMediaPlayer(){
+        mMediaPlayer.reset();
+        isMediaPlayerPrepare = false;
     }
 
     public static RingtoneService getInstance() {

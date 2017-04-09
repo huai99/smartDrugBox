@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.controller.PostsDatabaseHelper;
-import com.siehuai.smartdrugbox.controller.Service.UserAlarmService;
+import com.siehuai.smartdrugbox.controller.Service.SetAlarmService;
 import com.siehuai.smartdrugbox.data.AlarmData;
 import com.siehuai.smartdrugbox.data.AlarmDataHelper;
 
@@ -30,7 +30,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     private TextView mTextClock;
     private Switch mSwitch;
     private PostsDatabaseHelper postsDbHelper;
-    private UserAlarmService mUserAlarmService;
+    private SetAlarmService mSetAlarmService;
 
     public ReminderListViewAdapter(Context context,
                                    ExpandableListView expandableListView,
@@ -39,7 +39,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         mExpandableListView = expandableListView;
         mParentList = parentList;
         postsDbHelper = PostsDatabaseHelper.getInstance(context);
-        mUserAlarmService = new UserAlarmService(context);
+        mSetAlarmService = new SetAlarmService(context);
     }
 
     @Override
@@ -183,11 +183,11 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     //TODO: The alarm will go off immediately if the time is past already
     @TargetApi(23)
     protected void setAlarmOn(AlarmData alarmData) {
-        mUserAlarmService.setAlarmOn(alarmData);
+        mSetAlarmService.setAlarmOn(alarmData);
     }
 
     private void cancelAlarm(AlarmData alarmData) {
-        mUserAlarmService.cancelAlarm(alarmData);
+        mSetAlarmService.cancelAlarm(alarmData);
     }
 
 

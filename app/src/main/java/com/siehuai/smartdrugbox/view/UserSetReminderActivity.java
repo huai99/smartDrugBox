@@ -101,8 +101,4 @@ public class UserSetReminderActivity extends AppCompatActivity {
         setDialogCancelBtn(alarmDialog.getCancelButton());
     }
 
-    protected void resetNewTime() {
-
-    }
-
 }

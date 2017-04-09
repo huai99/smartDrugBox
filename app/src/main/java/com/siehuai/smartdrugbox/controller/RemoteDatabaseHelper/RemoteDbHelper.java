@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class RemoteDbHelper {
+public abstract class RemoteDbHelper {
 
     protected enum DbStatus {
         SUCCESSFUL,
@@ -25,8 +25,8 @@ public class RemoteDbHelper {
         return mDatabase;
     }
 
-    public void attachOnCompleteListener(DatabaseReference.CompletionListener listener) {}
-
+    public void attachOnCompleteListener(DatabaseReference.CompletionListener listener){}
+    
     protected DatabaseReference.CompletionListener returnDefaultOnCompleteListener() {
         return new DatabaseReference.CompletionListener() {
             @Override

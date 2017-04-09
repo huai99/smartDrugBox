@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.controller.Adapter.GenericRenderAdapter;
 
 public class UserViewMedicineMenuFragment extends Fragment {
 
@@ -28,13 +27,10 @@ public class UserViewMedicineMenuFragment extends Fragment {
         return view;
     }
 
-
     public void setUpGridView(View mView) {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getActivity());
         setRecycleViewLayoutManager();
-        GenericRenderAdapter mGenericRenderAdapter = new GenericRenderAdapter("ViewMedicine");
-        mRecyclerView.setAdapter(mGenericRenderAdapter);
     }
 
     public void setRecycleViewLayoutManager() {

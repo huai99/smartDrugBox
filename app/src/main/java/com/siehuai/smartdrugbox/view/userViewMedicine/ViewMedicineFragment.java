@@ -15,7 +15,6 @@ public class ViewMedicineFragment extends Fragment {
     public ViewMedicineFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

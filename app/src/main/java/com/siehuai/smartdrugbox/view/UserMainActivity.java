@@ -54,7 +54,6 @@ public class UserMainActivity extends AppCompatActivity {
 
         activateAlarm();
 
-//        getMedicineDetailsFromDb();
     }
 
     public void setReminderBtn() {
@@ -82,6 +81,8 @@ public class UserMainActivity extends AppCompatActivity {
     }
 
     public void orderMedicine() {
+        Intent intent = new Intent(UserMainActivity.this, UserViewMedicineTabActivity.class);
+        startActivity(intent);
     }
 
     public void activateAlarm() {
@@ -96,7 +97,7 @@ public class UserMainActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                 Log.d("UserMainActivity", response);
+                                Log.d("UserMainActivity", response);
                             }
                         }, new Response.ErrorListener() {
                     @Override

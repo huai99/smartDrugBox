@@ -1,7 +1,6 @@
 package com.siehuai.smartdrugbox.controller.Adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,72 +8,82 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.data.MenuResource.MenuResource;
+
+import java.util.ArrayList;
 
 
-public class GenericRenderAdapter extends RecyclerView.Adapter<GenericRenderAdapter.ViewHolder> {
+public abstract class GenericRenderAdapter extends RecyclerView.Adapter<GenericRenderAdapter.ViewHolder>
+        implements MenuAdapter {
 
-    String menuItem;
+    MenuResource mMenuResource;
 
-    public GenericRenderAdapter(String menuItem) {
-        this.menuItem = menuItem;
+    ArrayList<Integer> mImgResourceList;
+
+    ArrayList<String> mTextResourceList;
+
+    View.OnClickListener mOnClickListener;
+
+
+    public GenericRenderAdapter() {
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    protected static class ViewHolder extends RecyclerView.ViewHolder {
 
+        View mView;
         ImageView mImage;
         TextView mTextView;
         int position;
 
-        public ViewHolder(final View itemView) {
+
+        protected ViewHolder(final View itemView) {
             super(itemView);
+            mView = itemView;
             mImage = (ImageView) itemView.findViewById(R.id.item_image);
             mTextView = (TextView) itemView.findViewById(R.id.item_text);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Catalogue Renderer", "Reach here" + position);
-                }
-            });
         }
 
-        public void setImageSource(int resId) {
+        protected void setImageSource(int resId) {
             mImage.setImageResource(resId);
         }
 
-        public void setTextView(String text) {
+        protected void setTextView(String text) {
             mTextView.setText(text);
         }
 
-        public void setPosition(int position) {
+        protected void setPosition(int position) {
             this.position = position;
+        }
+
+        protected void setOnClickListener(View.OnClickListener listener){
+            mView.setOnClickListener(listener);
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.design_grid_view, parent, false);
+        initResource();
         return new ViewHolder(mView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        if (menuItem.equals("MedicineDetails")) {
-            holder.setImageSource(R.drawable.medicine_box_icon);
-            holder.setTextView("Testing");
-            holder.setPosition(position);
-        } else {
-            //Setting initial state
-            holder.setImageSource(R.drawable.placeholder);
-            holder.setTextView("Testing");
-            holder.setPosition(position);
-        }
-
+        holder.setImageSource(mImgResourceList.get(position));
+        holder.setTextView(mTextResourceList.get(position));
+        holder.setPosition(position);
+        holder.setOnClickListener(mOnClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return 8;
+        return mMenuResource.getResourceSize();
+    }
+
+
+    private void initResource() {
+        mImgResourceList = (ArrayList<Integer>) mMenuResource.getResourceImgList();
+        mTextResourceList = (ArrayList<String>) mMenuResource.getResourceTextList();
     }
 
 }

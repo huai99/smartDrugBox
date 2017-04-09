@@ -55,7 +55,7 @@
         <receiver android:name=".controller.AlarmReceiver"/>
 
         <service
-            android:name=".controller.Service.SystemAlarmService"
+            android:name=".controller.Service.AfterAlarmSetService"
             android:enabled="true">
         </service>
 

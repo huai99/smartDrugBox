@@ -13,13 +13,13 @@ import com.siehuai.smartdrugbox.data.AlarmData;
 import java.util.Calendar;
 
 
-public class UserAlarmService {
+public class SetAlarmService {
 
     private AlarmManager mAlarmManager;
     private Context mContext;
     private Intent mIntent;
 
-    public UserAlarmService(Context context) {
+    public SetAlarmService(Context context) {
         mContext = context;
         mIntent = new Intent(this.mContext, AlarmReceiver.class);
         mAlarmManager = (AlarmManager) this.mContext.getSystemService(Context.ALARM_SERVICE);

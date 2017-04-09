@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.siehuai.smartdrugbox.controller.Service.SystemAlarmService;
+import com.siehuai.smartdrugbox.controller.Service.AfterAlarmSetService;
 
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -17,7 +17,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         String state = intent.getExtras().getString("extra");
         int alarmId = intent.getExtras().getInt("alarmId");
 
-        Intent serviceIntent = new Intent(context, SystemAlarmService.class);
+        Intent serviceIntent = new Intent(context, AfterAlarmSetService.class);
         serviceIntent.putExtra("extra", state);
         serviceIntent.putExtra("alarmId", alarmId);
 
