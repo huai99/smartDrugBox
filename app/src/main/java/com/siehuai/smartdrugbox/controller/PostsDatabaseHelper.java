@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.siehuai.smartdrugbox.controller.Adapter.ReminderListViewAdapter;
-import com.siehuai.smartdrugbox.data.AlarmData;
-import com.siehuai.smartdrugbox.data.AlarmDataHelper;
+import com.siehuai.smartdrugbox.controller.User.Adapter.ReminderListViewAdapter;
+import com.siehuai.smartdrugbox.data.User.AlarmData;
+import com.siehuai.smartdrugbox.data.User.AlarmDataHelper;
 import com.siehuai.smartdrugbox.data.LocalDb.DataBaseContract;
 
 import java.util.ArrayList;

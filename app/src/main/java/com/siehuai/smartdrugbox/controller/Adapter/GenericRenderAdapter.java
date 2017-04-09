@@ -16,13 +16,13 @@ import java.util.ArrayList;
 public abstract class GenericRenderAdapter extends RecyclerView.Adapter<GenericRenderAdapter.ViewHolder>
         implements MenuAdapter {
 
-    MenuResource mMenuResource;
+    public MenuResource mMenuResource;
 
     ArrayList<Integer> mImgResourceList;
 
     ArrayList<String> mTextResourceList;
 
-    View.OnClickListener mOnClickListener;
+    public View.OnClickListener mOnClickListener;
 
 
     public GenericRenderAdapter() {

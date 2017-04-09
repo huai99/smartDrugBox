@@ -7,12 +7,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.siehuai.smartdrugbox.view.UserViewMedicine.UserViewMedicineActivity"
+        tools:context=".view.User.UserViewMedicine.UserViewMedicineActivity"
         >
 
         <fragment
             android:id="@+id/fragment_viewMedicine"
-            android:name="com.siehuai.smartdrugbox.view.UserViewMedicineMenuFragment"
+            android:name="com.siehuai.smartdrugbox.view.User.UserViewMedicineMenuFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_view_medicine"/>

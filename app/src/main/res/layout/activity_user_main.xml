@@ -8,13 +8,13 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        tools:context="com.siehuai.smartdrugbox.view.UserMainActivity"
+        tools:context="com.siehuai.smartdrugbox.view.U_MainActivity"
         >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/medicine_box_icon"
+            android:layout_width="256dp"
+            android:layout_height="271dp"
+            android:src="@drawable/user"
             />
 
         <Button

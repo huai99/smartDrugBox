@@ -4,72 +4,37 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.siehuai.smartdrugbox.view.MedicineCatalogueFragment;
-import com.siehuai.smartdrugbox.view.UserCartFragment;
-import com.siehuai.smartdrugbox.view.UserViewMedicineTabActivity;
+import com.siehuai.smartdrugbox.data.TabLayoutResource.ITabLayoutResource;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
-    String classname;
+    ITabLayoutResource mITabLayoutResource;
 
-    public PagerAdapter(FragmentManager fm, String classname) {
+    public PagerAdapter(FragmentManager fm, ITabLayoutResource tabLayoutResource) {
         super(fm);
-        this.classname = classname;
+        mITabLayoutResource = tabLayoutResource;
     }
 
 
     @Override
     public Fragment getItem(int position) {
 
-        Fragment fragment = null;
+        Fragment[] fragments = mITabLayoutResource.getFragments();
 
-        if (classname.equals(UserViewMedicineTabActivity.CLASSNAME)) {
-            switch (position) {
-                case 0:
-                    fragment = new MedicineCatalogueFragment();
-                    break;
-                case 1:
-                    fragment = new UserCartFragment();
-                    break;
-            }
-
-            return fragment;
-
-        } else {
-
-            return fragment;
-
-        }
+        return fragments[position];
 
     }
 
 
     @Override
     public int getCount() {
-        if (classname.equals(UserViewMedicineTabActivity.CLASSNAME)) {
-            return 2;
-        } else {
-            return 0;
-        }
+        return mITabLayoutResource.getTabTotalNum();
     }
 
 
     @Override
     public CharSequence getPageTitle(int position) {
-        String title = "";
-        if (classname.equals(UserViewMedicineTabActivity.CLASSNAME)) {
-            switch (position) {
-                case 0:
-                    title = "Medicine Catalogue";
-                    break;
-                case 1:
-                    title = "Cart";
-                    break;
-            }
-        } else {
-
-        }
-
-        return title;
+        String[] strings = mITabLayoutResource.getTabNames();
+        return strings[position];
     }
 }
