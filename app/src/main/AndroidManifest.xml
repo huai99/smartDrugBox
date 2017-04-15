@@ -10,26 +10,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.U_MainActivity">
+        <activity android:name=".User.view.U_MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.User.UserSetReminderActivity"
+            android:name=".User.view.UserSetReminderActivity"
             android:label="@string/title_activity_user_set_reminder"
-            android:parentActivityName=".view.U_MainActivity">
+            android:parentActivityName=".User.view.U_MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.siehuai.smartdrugbox.view.U_MainActivity"/>
+                android:value="com.siehuai.smartdrugbox.User.view.U_MainActivity"/>
         </activity>
         <activity
-            android:name=".view.User.UserViewMedicineTabActivity"
+            android:name=".User.view.UserViewMedicineTabActivity"
             android:label="@string/view_medicine"
-            android:parentActivityName=".view.U_MainActivity">
+            android:parentActivityName=".User.view.U_MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.siehuai.smartdrugbox.view.U_MainActivity"/>
+                android:value="com.siehuai.smartdrugbox.User.view.U_MainActivity"/>
             <!--
  ATTENTION: This intent was auto-generated. Follow instructions at
   https://g.co/AppIndexing/AndroidStudio to publish your URLs.
@@ -50,23 +50,23 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".controller.User.AlarmReceiver"/>
+        <receiver android:name=".User.controller.AlarmReceiver"/>
 
         <service
-            android:name=".controller.User.Service.AfterAlarmSetService"
+            android:name=".Generic.controller.Service.AfterAlarmSetService"
             android:enabled="true">
         </service>
 
-        <activity android:name=".view.User.OffAlarmActivity">
+        <activity android:name=".User.view.OffAlarmActivity">
         </activity>
-        <activity android:name=".view.User.UserSetMedicine.UserSetMedicineActivity">
+        <activity android:name=".User.view.UserSetMedicine.UserSetMedicineActivity">
         </activity>
-        <activity android:name=".view.User.UserViewMedicine.UserViewMedicineActivity">
+        <activity android:name=".User.view.UserViewMedicine.UserViewMedicineActivity">
         </activity>
-        <activity android:name=".view.Pharmacy.P_EditTabActivity">
+        <activity android:name=".Pharmacy.view.P_EditTabActivity">
         </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".Generic.view.MainActivity"
             android:icon="@drawable/medicine_box_icon"
             android:label="@string/app_name"
             android:supportsRtl="true"
@@ -77,9 +77,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.Pharmacy.P_MainActivity">
+        <activity android:name=".Pharmacy.view.P_MainActivity">
         </activity>
-        <activity android:name=".view.Pharmacy.P_AddMedicineActivity">
+        <activity android:name=".Pharmacy.view.P_AddMedicineActivity">
+        </activity>
+        <activity android:name=".Pharmacy.view.P_EditMenuCatalogueDetailActivity">
         </activity>
     </application>
 

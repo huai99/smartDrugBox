@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".view.User.UserSetMedicine.UserSetMedicineActivity"
+        tools:context=".User.view.UserSetMedicine.UserSetMedicineActivity"
         >
 
         <fragment
             android:id="@+id/fragment_getDrugStore"
-            android:name="com.siehuai.smartdrugbox.view.User.UserSetMedicine.SetDetailFragment"
+            android:name="com.siehuai.smartdrugbox.User.view.UserSetMedicine.SetDetailFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_set_medicine_detail"/>

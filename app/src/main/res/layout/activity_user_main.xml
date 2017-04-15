@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        tools:context="com.siehuai.smartdrugbox.view.U_MainActivity"
+        tools:context="com.siehuai.smartdrugbox.User.view.U_MainActivity"
         >
 
         <ImageView
