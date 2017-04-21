@@ -1,10 +1,10 @@
 package com.siehuai.smartdrugbox.User.data.LocalAppData;
 
 import com.google.firebase.database.IgnoreExtraProperties;
-import com.siehuai.smartdrugbox.Generic.data.IRemoteDbData;
+import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
 @IgnoreExtraProperties
-public class MedicineDetails implements IRemoteDbData {
+public class MedicineDetails implements IDbData {
     private String id;
     private String drugstore;
     private String medicineName;

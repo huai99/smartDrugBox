@@ -12,13 +12,13 @@ public class MedicineDetailsResource implements MenuResource {
     private ArrayList<String> mTextList;
 
     @Override
-    public void setResourceImgList(ArrayList<?> imgList) {
-        mImageList = (ArrayList<Bitmap>) imgList;
+    public void setResourceList(ArrayList<?> resourceList) {
+
     }
 
     @Override
-    public void setResourceTextList(ArrayList<?> textList) {
-        mTextList = (ArrayList<String>)textList;
+    public ArrayList<?> getResourceList() {
+        return null;
     }
 
     @Override

@@ -79,10 +79,14 @@
         </activity>
         <activity android:name=".Pharmacy.view.P_MainActivity">
         </activity>
-        <activity android:name=".Pharmacy.view.P_AddMedicineActivity">
-        </activity>
-        <activity android:name=".Pharmacy.view.P_EditMenuCatalogueDetailActivity">
-        </activity>
+        <activity
+            android:name=".Pharmacy.view.P_AddMedicineActivity"
+            android:windowSoftInputMode="stateHidden"
+            />
+        <activity
+            android:name=".Pharmacy.view.P_EditCatalogue.P_EditCatalogueDetailActivity"
+            android:windowSoftInputMode="stateHidden"
+            />
     </application>
 
 </manifest>

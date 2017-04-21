@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
 
@@ -23,6 +24,8 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
     ArrayList<Bitmap> mImgResourceList;
 
     ArrayList<String> mTextResourceList;
+
+    ArrayList<IDbData> mResourceList;
 
     public View.OnClickListener mOnClickListener;
 
@@ -81,7 +84,7 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
             @Override
             public void onClick(View v) {
                 mClickListenerObservable.setChanged();
-                mClickListenerObservable.notifyObservers(position);
+                mClickListenerObservable.notifyObservers(mResourceList.get(position));
             }
         });
     }
@@ -96,6 +99,7 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
     private void initResource() {
         mImgResourceList = (ArrayList<Bitmap>) mMenuResource.getResourceImgList();
         mTextResourceList = (ArrayList<String>) mMenuResource.getResourceTextList();
+        mResourceList = (ArrayList<IDbData>) mMenuResource.getResourceList();
     }
 
     public MenuAdapterObservable getClickListenerObservable() {
@@ -106,7 +110,7 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
         mClickListenerObservable.addObserver(o);
     }
 
-    public void deleteObserver(Observer o){
+    public void deleteObserver(Observer o) {
         mClickListenerObservable.deleteObserver(o);
     }
 

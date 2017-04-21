@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.ILocalAppDataHelper;
+import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
 
 import java.util.ArrayList;
@@ -77,8 +78,6 @@ public class P_MedicineDetailsLocalDataHelper extends Observable implements ILoc
 
     public Object returnMenuTextList() {
         ArrayList<String> textList = new ArrayList<>();
-        Map<String, String> textMap = new HashMap<>();
-
         for (P_MedicineDetails medicineDetails : mMedicineDetailList) {
             textList.add(medicineDetails.getMedicineName());
         }
@@ -91,6 +90,14 @@ public class P_MedicineDetailsLocalDataHelper extends Observable implements ILoc
             bitMapList.add(Utils.Base64toBitMap(medicineDetails.getMedicineImage()));
         }
         return bitMapList;
+    }
+
+    public Map<String, IDbData> returnMenuMap() {
+        Map<String, IDbData> menuMap = new HashMap<>();
+        for(P_MedicineDetails medicineDetails:mMedicineDetailList){
+            menuMap.put(medicineDetails.getId(),medicineDetails);
+        }
+        return menuMap;
     }
 
     @Override

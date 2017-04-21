@@ -1,7 +1,7 @@
 package com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper;
 
 import com.google.firebase.database.DatabaseReference;
-import com.siehuai.smartdrugbox.Generic.data.IRemoteDbData;
+import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
 public interface IRemoteDbHelper {
 
@@ -11,11 +11,11 @@ public interface IRemoteDbHelper {
      */
     void attachOnCompleteListener(DatabaseReference.CompletionListener listener);
 
-    void insert(IRemoteDbData dbData);
+    void insert(IDbData dbData);
 
-    void delete(IRemoteDbData dbData);
+    void delete(IDbData dbData);
 
-    void update(IRemoteDbData dbData);
+    void update(IDbData dbData);
 
     void read();
 }

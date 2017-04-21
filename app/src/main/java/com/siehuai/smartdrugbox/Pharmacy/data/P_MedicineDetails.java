@@ -3,9 +3,9 @@ package com.siehuai.smartdrugbox.Pharmacy.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.siehuai.smartdrugbox.Generic.data.IRemoteDbData;
+import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
-public class P_MedicineDetails implements IRemoteDbData,Parcelable {
+public class P_MedicineDetails implements IDbData, Parcelable {
 
     private String id;
     private String medicineName;
@@ -31,6 +31,28 @@ public class P_MedicineDetails implements IRemoteDbData,Parcelable {
         this.medicineMoreInfo = medicineMoreInfo;
         this.medicineImage = medicineImage;
     }
+
+    protected P_MedicineDetails(Parcel in) {
+        id = in.readString();
+        medicineName = in.readString();
+        price = in.readDouble();
+        description = in.readString();
+        frequencyOfTaking = in.readInt();
+        medicineMoreInfo = in.readString();
+        medicineImage = in.readString();
+    }
+
+    public static final Creator<P_MedicineDetails> CREATOR = new Creator<P_MedicineDetails>() {
+        @Override
+        public P_MedicineDetails createFromParcel(Parcel in) {
+            return new P_MedicineDetails(in);
+        }
+
+        @Override
+        public P_MedicineDetails[] newArray(int size) {
+            return new P_MedicineDetails[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -96,6 +118,16 @@ public class P_MedicineDetails implements IRemoteDbData,Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this,flags);
+
+        dest.writeString(id);
+        dest.writeString(medicineName);
+        dest.writeDouble(price);
+        dest.writeString(description);
+        dest.writeInt(frequencyOfTaking);
+        dest.writeString(medicineMoreInfo);
+        dest.writeString(medicineImage);
+
+
     }
+
 }

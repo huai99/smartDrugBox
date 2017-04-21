@@ -29,12 +29,17 @@ public class GetImgFrmGalleryResponse implements IOnActivityResultResponse {
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = false;
-            options.inSampleSize = 16;
-            mBitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(targetUri),null,options);
+            options.inSampleSize = 2;
+            mBitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(targetUri), null, options);
             int size = mBitmap.getAllocationByteCount();
-            int minSize = mBitmap.getByteCount();
+            int total = 1;
+            while (size > 300000) {
+                options.inSampleSize = 2 * total;
+                mBitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(targetUri), null, options);
+                size = mBitmap.getAllocationByteCount();
+                total = total * 2;
+            }
             Log.d("GetImgFrmGallery", "Current Size: " + String.valueOf(size));
-            Log.d("GetImgFrmGallery", "Smallest Size: " + String.valueOf(minSize));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

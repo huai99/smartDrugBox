@@ -57,8 +57,6 @@ public class Utils {
     }
 
     public static String BitMaptoBase64(Context mContext, Bitmap mBitMap) {
-
-
         if (mBitMap == null) {
             mBitMap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.placeholder);
         }

@@ -7,7 +7,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.siehuai.smartdrugbox.Generic.common.FireBaseUtils;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
-import com.siehuai.smartdrugbox.Generic.data.IRemoteDbData;
+import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.Pharmacy.controller.LocalAppDataHelper.P_MedicineDetailsLocalDataHelper;
 import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
 
@@ -45,22 +45,24 @@ public class P_MedicineDetailsRemoteHelper extends RemoteDbHelper {
     }
 
     @Override
-    public void insert(IRemoteDbData iRemoteDbData) {
+    public void insert(IDbData iDbData) {
         DatabaseReference newRef = mDatabase.push();
         String key = newRef.getKey();
-        iRemoteDbData.setId(key);
-        mDatabase.child(DataType.PharmacyMedicineDetails).child(key).setValue(iRemoteDbData, mOnCompleteListener);
-        localDataHelper.insert(iRemoteDbData);
+        iDbData.setId(key);
+        mDatabase.child(DataType.PharmacyMedicineDetails).child(key).setValue(iDbData, mOnCompleteListener);
+        localDataHelper.insert(iDbData);
     }
 
     @Override
-    public void delete(IRemoteDbData iRemoteDbData) {
-
+    public void delete(IDbData iDbData) {
+        String key = iDbData.getId();
+        mDatabase.child(DataType.PharmacyMedicineDetails).child(key).removeValue(mOnCompleteListener);
     }
 
     @Override
-    public void update(IRemoteDbData iRemoteDbData) {
-
+    public void update(IDbData iDbData) {
+        String key = iDbData.getId();
+        mDatabase.child(DataType.PharmacyMedicineDetails).child(key).setValue(iDbData,mOnCompleteListener);
     }
 
     @Override

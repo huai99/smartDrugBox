@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.Pharmacy.controller.LocalAppDataHelper.P_MedicineDetailsLocalDataHelper;
 import com.siehuai.smartdrugbox.Pharmacy.controller.P_MedicineDetailsMenuAdapter;
 import com.siehuai.smartdrugbox.Pharmacy.data.MenuResource.P_MedicineDetailsMenuResource;
@@ -54,7 +55,7 @@ public class P_EditCatalogueFragment extends Fragment {
         adapter = new P_MedicineDetailsMenuAdapter();
         mRecyclerView.setAdapter(adapter);
         adapter.setResourceArrayList(setUpMenuResource());
-        adapter.getClickListenerObservable().addObserver(new P_EditCatalogueClickListener());
+        adapter.addObserver(new P_EditCatalogueClickListener(getActivity()));
     }
 
     public void setRecycleViewLayoutManager() {
@@ -68,24 +69,21 @@ public class P_EditCatalogueFragment extends Fragment {
         mRecyclerView.scrollToPosition(scrollPosition);
     }
 
-    public P_MedicineDetailsMenuResource setUpMenuResource() {
-        final P_MedicineDetailsMenuResource resource = new P_MedicineDetailsMenuResource();
+    public MenuResource setUpMenuResource() {
+        final MenuResource resource = new P_MedicineDetailsMenuResource();
         final P_MedicineDetailsLocalDataHelper localDataHelper = P_MedicineDetailsLocalDataHelper.getInstance();
         Observer observer = new Observer() {
             @Override
             public void update(Observable o, Object arg) {
-                resource.setResourceTextList((ArrayList<?>) localDataHelper.returnMenuTextList());
-                resource.setResourceImgList((ArrayList<?>) localDataHelper.returnMenuImgList());
+                resource.setResourceList((ArrayList<?>) localDataHelper.returnAppData());
                 adapter.notifyDataSetChanged();
                 hideProgressBar();
             }
         };
         localDataHelper.addObserver(observer);
-        ArrayList<?> textList = (ArrayList<?>) localDataHelper.returnMenuTextList();
-        resource.setResourceTextList(textList);
-        ArrayList<?> imgList = (ArrayList<?>) localDataHelper.returnMenuImgList();
-        resource.setResourceImgList(imgList);
-        if (textList.size() == 0 || imgList.size() == 0) {
+        ArrayList<?> resourceList = (ArrayList<?>) localDataHelper.returnAppData();
+        resource.setResourceList(resourceList);
+        if (resourceList.size() == 0) {
             showProgressBar();
         }
         return resource;

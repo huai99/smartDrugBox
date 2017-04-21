@@ -2,7 +2,7 @@ package com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper;
 
 import com.google.firebase.database.DatabaseReference;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
-import com.siehuai.smartdrugbox.Generic.data.IRemoteDbData;
+import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
 public class MedicineDetailsRemoteHelper extends RemoteDbHelper {
 
@@ -29,11 +29,11 @@ public class MedicineDetailsRemoteHelper extends RemoteDbHelper {
         }
     }
 
-    public void insert(IRemoteDbData iRemoteDbData) {
+    public void insert(IDbData iDbData) {
         DatabaseReference newRef = mDatabase.push();
         String key = newRef.getKey();
-        iRemoteDbData.setId(key);
-        mDatabase.child("User Medicine Details").child(key).setValue(iRemoteDbData, mOnCompleteListener);
+        iDbData.setId(key);
+        mDatabase.child("User Medicine Details").child(key).setValue(iDbData, mOnCompleteListener);
     }
 
     @Override
@@ -42,12 +42,12 @@ public class MedicineDetailsRemoteHelper extends RemoteDbHelper {
     }
 
     @Override
-    public void delete(IRemoteDbData dbData) {
+    public void delete(IDbData dbData) {
 
     }
 
     @Override
-    public void update(IRemoteDbData dbData) {
+    public void update(IDbData dbData) {
 
     }
 

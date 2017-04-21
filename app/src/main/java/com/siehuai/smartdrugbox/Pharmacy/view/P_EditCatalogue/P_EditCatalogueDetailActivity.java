@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.Pharmacy.view;
+package com.siehuai.smartdrugbox.Pharmacy.view.P_EditCatalogue;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,52 +13,65 @@ import com.google.firebase.database.DatabaseReference;
 import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.OnActivityResultResponse.IOnActivityResultResponse;
 import com.siehuai.smartdrugbox.Generic.controller.OnActivityResultResponse.OnActivityResultResponseFactory;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IRemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
-import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
 import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
+import com.siehuai.smartdrugbox.Pharmacy.view.P_EditTabActivity;
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.databinding.ActivityPAddMedicineBinding;
-
-import java.util.ArrayList;
+import com.siehuai.smartdrugbox.databinding.ActivityPEditCatalogueDetailBinding;
 
 import static com.siehuai.smartdrugbox.Generic.common.Utils.safeParseDouble;
 import static com.siehuai.smartdrugbox.Generic.common.Utils.safeParseInteger;
 
-public class P_AddMedicineActivity extends AppCompatActivity {
+public class P_EditCatalogueDetailActivity extends AppCompatActivity {
 
-    private ActivityPAddMedicineBinding mBinding;
+    P_MedicineDetails medicineDetails;
+    ActivityPEditCatalogueDetailBinding mBinding;
     private String medicineName;
     private double price;
     private String description;
     private int frequencyOfTaking;
     private String medicineMoreInfo;
     private String medicineImage;
-    private RemoteDbHelper mRemoteDbHelper;
-    private AlertDialogService mAlertDialogService;
-    private ArrayList<String> errorMsgList = new ArrayList<>();
     private Bitmap mBitmap;
+    private AlertDialogService mAlertDialogService;
+    private IRemoteDbHelper mRemoteDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_p_add_medicine);
-        mRemoteDbHelper = RemoteDbFactory.createRemoteDbHelper(RemoteDbFactory.RemoteDataType.PharmacyMedicineDetails);
+        Intent i = getIntent();
+        medicineDetails = i.getParcelableExtra("P_MedicineDetails");
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_p_edit_catalogue_detail);
         mAlertDialogService = AlertDialogServiceFactory.createAlertDialogService(this);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_p_add_medicine);
-        setConfirmBtnOnClick();
+        mRemoteDbHelper = RemoteDbFactory.createRemoteDbHelper(RemoteDbFactory.RemoteDataType.PharmacyMedicineDetails);
+
+        initData();
+        initUI();
         setChgImageOnClick();
+        setEditBtnClick();
+        setDeleteBtnClick();
     }
 
-    private void setConfirmBtnOnClick() {
-        mBinding.btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getAllInputDetails();
-                insertMedicineRemote();
-            }
-        });
+    public void initData() {
+        medicineName = medicineDetails.getMedicineName();
+        price = medicineDetails.getPrice();
+        description = medicineDetails.getDescription();
+        frequencyOfTaking = medicineDetails.getFrequencyOfTaking();
+        medicineMoreInfo = medicineDetails.getMedicineMoreInfo();
+        medicineImage = medicineDetails.getMedicineImage();
+        mBitmap = Utils.Base64toBitMap(medicineImage);
+    }
+
+    public void initUI() {
+        mBinding.editTextName.setText(medicineName);
+        mBinding.editTextPrice.setText(String.valueOf(price));
+        mBinding.editTextDescription.setText(description);
+        mBinding.editTextFrequencyOfTaking.setText(String.valueOf(frequencyOfTaking));
+        mBinding.editTextMoreInfo.setText(medicineMoreInfo);
+        mBinding.imgMedicine.setImageBitmap(mBitmap);
     }
 
     private void getAllInputDetails() {
@@ -76,19 +89,19 @@ public class P_AddMedicineActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.chooseImageFromMediaStore(P_AddMedicineActivity.this);
+                        Utils.chooseImageFromMediaStore(P_EditCatalogueDetailActivity.this);
                         dialog.dismiss();
                     }
                 }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.cameraCaptureImg(P_AddMedicineActivity.this);
+                        Utils.cameraCaptureImg(P_EditCatalogueDetailActivity.this);
                     }
                 });
     }
 
     private void setChgImageOnClick() {
-        mBinding.imgNewMedicine.setOnClickListener(new View.OnClickListener() {
+        mBinding.imgMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editImage();
@@ -96,9 +109,40 @@ public class P_AddMedicineActivity extends AppCompatActivity {
         });
     }
 
-    private void insertMedicineRemote() {
-        P_MedicineDetails p_medicineDetails = new P_MedicineDetails(
-                medicineName, price, description, frequencyOfTaking, medicineMoreInfo, medicineImage);
+
+    private void setNewImageBitMap() {
+        mBinding.imgMedicine.setImageBitmap(mBitmap);
+    }
+
+    private void setEditBtnClick() {
+        mBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAllInputDetails();
+                updateRemoteData();
+            }
+        });
+    }
+
+    private void setDeleteBtnClick() {
+        mBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteRemoteData();
+            }
+        });
+    }
+
+    private void updateDataIntoObject(){
+        medicineDetails.setMedicineName(medicineName);
+        medicineDetails.setMedicineImage(medicineImage);
+        medicineDetails.setMedicineMoreInfo(medicineMoreInfo);
+        medicineDetails.setPrice(price);
+        medicineDetails.setDescription(description);
+        medicineDetails.setFrequencyOfTaking(frequencyOfTaking);
+    }
+
+    private void setRemoteDbHelperListener(){
         mRemoteDbHelper.attachOnCompleteListener(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -107,7 +151,7 @@ public class P_AddMedicineActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
-                            Intent intent = new Intent(P_AddMedicineActivity.this, P_MainActivity.class);
+                            Intent intent = new Intent(P_EditCatalogueDetailActivity.this, P_EditTabActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
@@ -117,7 +161,17 @@ public class P_AddMedicineActivity extends AppCompatActivity {
                 }
             }
         });
-        mRemoteDbHelper.insert(p_medicineDetails);
+    }
+
+    private void updateRemoteData() {
+        updateDataIntoObject();
+        setRemoteDbHelperListener();
+        mRemoteDbHelper.update(medicineDetails);
+    }
+
+    private void deleteRemoteData() {
+        setRemoteDbHelperListener();
+        mRemoteDbHelper.delete(medicineDetails);
     }
 
     @Override
@@ -128,8 +182,5 @@ public class P_AddMedicineActivity extends AppCompatActivity {
         mBitmap = (Bitmap) response.returnProcessResult();
         setNewImageBitMap();
     }
-
-    private void setNewImageBitMap() {
-        mBinding.imgNewMedicine.setImageBitmap(mBitmap);
-    }
 }
+

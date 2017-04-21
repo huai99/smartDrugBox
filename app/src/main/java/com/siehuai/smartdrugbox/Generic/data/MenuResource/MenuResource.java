@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public interface MenuResource {
 
-    void setResourceImgList(ArrayList<?> imgList);
+    int getResourceSize();
 
-    void setResourceTextList(ArrayList<?> textList);
+    void setResourceList(ArrayList<?> resourceList);
+
+    ArrayList<?> getResourceList();
 
     ArrayList<?> getResourceImgList();
 
     ArrayList<?> getResourceTextList();
 
-    int getResourceSize();
 }

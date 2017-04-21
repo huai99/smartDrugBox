@@ -35,4 +35,6 @@
     <string name="more_info">More Info:</string>
     <string name="how_many_times_a_day">How many times a day ?</string>
     <string name="tap_to_change">Tap to change</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
