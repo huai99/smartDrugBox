@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.Pharmacy.controller;
+package com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -8,23 +8,23 @@ import com.siehuai.smartdrugbox.Generic.common.FireBaseUtils;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
-import com.siehuai.smartdrugbox.Pharmacy.controller.LocalAppDataHelper.P_MedicineDetailsLocalDataHelper;
-import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
+import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxDetailsLocalDataHelper;
+import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartmentDetails;
 
 import java.util.Iterator;
 
-public class P_MedicineDetailsRemoteHelper extends RemoteDbHelper {
+public class MedicineBoxCompartmentRemoteHelper extends RemoteDbHelper {
 
     DatabaseReference mDatabase;
     private DatabaseReference.CompletionListener mOnCompleteListener;
-    private P_MedicineDetailsLocalDataHelper localDataHelper;
+    private MedicineBoxDetailsLocalDataHelper localDataHelper;
+    private String key;
 
-
-    public P_MedicineDetailsRemoteHelper() {
+    public MedicineBoxCompartmentRemoteHelper() {
         super();
-        mDatabase = getDatabaseObj();
+        mDatabase = getDatabaseObj().child(DataType.MedicineBox);
         mOnCompleteListener = returnDefaultOnCompleteListener();
-        localDataHelper = P_MedicineDetailsLocalDataHelper.getInstance();
+        localDataHelper = MedicineBoxDetailsLocalDataHelper.getInstance();
     }
 
     @Override
@@ -47,22 +47,24 @@ public class P_MedicineDetailsRemoteHelper extends RemoteDbHelper {
     @Override
     public void insert(IDbData iDbData) {
         DatabaseReference newRef = mDatabase.push();
-        String key = newRef.getKey();
-        iDbData.setId(key);
-        mDatabase.child(DataType.PharmacyMedicineDetails).child(key).setValue(iDbData, mOnCompleteListener);
+        if(key ==null){
+            key = newRef.getKey();
+        }
+        iDbData.setId(getKey());
+        mDatabase.child(DataType.MedicineBoxCompartmentDetails).child(iDbData.getId()).setValue(iDbData, mOnCompleteListener);
         localDataHelper.insert(iDbData);
     }
 
     @Override
     public void delete(IDbData iDbData) {
         String key = iDbData.getId();
-        mDatabase.child(DataType.PharmacyMedicineDetails).child(key).removeValue(mOnCompleteListener);
+        mDatabase.child(DataType.MedicineBoxCompartmentDetails).child(key).removeValue(mOnCompleteListener);
     }
 
     @Override
     public void update(IDbData iDbData) {
         String key = iDbData.getId();
-        mDatabase.child(DataType.PharmacyMedicineDetails).child(key).setValue(iDbData, mOnCompleteListener);
+        mDatabase.child(DataType.MedicineBoxCompartmentDetails).child(key).setValue(iDbData, mOnCompleteListener);
     }
 
     @Override
@@ -81,10 +83,28 @@ public class P_MedicineDetailsRemoteHelper extends RemoteDbHelper {
     }
 
     private void transferDatatoLocal(DataSnapshot dataSnapshot) {
-        Iterator<DataSnapshot> iterator = dataSnapshot.child(DataType.PharmacyMedicineDetails).getChildren().iterator();
+        Iterator<DataSnapshot> iterator = dataSnapshot
+                .child(DataType.MedicineBoxCompartmentDetails)
+                .getChildren()
+                .iterator();
 
-        Iterator<P_MedicineDetails> medicineDetailsIterator
-                = FireBaseUtils.convertDataSnapshotIterator(iterator, P_MedicineDetails.class);
-        localDataHelper.read(medicineDetailsIterator);
+        Iterator<MedicineBoxCompartmentDetails> medicineBoxCompartmentDetailsIterator
+                = FireBaseUtils.convertDataSnapshotIterator(iterator, MedicineBoxCompartmentDetails.class);
+        localDataHelper.read(medicineBoxCompartmentDetailsIterator);
+    }
+
+    public String generateNewId(){
+        DatabaseReference newRef = mDatabase.push();
+        return newRef.getKey();
+    }
+
+    public String getKey() {
+        String clone = String.valueOf(key);
+        key = null;
+        return clone;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

@@ -17,14 +17,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
+import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
+import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
-import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
-import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
-import com.siehuai.smartdrugbox.User.view.UserSetMedicine.UserSetMedicineActivity;
+import com.siehuai.smartdrugbox.User.view.MedicineBox.MedicineBoxActivity;
 import com.siehuai.smartdrugbox.User.view.UserViewMedicine.UserViewMedicineActivity;
+import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +36,7 @@ public class U_MainActivity extends AppCompatActivity {
 
     ActivityUserMainBinding mBinding;
     MedicineDetailsRemoteHelper mMedicineDbHelper;
+    MedicineBoxDetailsRemoteHelper mMedicineBoxDetailsRemoteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class U_MainActivity extends AppCompatActivity {
         mMedicineDbHelper = new MedicineDetailsRemoteHelper();
 
         PostsDatabaseHelper postsDbHelper = PostsDatabaseHelper.getInstance(this);
+        
+        getAllMedicineBoxData();
 
         initAlarmData(postsDbHelper);
 
@@ -152,13 +157,18 @@ public class U_MainActivity extends AppCompatActivity {
     }
 
     public void userSetMedicine() {
-        Intent intent = new Intent(U_MainActivity.this, UserSetMedicineActivity.class);
+        Intent intent = new Intent(U_MainActivity.this, MedicineBoxActivity.class);
         startActivity(intent);
     }
 
     public void userViewMedicine() {
         Intent intent = new Intent(U_MainActivity.this, UserViewMedicineActivity.class);
         startActivity(intent);
+    }
+
+    private void getAllMedicineBoxData() {
+        mMedicineBoxDetailsRemoteHelper = (MedicineBoxDetailsRemoteHelper) RemoteDbFactory.createRemoteDbHelper(RemoteDbFactory.RemoteDataType.MedicineBoxDetails);
+        mMedicineBoxDetailsRemoteHelper.read();
     }
 
 }

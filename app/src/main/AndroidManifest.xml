@@ -81,12 +81,18 @@
         </activity>
         <activity
             android:name=".Pharmacy.view.P_AddMedicineActivity"
-            android:windowSoftInputMode="stateHidden"
-            />
+
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".Pharmacy.view.P_EditCatalogue.P_EditCatalogueDetailActivity"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".User.view.MedicineBox.MedicineBoxActivity">
+        </activity>
+        <activity
+            android:name=".User.view.MedicineBox.AddMedicineBoxDetailsActivity"
+            android:label="@string/title_activity_add_medicine_box_details"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
     </application>
 
 </manifest>

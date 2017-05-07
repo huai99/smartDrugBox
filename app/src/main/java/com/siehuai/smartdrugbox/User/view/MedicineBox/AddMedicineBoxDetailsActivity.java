@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.Pharmacy.view;
+package com.siehuai.smartdrugbox.User.view.MedicineBox;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,40 +14,46 @@ import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.OnActivityResultResponse.IOnActivityResultResponse;
 import com.siehuai.smartdrugbox.Generic.controller.OnActivityResultResponse.OnActivityResultResponseFactory;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
-import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
-import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.databinding.ActivityPAddMedicineBinding;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
+import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartmentDetails;
+import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
+import com.siehuai.smartdrugbox.User.data.MedicineDetails;
+import com.siehuai.smartdrugbox.databinding.ActivityAddMedicineBoxDetailsBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import static com.siehuai.smartdrugbox.Generic.common.Utils.safeParseDouble;
-import static com.siehuai.smartdrugbox.Generic.common.Utils.safeParseInteger;
+public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
 
-public class P_AddMedicineActivity extends AppCompatActivity {
-
-    private ActivityPAddMedicineBinding mBinding;
-    private String medicineName;
-    private double price;
-    private String description;
-    private int frequencyOfTaking;
-    private String medicineMoreInfo;
-    private String medicineImage;
-    private RemoteDbHelper mRemoteDbHelper;
+    private ActivityAddMedicineBoxDetailsBinding mBinding;
+    private String userName;
+    private String userImg;
+    private int compartmentNumber;
+    private String emergencyContact;
+    private MedicineBoxDetailsRemoteHelper mMedicineBoxDetailsRemoteHelper;
+    private MedicineBoxCompartmentRemoteHelper mMedicineBoxCompartmentRemoteHelper;
     private AlertDialogService mAlertDialogService;
     private ArrayList<String> errorMsgList = new ArrayList<>();
     private Bitmap mBitmap;
-    private boolean showStatus = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_p_add_medicine);
-        mRemoteDbHelper = RemoteDbFactory.createRemoteDbHelper(RemoteDbFactory.RemoteDataType.PharmacyMedicineDetails);
+        setContentView(R.layout.activity_add_medicine_box_details);
+        mMedicineBoxDetailsRemoteHelper
+                = (MedicineBoxDetailsRemoteHelper) RemoteDbFactory
+                .createRemoteDbHelper(RemoteDbFactory.RemoteDataType.MedicineBoxDetails);
+
+        mMedicineBoxCompartmentRemoteHelper
+                = (MedicineBoxCompartmentRemoteHelper) RemoteDbFactory
+                .createRemoteDbHelper(RemoteDbFactory.RemoteDataType.CompartmentDetails);
+
         mAlertDialogService = AlertDialogServiceFactory.createAlertDialogService(this);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_p_add_medicine);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_medicine_box_details);
         setConfirmBtnOnClick();
         setChgImageOnClick();
     }
@@ -57,19 +63,16 @@ public class P_AddMedicineActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getAllInputDetails();
-                insertMedicineRemote();
+                insertMedicineBoxRemote();
             }
         });
     }
 
     private void getAllInputDetails() {
-        medicineName = mBinding.editTextName.getText().toString();
-        price = safeParseDouble(mBinding.editTextPrice.getText().toString());
-        description = mBinding.editTextDescription.getText().toString();
-        frequencyOfTaking = safeParseInteger(mBinding.editTextFrequencyOfTaking.getText().toString());
-        medicineMoreInfo = mBinding.editTextMoreInfo.getText().toString();
-        medicineImage = Utils.BitMaptoBase64(this, mBitmap);
-        showStatus = mBinding.radioBtnShow.isChecked();
+        userName = mBinding.editTextUserName.getText().toString();
+        userImg = Utils.BitMaptoBase64(this, mBitmap);
+        emergencyContact = mBinding.editTextEmergencyContact.getText().toString();
+        compartmentNumber = Utils.safeParseInteger(mBinding.editTextTotalCompartmentNumber.getText().toString());
     }
 
     private void editImage() {
@@ -78,19 +81,19 @@ public class P_AddMedicineActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.chooseImageFromMediaStore(P_AddMedicineActivity.this);
+                        Utils.chooseImageFromMediaStore(AddMedicineBoxDetailsActivity.this);
                         dialog.dismiss();
                     }
                 }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Utils.cameraCaptureImg(P_AddMedicineActivity.this);
+                        Utils.cameraCaptureImg(AddMedicineBoxDetailsActivity.this);
                     }
                 });
     }
 
     private void setChgImageOnClick() {
-        mBinding.imgNewMedicine.setOnClickListener(new View.OnClickListener() {
+        mBinding.imgNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editImage();
@@ -98,10 +101,13 @@ public class P_AddMedicineActivity extends AppCompatActivity {
         });
     }
 
-    private void insertMedicineRemote() {
-        P_MedicineDetails p_medicineDetails = new P_MedicineDetails(
-                medicineName, price, description, frequencyOfTaking, medicineMoreInfo, medicineImage, showStatus);
-        mRemoteDbHelper.attachOnCompleteListener(new DatabaseReference.CompletionListener() {
+    private void insertMedicineBoxRemote() {
+        MedicineBoxCompartmentDetails compartmentDetails = new MedicineBoxCompartmentDetails();
+        HashMap<String, MedicineDetails> map = new HashMap<>();
+        map.put("1", new MedicineDetails());
+
+        MedicineBoxDetails medicineBoxDetails = new MedicineBoxDetails(null, userName, userImg, compartmentNumber, 0, emergencyContact);
+        mMedicineBoxDetailsRemoteHelper.attachOnCompleteListener(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError == null) {
@@ -109,7 +115,7 @@ public class P_AddMedicineActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
-                            Intent intent = new Intent(P_AddMedicineActivity.this, P_MainActivity.class);
+                            Intent intent = new Intent(AddMedicineBoxDetailsActivity.this, MedicineBoxActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
@@ -119,7 +125,11 @@ public class P_AddMedicineActivity extends AppCompatActivity {
                 }
             }
         });
-        mRemoteDbHelper.insert(p_medicineDetails);
+        String id = mMedicineBoxCompartmentRemoteHelper.generateNewId();
+        mMedicineBoxCompartmentRemoteHelper.setKey(id);
+        mMedicineBoxDetailsRemoteHelper.setKey(id);
+        mMedicineBoxDetailsRemoteHelper.insert(medicineBoxDetails);
+        mMedicineBoxCompartmentRemoteHelper.insert(compartmentDetails);
     }
 
     @Override
@@ -132,6 +142,7 @@ public class P_AddMedicineActivity extends AppCompatActivity {
     }
 
     private void setNewImageBitMap() {
-        mBinding.imgNewMedicine.setImageBitmap(mBitmap);
+        mBinding.imgNewUser.setImageBitmap(mBitmap);
     }
+
 }

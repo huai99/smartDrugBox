@@ -31,7 +31,7 @@ public class Utils {
         try {
             return Double.parseDouble(input);
         } catch (NumberFormatException e) {
-            return -1.00;
+            return (double) -1.00;
         }
     }
 
@@ -68,7 +68,11 @@ public class Utils {
 
 
     public static Bitmap Base64toBitMap(String encodedImage) {
-        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        try {
+            byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

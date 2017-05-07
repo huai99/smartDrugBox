@@ -9,7 +9,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
 
             <ImageView
@@ -103,10 +103,39 @@
                 android:layout_alignEnd="@+id/textView"
                 android:layout_alignParentBottom="true"
                 android:layout_alignRight="@+id/textView"
-                android:layout_below="@id/editText_frequencyOfTaking"
+                android:layout_below="@+id/radioGroup"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/confirm"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editText_frequencyOfTaking"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:id="@+id/radioBtnShow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="100dp"
+                    android:checked="true"
+                    android:text="@string/show"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radioBtnHide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/hide"
+                    />
+
+            </RadioGroup>
 
         </RelativeLayout>
 

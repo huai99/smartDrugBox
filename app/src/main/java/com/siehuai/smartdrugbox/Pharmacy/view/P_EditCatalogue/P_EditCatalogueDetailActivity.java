@@ -36,6 +36,7 @@ public class P_EditCatalogueDetailActivity extends AppCompatActivity {
     private String medicineMoreInfo;
     private String medicineImage;
     private Bitmap mBitmap;
+    private boolean mShowStatus;
     private AlertDialogService mAlertDialogService;
     private IRemoteDbHelper mRemoteDbHelper;
 
@@ -63,6 +64,7 @@ public class P_EditCatalogueDetailActivity extends AppCompatActivity {
         medicineMoreInfo = medicineDetails.getMedicineMoreInfo();
         medicineImage = medicineDetails.getMedicineImage();
         mBitmap = Utils.Base64toBitMap(medicineImage);
+        mShowStatus = medicineDetails.isShowStatus();
     }
 
     public void initUI() {
@@ -72,6 +74,7 @@ public class P_EditCatalogueDetailActivity extends AppCompatActivity {
         mBinding.editTextFrequencyOfTaking.setText(String.valueOf(frequencyOfTaking));
         mBinding.editTextMoreInfo.setText(medicineMoreInfo);
         mBinding.imgMedicine.setImageBitmap(mBitmap);
+        setRadioBtn();
     }
 
     private void getAllInputDetails() {
@@ -81,6 +84,7 @@ public class P_EditCatalogueDetailActivity extends AppCompatActivity {
         frequencyOfTaking = safeParseInteger(mBinding.editTextFrequencyOfTaking.getText().toString());
         medicineMoreInfo = mBinding.editTextMoreInfo.getText().toString();
         medicineImage = Utils.BitMaptoBase64(this, mBitmap);
+        mShowStatus = mBinding.radioBtnShow.isChecked();
     }
 
     private void editImage() {
@@ -109,6 +113,13 @@ public class P_EditCatalogueDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void setRadioBtn() {
+        if (mShowStatus) {
+            mBinding.radioBtnShow.setChecked(true);
+        } else {
+            mBinding.radioBtnHide.setChecked(true);
+        }
+    }
 
     private void setNewImageBitMap() {
         mBinding.imgMedicine.setImageBitmap(mBitmap);
@@ -133,16 +144,17 @@ public class P_EditCatalogueDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void updateDataIntoObject(){
+    private void updateDataIntoObject() {
         medicineDetails.setMedicineName(medicineName);
         medicineDetails.setMedicineImage(medicineImage);
         medicineDetails.setMedicineMoreInfo(medicineMoreInfo);
         medicineDetails.setPrice(price);
         medicineDetails.setDescription(description);
         medicineDetails.setFrequencyOfTaking(frequencyOfTaking);
+        medicineDetails.setShowStatus(mShowStatus);
     }
 
-    private void setRemoteDbHelperListener(){
+    private void setRemoteDbHelperListener() {
         mRemoteDbHelper.attachOnCompleteListener(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

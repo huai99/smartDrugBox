@@ -14,7 +14,7 @@ public class Validation {
 
     public static boolean isInBetweenTwoInteger(int targetNum, int smallerNum, int biggerNum) {
         boolean result = (targetNum > smallerNum) && (targetNum < biggerNum);
-        Log.d("isInBetween",String.valueOf(result));
+        Log.d("Validation", String.valueOf(result));
         return result;
     }
 

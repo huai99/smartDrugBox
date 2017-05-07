@@ -76,7 +76,7 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.setImageBitMap(mImgResourceList.get(position));
         holder.setTextView(mTextResourceList.get(position));
         holder.setPosition(position);
@@ -84,7 +84,7 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
             @Override
             public void onClick(View v) {
                 mClickListenerObservable.setChanged();
-                mClickListenerObservable.notifyObservers(mResourceList.get(position));
+                mClickListenerObservable.notifyObservers(mResourceList.get(holder.getAdapterPosition()));
             }
         });
     }

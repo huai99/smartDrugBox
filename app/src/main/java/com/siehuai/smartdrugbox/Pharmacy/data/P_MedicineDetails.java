@@ -14,6 +14,7 @@ public class P_MedicineDetails implements IDbData, Parcelable {
     private int frequencyOfTaking;
     private String medicineMoreInfo;
     private String medicineImage;
+    private boolean showStatus;
 
     public P_MedicineDetails() {
     }
@@ -23,36 +24,17 @@ public class P_MedicineDetails implements IDbData, Parcelable {
                              String description,
                              int frequencyOfTaking,
                              String medicineMoreInfo,
-                             String medicineImage) {
+                             String medicineImage,
+                             boolean showStatus
+                             ) {
         this.medicineName = medicineName;
         this.price = price;
         this.description = description;
         this.frequencyOfTaking = frequencyOfTaking;
         this.medicineMoreInfo = medicineMoreInfo;
         this.medicineImage = medicineImage;
+        this.showStatus = showStatus;
     }
-
-    protected P_MedicineDetails(Parcel in) {
-        id = in.readString();
-        medicineName = in.readString();
-        price = in.readDouble();
-        description = in.readString();
-        frequencyOfTaking = in.readInt();
-        medicineMoreInfo = in.readString();
-        medicineImage = in.readString();
-    }
-
-    public static final Creator<P_MedicineDetails> CREATOR = new Creator<P_MedicineDetails>() {
-        @Override
-        public P_MedicineDetails createFromParcel(Parcel in) {
-            return new P_MedicineDetails(in);
-        }
-
-        @Override
-        public P_MedicineDetails[] newArray(int size) {
-            return new P_MedicineDetails[size];
-        }
-    };
 
     public String getId() {
         return id;
@@ -111,6 +93,38 @@ public class P_MedicineDetails implements IDbData, Parcelable {
         this.medicineImage = medicineImage;
     }
 
+    public boolean isShowStatus() {
+        return showStatus;
+    }
+
+    public void setShowStatus(boolean showStatus) {
+        this.showStatus = showStatus;
+    }
+
+    protected P_MedicineDetails(Parcel in) {
+        id = in.readString();
+        medicineName = in.readString();
+        price = in.readDouble();
+        description = in.readString();
+        frequencyOfTaking = in.readInt();
+        medicineMoreInfo = in.readString();
+        medicineImage = in.readString();
+        showStatus = in.readInt() == 0 ? false : true;
+    }
+
+    public static final Creator<P_MedicineDetails> CREATOR = new Creator<P_MedicineDetails>() {
+        @Override
+        public P_MedicineDetails createFromParcel(Parcel in) {
+            return new P_MedicineDetails(in);
+        }
+
+        @Override
+        public P_MedicineDetails[] newArray(int size) {
+            return new P_MedicineDetails[size];
+        }
+    };
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -126,8 +140,7 @@ public class P_MedicineDetails implements IDbData, Parcelable {
         dest.writeInt(frequencyOfTaking);
         dest.writeString(medicineMoreInfo);
         dest.writeString(medicineImage);
-
-
+        dest.writeInt(showStatus ? 1 : 0);
     }
 
 }

@@ -1,19 +1,21 @@
-package com.siehuai.smartdrugbox.Pharmacy.view.P_EditCatalogue;
+package com.siehuai.smartdrugbox.User.view.MedicineBox;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
 import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
+import com.siehuai.smartdrugbox.Pharmacy.view.P_EditCatalogue.P_EditCatalogueDetailActivity;
 
 import java.util.Observable;
 import java.util.Observer;
 
-class P_EditCatalogueClickListener implements Observer {
+public class ViewMedicineBoxMenuOnClickListener implements Observer {
 
     private Context mContext;
 
-    P_EditCatalogueClickListener(Context context) {
+    ViewMedicineBoxMenuOnClickListener(Context context) {
         mContext = context;
     }
 

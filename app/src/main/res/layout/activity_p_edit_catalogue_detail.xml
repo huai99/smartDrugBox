@@ -113,7 +113,37 @@
                 android:layout_alignEnd="@+id/editText_frequencyOfTaking"
                 android:layout_alignParentBottom="true"
                 android:layout_alignRight="@+id/editText_frequencyOfTaking"
+                android:layout_below="@id/radioGroup"
                 android:text="@string/delete"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editText_frequencyOfTaking"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                >
+
+                <RadioButton
+                    android:id="@+id/radioBtnShow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/show"
+                    android:layout_marginRight="100dp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radioBtnHide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/hide"
+                    />
+
+            </RadioGroup>
+
 
 
         </RelativeLayout>

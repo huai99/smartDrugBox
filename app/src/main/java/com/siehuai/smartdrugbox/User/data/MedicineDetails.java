@@ -1,31 +1,37 @@
-package com.siehuai.smartdrugbox.User.data.LocalAppData;
+package com.siehuai.smartdrugbox.User.data;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
 @IgnoreExtraProperties
 public class MedicineDetails implements IDbData {
-    private String id;
-    private String drugstore;
-    private String medicineName;
-    private int pillNumberPurchase;
-    private String takeMedicineFrequency;
-    private int compartmentNumber;
 
-    public MedicineDetails(String id,
-                           String drugstore,
-                           String medicineName,
-                           int pillNumberPurchase,
-                           int compartmentNumber,
-                           String takeMedicineFrequency) {
-        this.compartmentNumber = compartmentNumber;
-        this.drugstore = drugstore;
-        this.id = id;
-        this.medicineName = medicineName;
-        this.pillNumberPurchase = pillNumberPurchase;
-        this.takeMedicineFrequency = takeMedicineFrequency;
+    private String id;
+    private String medicineName;
+    private String drugstore;
+    private String description;
+    private String frequencyOfTaking;
+    private int compartmentNumber;
+    private String medicineImg;
+
+    public MedicineDetails() {
     }
 
+    public MedicineDetails(String id,
+                           String medicineName,
+                           String drugstore,
+                           String description,
+                           String frequencyOfTaking,
+                           int compartmentNumber,
+                           String medicineImg) {
+        this.id = id;
+        this.medicineName = medicineName;
+        this.drugstore = drugstore;
+        this.description = description;
+        this.frequencyOfTaking = frequencyOfTaking;
+        this.compartmentNumber = compartmentNumber;
+        this.medicineImg = medicineImg;
+    }
 
     public String getDrugstore() {
         return drugstore;
@@ -52,20 +58,20 @@ public class MedicineDetails implements IDbData {
         this.medicineName = medicineName;
     }
 
-    public int getPillNumberPurchase() {
-        return pillNumberPurchase;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPillNumberPurchase(int pillNumberPurchase) {
-        this.pillNumberPurchase = pillNumberPurchase;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getTakeMedicineFrequency() {
-        return takeMedicineFrequency;
+    public String getFrequencyOfTaking() {
+        return frequencyOfTaking;
     }
 
-    public void setTakeMedicineFrequency(String takeMedicineFrequency) {
-        this.takeMedicineFrequency = takeMedicineFrequency;
+    public void setFrequencyOfTaking(String frequencyOfTaking) {
+        this.frequencyOfTaking = frequencyOfTaking;
     }
 
     public int getCompartmentNumber() {
@@ -74,5 +80,13 @@ public class MedicineDetails implements IDbData {
 
     public void setCompartmentNumber(int compartmentNumber) {
         this.compartmentNumber = compartmentNumber;
+    }
+
+    public String getMedicineImg() {
+        return medicineImg;
+    }
+
+    public void setMedicineImg(String medicineImg) {
+        this.medicineImg = medicineImg;
     }
 }

@@ -16,17 +16,16 @@ import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
-import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.common.Validation;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.DatabaseConnectionHelper;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
-import com.siehuai.smartdrugbox.User.data.LocalAppData.MedicineDetails;
-import com.siehuai.smartdrugbox.User.view.U_MainActivity;
+import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
+import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.view.MedicineBoxDetails;
+import com.siehuai.smartdrugbox.User.view.U_MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -210,8 +209,8 @@ public class SetDetailFragment extends Fragment {
                 }
             }
         });
-        MedicineDetails medicineDetails = new MedicineDetails("", drugStore, medicineName, pillNumber, compartmentNumber, "everyday");
-        mRemoteDbHelper.insert(medicineDetails);
+//        MedicineDetails medicineDetails = new MedicineDetails("",medicineName, drugStore, pillNumber, compartmentNumber, "everyday");
+//        mRemoteDbHelper.insert(medicineDetails);
     }
 
     public boolean isValidateInput() {
