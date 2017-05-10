@@ -1,10 +1,13 @@
 package com.siehuai.smartdrugbox.User.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
 @IgnoreExtraProperties
-public class MedicineDetails implements IDbData {
+public class MedicineDetails implements IDbData, Parcelable {
 
     private String id;
     private String medicineName;
@@ -89,4 +92,43 @@ public class MedicineDetails implements IDbData {
     public void setMedicineImg(String medicineImg) {
         this.medicineImg = medicineImg;
     }
+
+    protected MedicineDetails(Parcel in) {
+        id = in.readString();
+        medicineName = in.readString();
+        drugstore = in.readString();
+        description = in.readString();
+        frequencyOfTaking = in.readString();
+        compartmentNumber = in.readInt();
+        medicineImg = in.readString();
+    }
+
+    public static final Creator<MedicineDetails> CREATOR = new Creator<MedicineDetails>() {
+        @Override
+        public MedicineDetails createFromParcel(Parcel in) {
+            return new MedicineDetails(in);
+        }
+
+        @Override
+        public MedicineDetails[] newArray(int size) {
+            return new MedicineDetails[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(medicineName);
+        dest.writeString(drugstore);
+        dest.writeString(description);
+        dest.writeString(frequencyOfTaking);
+        dest.writeInt(compartmentNumber);
+        dest.writeString(medicineName);
+    }
+
 }
