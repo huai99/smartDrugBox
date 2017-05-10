@@ -14,7 +14,6 @@ public class MedicineDetails implements IDbData, Parcelable {
     private String drugstore;
     private String description;
     private String frequencyOfTaking;
-    private int compartmentNumber;
     private String medicineImg;
 
     public MedicineDetails() {
@@ -25,14 +24,12 @@ public class MedicineDetails implements IDbData, Parcelable {
                            String drugstore,
                            String description,
                            String frequencyOfTaking,
-                           int compartmentNumber,
                            String medicineImg) {
         this.id = id;
         this.medicineName = medicineName;
         this.drugstore = drugstore;
         this.description = description;
         this.frequencyOfTaking = frequencyOfTaking;
-        this.compartmentNumber = compartmentNumber;
         this.medicineImg = medicineImg;
     }
 
@@ -77,14 +74,6 @@ public class MedicineDetails implements IDbData, Parcelable {
         this.frequencyOfTaking = frequencyOfTaking;
     }
 
-    public int getCompartmentNumber() {
-        return compartmentNumber;
-    }
-
-    public void setCompartmentNumber(int compartmentNumber) {
-        this.compartmentNumber = compartmentNumber;
-    }
-
     public String getMedicineImg() {
         return medicineImg;
     }
@@ -99,7 +88,6 @@ public class MedicineDetails implements IDbData, Parcelable {
         drugstore = in.readString();
         description = in.readString();
         frequencyOfTaking = in.readString();
-        compartmentNumber = in.readInt();
         medicineImg = in.readString();
     }
 
@@ -127,8 +115,6 @@ public class MedicineDetails implements IDbData, Parcelable {
         dest.writeString(drugstore);
         dest.writeString(description);
         dest.writeString(frequencyOfTaking);
-        dest.writeInt(compartmentNumber);
-        dest.writeString(medicineName);
     }
 
 }
