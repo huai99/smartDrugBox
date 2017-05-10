@@ -3,7 +3,6 @@ package com.siehuai.smartdrugbox.User.view.MedicineBox;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,14 +13,22 @@ import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineBoxMenuAdapter;
+import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineBoxCompartmentMenuAdapter;
+import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxCompartmentLocalDataHelper;
+import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
+import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
-import com.siehuai.smartdrugbox.User.data.MenuResource.MedicineBoxCompartmentMenuResource;
+import com.siehuai.smartdrugbox.User.data.MenuResource.CompartmentDetailsMenuResource;
 import com.siehuai.smartdrugbox.databinding.FragmentViewMedicineBoxCompartmentBinding;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Observable;
+import java.util.Observer;
 
 public class ViewMedicineBoxCompartmentFragment extends Fragment {
 
-    MedicineBoxMenuAdapter adapter;
+    MedicineBoxCompartmentMenuAdapter adapter;
     protected RecyclerView mRecyclerView;
     FragmentViewMedicineBoxCompartmentBinding mBinding;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -32,17 +39,10 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        mMedicineBoxDetails = bundle.getParcelable("MedicineBoxDetails");
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_view_medicine_box_menu, container, false);
+                inflater, R.layout.fragment_view_medicine_box_compartment, container, false);
 
         View view = mBinding.getRoot();
 
@@ -56,7 +56,7 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         setRecycleViewLayoutManager();
-        adapter = new MedicineBoxMenuAdapter();
+        adapter = new MedicineBoxCompartmentMenuAdapter();
         MenuResource resource = setUpMenuResource();
         adapter.setResourceArrayList(resource);
         mRecyclerView.setAdapter(adapter);
@@ -74,8 +74,29 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
     }
 
     public MenuResource setUpMenuResource() {
-        final MenuResource resource = new MedicineBoxCompartmentMenuResource();
-//        resource.setResourceList(mMedicineBoxDetails.getCompartmentDetails());
+        final MenuResource resource = new CompartmentDetailsMenuResource();
+        final MedicineBoxCompartmentLocalDataHelper localDataHelper = MedicineBoxCompartmentLocalDataHelper.getInstance();
+        Observer observer = new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                ArrayList<MedicineBoxCompartment> compartments = (ArrayList<MedicineBoxCompartment>) localDataHelper.returnAppData();
+                Collection<CompartmentDetails> values = compartments.get(0).getCompartmentDetailsMap().values();
+                ArrayList<CompartmentDetails> resourceList = new ArrayList<>();
+                for (CompartmentDetails compartmentDetails : values) {
+                    resourceList.add(compartmentDetails);
+                }
+                resource.setResourceList(resourceList);
+                adapter.notifyDataSetChanged();
+            }
+        };
+        localDataHelper.addObserver(observer);
+        ArrayList<MedicineBoxCompartment> compartments = (ArrayList<MedicineBoxCompartment>) localDataHelper.returnAppData();
+        Collection<CompartmentDetails> values = compartments.get(0).getCompartmentDetailsMap().values();
+        ArrayList<CompartmentDetails> resourceList = new ArrayList<>();
+        for (CompartmentDetails compartmentDetails : values) {
+            resourceList.add(compartmentDetails);
+        }
+        resource.setResourceList(resourceList);
         return resource;
     }
 
