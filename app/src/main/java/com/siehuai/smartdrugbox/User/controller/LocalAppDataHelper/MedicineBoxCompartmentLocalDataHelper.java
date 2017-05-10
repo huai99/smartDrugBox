@@ -1,17 +1,20 @@
 package com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper;
 
-import android.util.Log;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.ILocalAppDataHelper;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
-import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
+import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
+import com.siehuai.smartdrugbox.User.view.UserUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 public class MedicineBoxCompartmentLocalDataHelper extends Observable implements ILocalAppDataHelper {
+
+    private ObjectMapper mObjectMapper = new ObjectMapper();
 
     private ArrayList<IDbData> mMedicineBoxCompartmentList = new ArrayList<>();
 
@@ -37,10 +40,10 @@ public class MedicineBoxCompartmentLocalDataHelper extends Observable implements
     public void read(Iterator<?> iterator) {
         mMedicineBoxCompartmentList.clear();
         while (iterator.hasNext()) {
-            IDbData value = (MedicineBoxDetails) iterator.next();
-            String key = value.getId();
-            mMedicineBoxCompartmentList.add(value);
-            Log.d("Medicine Box Details", value.toString());
+            Map<String, Object> map = (Map<String, Object>) iterator.next();
+            MedicineBoxCompartment medicineBoxCompartment
+                    = UserUtils.convertRawToMedicineCompartment(mObjectMapper, map);
+            mMedicineBoxCompartmentList.add(medicineBoxCompartment);
         }
         setChanged();
         notifyObservers();

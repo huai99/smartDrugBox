@@ -8,23 +8,26 @@ import com.siehuai.smartdrugbox.Generic.common.FireBaseUtils;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
-import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxDetailsLocalDataHelper;
-import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartmentDetails;
+import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxCompartmentLocalDataHelper;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class MedicineBoxCompartmentRemoteHelper extends RemoteDbHelper {
 
     DatabaseReference mDatabase;
     private DatabaseReference.CompletionListener mOnCompleteListener;
-    private MedicineBoxDetailsLocalDataHelper localDataHelper;
+    private MedicineBoxCompartmentLocalDataHelper localDataHelper;
     private String key;
+    private int FLAG_READ = 0;
+    private int FLAG_FIND = 1;
 
     public MedicineBoxCompartmentRemoteHelper() {
         super();
-        mDatabase = getDatabaseObj().child(DataType.MedicineBox);
+        mDatabase = getDatabaseObj().child(DataType.MedicineBox).child(DataType.MedicineBoxCompartmentDetails);
         mOnCompleteListener = returnDefaultOnCompleteListener();
-        localDataHelper = MedicineBoxDetailsLocalDataHelper.getInstance();
+        localDataHelper = MedicineBoxCompartmentLocalDataHelper.getInstance();
     }
 
     @Override
@@ -47,24 +50,24 @@ public class MedicineBoxCompartmentRemoteHelper extends RemoteDbHelper {
     @Override
     public void insert(IDbData iDbData) {
         DatabaseReference newRef = mDatabase.push();
-        if(key ==null){
+        if (key == null) {
             key = newRef.getKey();
         }
         iDbData.setId(getKey());
-        mDatabase.child(DataType.MedicineBoxCompartmentDetails).child(iDbData.getId()).setValue(iDbData, mOnCompleteListener);
+        mDatabase.child(iDbData.getId()).setValue(iDbData, mOnCompleteListener);
         localDataHelper.insert(iDbData);
     }
 
     @Override
     public void delete(IDbData iDbData) {
         String key = iDbData.getId();
-        mDatabase.child(DataType.MedicineBoxCompartmentDetails).child(key).removeValue(mOnCompleteListener);
+        mDatabase.child(key).removeValue(mOnCompleteListener);
     }
 
     @Override
     public void update(IDbData iDbData) {
         String key = iDbData.getId();
-        mDatabase.child(DataType.MedicineBoxCompartmentDetails).child(key).setValue(iDbData, mOnCompleteListener);
+        mDatabase.child(key).setValue(iDbData, mOnCompleteListener);
     }
 
     @Override
@@ -72,7 +75,7 @@ public class MedicineBoxCompartmentRemoteHelper extends RemoteDbHelper {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                transferDatatoLocal(dataSnapshot);
+                transferDatatoLocalWithoutSerializer(dataSnapshot, FLAG_READ);
             }
 
             @Override
@@ -82,18 +85,35 @@ public class MedicineBoxCompartmentRemoteHelper extends RemoteDbHelper {
         });
     }
 
-    private void transferDatatoLocal(DataSnapshot dataSnapshot) {
-        Iterator<DataSnapshot> iterator = dataSnapshot
-                .child(DataType.MedicineBoxCompartmentDetails)
-                .getChildren()
-                .iterator();
+    public void find(String id) {
+        mDatabase.child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                transferDatatoLocalWithoutSerializer(dataSnapshot, FLAG_FIND);
+            }
 
-        Iterator<MedicineBoxCompartmentDetails> medicineBoxCompartmentDetailsIterator
-                = FireBaseUtils.convertDataSnapshotIterator(iterator, MedicineBoxCompartmentDetails.class);
-        localDataHelper.read(medicineBoxCompartmentDetailsIterator);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
-    public String generateNewId(){
+    private void transferDatatoLocalWithoutSerializer(DataSnapshot dataSnapshot, int flag) {
+        Iterator<Map<String, Object>> mapObjectIterator = null;
+        if (flag == FLAG_READ) {
+            Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+            mapObjectIterator
+                    = FireBaseUtils.SpecialConvertDataSnapshotIterator(iterator);
+        } else if (flag == FLAG_FIND) {
+            ArrayList<Map<String, Object>> list = new ArrayList<>();
+            list.add((Map<String, Object>) dataSnapshot.getValue());
+            mapObjectIterator = list.iterator();
+        }
+        localDataHelper.read(mapObjectIterator);
+    }
+
+    public String generateNewId() {
         DatabaseReference newRef = mDatabase.push();
         return newRef.getKey();
     }
