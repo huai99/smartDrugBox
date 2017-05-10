@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        tools:context="com.siehuai.smartdrugbox.User.view.MedicineBox.EditCompartmentDetailsFragment">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="600dp">
+
+                <EditText
+                    android:id="@+id/editText_medicineName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="82dp"
+                    android:layout_marginRight="82dp"
+                    android:layout_marginTop="210dp"
+                    android:ems="10"
+                    android:hint="Medicine Name"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/grey_500"/>
+
+                <EditText
+                    android:id="@+id/editText_drugStore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/editText_medicineName"
+                    android:layout_alignStart="@+id/editText_medicineName"
+                    android:layout_below="@+id/editText_medicineName"
+                    android:layout_centerVertical="true"
+                    android:ems="10"
+                    android:hint="Drug Store"
+                    android:inputType="number"
+                    android:textColor="@color/grey_500"/>
+
+                <Button
+                    android:id="@+id/btn_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/editText_drugStore"
+                    android:layout_alignStart="@+id/editText_drugStore"
+                    android:layout_below="@+id/editText_drugStore"
+                    android:layout_marginLeft="58dp"
+                    android:layout_marginStart="58dp"
+                    android:layout_marginTop="54dp"
+                    android:text="@string/confirm"/>
+
+            </RelativeLayout>
+    </FrameLayout>
+
+</layout>
