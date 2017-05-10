@@ -27,6 +27,8 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
 
     ArrayList<IDbData> mResourceList;
 
+    ArrayList<Integer> mColorResourceList;
+
     public View.OnClickListener mOnClickListener;
 
     public MenuAdapterObservable mClickListenerObservable = new MenuAdapterObservable();
@@ -48,6 +50,10 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
 
         protected void setImageSource(int resId) {
             mImage.setImageResource(resId);
+        }
+
+        protected void setBackGroundColor(int resId) {
+            mImage.setBackgroundResource(resId);
         }
 
         protected void setImageBitMap(Bitmap bitMap) {
@@ -78,6 +84,9 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.setImageBitMap(mImgResourceList.get(position));
+        if (mColorResourceList != null && mColorResourceList.get(position) != null) {
+            holder.setBackGroundColor(mColorResourceList.get(position));
+        }
         holder.setTextView(mTextResourceList.get(position));
         holder.setPosition(position);
         holder.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +109,7 @@ public abstract class GenericMenuAdapter extends RecyclerView.Adapter<GenericMen
         mImgResourceList = (ArrayList<Bitmap>) mMenuResource.getResourceImgList();
         mTextResourceList = (ArrayList<String>) mMenuResource.getResourceTextList();
         mResourceList = (ArrayList<IDbData>) mMenuResource.getResourceList();
+        mColorResourceList = (ArrayList<Integer>) mMenuResource.getResourceColorList();
     }
 
     public MenuAdapterObservable getClickListenerObservable() {

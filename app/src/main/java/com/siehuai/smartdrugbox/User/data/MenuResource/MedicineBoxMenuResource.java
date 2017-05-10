@@ -64,4 +64,9 @@ public class MedicineBoxMenuResource<T> implements MenuResource {
     public ArrayList<?> getResourceTextList() {
         return mTextList;
     }
+
+    @Override
+    public ArrayList<?> getResourceColorList() {
+        return null;
+    }
 }

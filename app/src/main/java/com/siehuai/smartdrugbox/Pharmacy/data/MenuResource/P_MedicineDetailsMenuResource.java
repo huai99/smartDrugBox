@@ -62,4 +62,9 @@ public class P_MedicineDetailsMenuResource implements MenuResource {
     public int getResourceSize() {
         return mMedicineDetailList.size();
     }
+
+    @Override
+    public ArrayList<?> getResourceColorList() {
+        return null;
+    }
 }

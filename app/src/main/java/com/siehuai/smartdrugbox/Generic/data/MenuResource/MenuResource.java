@@ -14,4 +14,6 @@ public interface MenuResource {
 
     ArrayList<?> getResourceTextList();
 
+    ArrayList<?> getResourceColorList();
+
 }

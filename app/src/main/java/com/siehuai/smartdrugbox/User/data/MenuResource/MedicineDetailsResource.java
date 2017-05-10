@@ -35,4 +35,9 @@ public class MedicineDetailsResource implements MenuResource {
     public int getResourceSize() {
         return mImageList.size();
     }
+
+    @Override
+    public ArrayList<?> getResourceColorList() {
+        return null;
+    }
 }

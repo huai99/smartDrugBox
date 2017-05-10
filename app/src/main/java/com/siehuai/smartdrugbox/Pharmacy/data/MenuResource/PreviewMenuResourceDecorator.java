@@ -78,4 +78,9 @@ public class PreviewMenuResourceDecorator implements MenuResource {
             mTextList.add(medicineDetails.getMedicineName());
         }
     }
+
+    @Override
+    public ArrayList<?> getResourceColorList() {
+        return null;
+    }
 }
