@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineBoxMenuAdapter;
+import com.siehuai.smartdrugbox.User.controller.BtnOnClickListener.MedicineBox.ViewMedicineBoxMenuOnClickListener;
 import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxDetailsLocalDataHelper;
 import com.siehuai.smartdrugbox.User.data.MenuResource.MedicineBoxMenuResource;
 import com.siehuai.smartdrugbox.databinding.FragmentViewMedicineBoxMenuBinding;
@@ -104,7 +105,7 @@ public class ViewMedicineBoxMenuFragment extends Fragment {
     }
 
     private void setupMenuOnClickListener() {
-        adapter.addObserver(new ViewMedicineBoxMenuOnClickListener(getContext()));
+        adapter.addObserver(new ViewMedicineBoxMenuOnClickListener(getContext(), this));
     }
 
 
