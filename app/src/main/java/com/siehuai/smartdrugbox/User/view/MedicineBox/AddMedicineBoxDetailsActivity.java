@@ -19,9 +19,9 @@ import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFac
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
-import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartmentDetails;
+import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
+import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
-import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 import com.siehuai.smartdrugbox.databinding.ActivityAddMedicineBoxDetailsBinding;
 
 import java.util.ArrayList;
@@ -102,10 +102,6 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
     }
 
     private void insertMedicineBoxRemote() {
-        MedicineBoxCompartmentDetails compartmentDetails = new MedicineBoxCompartmentDetails();
-        HashMap<String, MedicineDetails> map = new HashMap<>();
-        map.put("1", new MedicineDetails());
-
         MedicineBoxDetails medicineBoxDetails = new MedicineBoxDetails(null, userName, userImg, compartmentNumber, 0, emergencyContact);
         mMedicineBoxDetailsRemoteHelper.attachOnCompleteListener(new DatabaseReference.CompletionListener() {
             @Override
@@ -126,10 +122,13 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
             }
         });
         String id = mMedicineBoxCompartmentRemoteHelper.generateNewId();
+
+        //Set the same id for detail and compartment so they can find each other
         mMedicineBoxCompartmentRemoteHelper.setKey(id);
         mMedicineBoxDetailsRemoteHelper.setKey(id);
         mMedicineBoxDetailsRemoteHelper.insert(medicineBoxDetails);
-        mMedicineBoxCompartmentRemoteHelper.insert(compartmentDetails);
+        MedicineBoxCompartment compartment = createInitialCompartment(compartmentNumber, id);
+        mMedicineBoxCompartmentRemoteHelper.insert(compartment);
     }
 
     @Override
@@ -145,4 +144,18 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
         mBinding.imgNewUser.setImageBitmap(mBitmap);
     }
 
+    private MedicineBoxCompartment createInitialCompartment(int compartmentNumber, String id) {
+        MedicineBoxCompartment compartment = new MedicineBoxCompartment();
+        HashMap<String, CompartmentDetails> map = new HashMap<>();
+
+        for (int i = 1; i < compartmentNumber + 1; i++) {
+            String key = "Compartment " + i;
+            CompartmentDetails compartmentDetails = new CompartmentDetails();
+            compartmentDetails.setId(String.valueOf(i));
+            compartmentDetails.setMedicineBoxId(id);
+            map.put(key, compartmentDetails);
+        }
+        compartment.setCompartmentDetailsMap(map);
+        return compartment;
+    }
 }
