@@ -9,6 +9,7 @@ import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDb
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxCompartmentLocalDataHelper;
+import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -66,8 +67,13 @@ public class MedicineBoxCompartmentRemoteHelper extends RemoteDbHelper {
 
     @Override
     public void update(IDbData iDbData) {
-        String key = iDbData.getId();
-        mDatabase.child(key).setValue(iDbData, mOnCompleteListener);
+        CompartmentDetails compartmentDetails = (CompartmentDetails) iDbData;
+        String medicineBoxId = compartmentDetails.getMedicineBoxId();
+        String id = compartmentDetails.getId();
+        mDatabase.child(medicineBoxId)
+                .child("compartmentDetailsMap")
+                .child("Compartment " + id)
+                .setValue(compartmentDetails, mOnCompleteListener);
     }
 
     @Override
