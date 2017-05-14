@@ -20,6 +20,7 @@ import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFac
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
+import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 
 public class EditCompartmentDetailsFragment extends Fragment {
 
@@ -31,6 +32,7 @@ public class EditCompartmentDetailsFragment extends Fragment {
     private String medicineName;
     private String drugStoreName;
     CompartmentDetails mCompartmentDetails;
+    MedicineDetails mMedicineDetails;
 
     public EditCompartmentDetailsFragment() {
         // Required empty public constructor
@@ -56,9 +58,32 @@ public class EditCompartmentDetailsFragment extends Fragment {
                 = (MedicineBoxCompartmentRemoteHelper) RemoteDbFactory
                 .createRemoteDbHelper(RemoteDbFactory.RemoteDataType.CompartmentDetails);
         mAlertDialogService = AlertDialogServiceFactory.createAlertDialogService(getActivity());
+        mMedicineDetails = mCompartmentDetails.getMedicineDetails();
 
+        initData();
+        initView();
         setConfirmBtnOnClick();
         return view;
+    }
+
+    private void initData() {
+        if (checkIfMedicineAvailable(mCompartmentDetails.getMedicineDetails())) {
+            medicineName = mMedicineDetails.getMedicineName();
+            drugStoreName = mMedicineDetails.getDrugstore();
+        }
+    }
+
+    private void initView() {
+        medicineNameEditText.setText(medicineName);
+        drugStoreEditText.setText(drugStoreName);
+    }
+
+    private boolean checkIfMedicineAvailable(MedicineDetails medicineDetails) {
+        if (medicineDetails == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void setConfirmBtnOnClick() {
@@ -78,6 +103,8 @@ public class EditCompartmentDetailsFragment extends Fragment {
 
 
     private void editCompartmentDetailsRemote() {
+        MedicineDetails newMedicineDetails = createMedicineDetails();
+        setCompartmentDetails(newMedicineDetails);
         mMedicineBoxCompartmentRemoteHelper.attachOnCompleteListener(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -86,6 +113,7 @@ public class EditCompartmentDetailsFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
+                            getFragmentManager().popBackStack();
                         }
                     }, null);
                 } else {
@@ -93,6 +121,21 @@ public class EditCompartmentDetailsFragment extends Fragment {
                 }
             }
         });
+        mMedicineBoxCompartmentRemoteHelper.update(mCompartmentDetails);
+    }
+
+    private MedicineDetails createMedicineDetails() {
+        MedicineDetails medicineDetails = new MedicineDetails();
+        String id = null;
+        medicineDetails.setId(id);
+        medicineDetails.setMedicineName(medicineName);
+        medicineDetails.setDrugstore(drugStoreName);
+        return medicineDetails;
+    }
+
+    private void setCompartmentDetails(MedicineDetails medicineDetails) {
+        mCompartmentDetails.setMedicineDetails(medicineDetails);
+        mCompartmentDetails.setFillUpStatus(true);
     }
 
 }
