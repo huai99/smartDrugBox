@@ -9,7 +9,7 @@ public class CompartmentDetails implements IDbData, Parcelable {
 
     boolean runOutAlert;
     boolean fillUpStatus;
-    MedicineDetails mMedicineDetails;
+    MedicineDetails medicineDetails;
     String id;
     String medicineBoxId;
 
@@ -21,7 +21,7 @@ public class CompartmentDetails implements IDbData, Parcelable {
         this.medicineBoxId = medicineBoxId;
         this.runOutAlert = runOutAlert;
         this.fillUpStatus = fillUpStatus;
-        mMedicineDetails = medicineDetails;
+        this.medicineDetails = medicineDetails;
     }
 
     public String getId() {
@@ -57,11 +57,11 @@ public class CompartmentDetails implements IDbData, Parcelable {
     }
 
     public MedicineDetails getMedicineDetails() {
-        return mMedicineDetails;
+        return medicineDetails;
     }
 
     public void setMedicineDetails(MedicineDetails medicineDetails) {
-        mMedicineDetails = medicineDetails;
+        this.medicineDetails = medicineDetails;
     }
 
     protected CompartmentDetails(Parcel in) {
@@ -69,7 +69,7 @@ public class CompartmentDetails implements IDbData, Parcelable {
         medicineBoxId = in.readString();
         runOutAlert = in.readInt() != 0;
         fillUpStatus = in.readInt() != 0;
-        mMedicineDetails = in.readParcelable(mMedicineDetails.getClass().getClassLoader());
+        medicineDetails = in.readParcelable(medicineDetails.getClass().getClassLoader());
     }
 
     public static final Creator<CompartmentDetails> CREATOR = new Creator<CompartmentDetails>() {
@@ -95,7 +95,7 @@ public class CompartmentDetails implements IDbData, Parcelable {
         dest.writeString(medicineBoxId);
         dest.writeInt(runOutAlert ? 1 : 0);
         dest.writeInt(fillUpStatus ? 1 : 0);
-        dest.writeParcelable(mMedicineDetails,flags);
+        dest.writeParcelable(medicineDetails,flags);
     }
 
 }
