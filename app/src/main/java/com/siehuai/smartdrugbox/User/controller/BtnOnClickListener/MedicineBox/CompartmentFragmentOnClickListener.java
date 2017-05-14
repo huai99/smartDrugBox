@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
-import com.siehuai.smartdrugbox.User.view.MedicineBox.EditCompartmentDetailsFragment;
+import com.siehuai.smartdrugbox.User.view.MedicineBox.ViewOrEditFragment;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -24,10 +24,10 @@ public class CompartmentFragmentOnClickListener implements Observer {
         Bundle bundl = new Bundle();
         CompartmentDetails details = (CompartmentDetails) arg;
         bundl.putParcelable("compartmentDetails",details);
-        EditCompartmentDetailsFragment compartmentFragment = new EditCompartmentDetailsFragment();
-        compartmentFragment.setArguments(bundl);
+        ViewOrEditFragment viewOrEditFragment = new ViewOrEditFragment();
+        viewOrEditFragment.setArguments(bundl);
         FragmentTransaction fragmentTransaction = mFragment.getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_getDrugStore, compartmentFragment);
+        fragmentTransaction.replace(R.id.fragment_getDrugStore, viewOrEditFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
