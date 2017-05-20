@@ -11,6 +11,7 @@ import android.view.View;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.siehuai.smartdrugbox.Generic.common.Utils;
+import com.siehuai.smartdrugbox.Generic.common.Validation;
 import com.siehuai.smartdrugbox.Generic.controller.OnActivityResultResponse.IOnActivityResultResponse;
 import com.siehuai.smartdrugbox.Generic.controller.OnActivityResultResponse.OnActivityResultResponseFactory;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
@@ -63,7 +64,17 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getAllInputDetails();
-                insertMedicineBoxRemote();
+                if (!isValidateInput()) {
+                    mAlertDialogService.provideDefaultErrorDialog(Utils.convertListToString(errorMsgList), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            errorMsgList.clear();
+                            dialog.cancel();
+                        }
+                    });
+                } else {
+                    insertMedicineBoxRemote();
+                }
             }
         });
     }
@@ -72,7 +83,7 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
         userName = mBinding.editTextUserName.getText().toString();
         userImg = Utils.BitMaptoBase64(this, mBitmap);
         emergencyContact = mBinding.editTextEmergencyContact.getText().toString();
-        compartmentNumber = Utils.safeParseInteger(mBinding.editTextTotalCompartmentNumber.getText().toString());
+        compartmentNumber = Utils.safeParseInteger(mBinding.spinner.getSelectedItem().toString());
     }
 
     private void editImage() {
@@ -157,5 +168,13 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
         }
         compartment.setCompartmentDetailsMap(map);
         return compartment;
+    }
+
+    public boolean isValidateInput() {
+        if (!Validation.isPositiveInteger(compartmentNumber)) {
+            errorMsgList.add("Compartment Number must be selected");
+            return false;
+        }
+        return true;
     }
 }
