@@ -75,4 +75,8 @@ public class Utils {
             return null;
         }
     }
+
+    public static String LogTagGenerate(Context context) {
+        return context.getClass().getSimpleName();
+    }
 }
