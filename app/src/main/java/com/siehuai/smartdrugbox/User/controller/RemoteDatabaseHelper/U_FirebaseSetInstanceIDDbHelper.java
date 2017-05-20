@@ -1,15 +1,15 @@
-package com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper;
+package com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper;
 
 import com.google.firebase.database.DatabaseReference;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.FirebaseRegistrationToken;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
-public class FirebaseSetInstanceIDDbHelper extends RemoteDbHelper {
+public class U_FirebaseSetInstanceIDDbHelper extends UserRemoteDbHelper {
 
     DatabaseReference mDatabase;
 
-    public FirebaseSetInstanceIDDbHelper() {
+    public U_FirebaseSetInstanceIDDbHelper() {
         mDatabase = getDatabaseObj();
     }
 

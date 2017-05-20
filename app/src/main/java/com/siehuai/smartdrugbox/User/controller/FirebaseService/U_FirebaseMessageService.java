@@ -1,7 +1,8 @@
-package com.siehuai.smartdrugbox.Generic.controller.FirebaseService;
+package com.siehuai.smartdrugbox.User.controller.FirebaseService;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -9,7 +10,7 @@ import com.siehuai.smartdrugbox.Generic.controller.Service.NotificationService;
 import com.siehuai.smartdrugbox.Generic.view.MainActivity;
 import com.siehuai.smartdrugbox.R;
 
-public class MyFirebaseMessageService extends FirebaseMessagingService {
+public class U_FirebaseMessageService extends FirebaseMessagingService {
 
     NotificationService mNotificationService;
 
@@ -18,7 +19,8 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        createNotification(intent,remoteMessage.getNotification().getBody());
+        createNotification(intent, remoteMessage.getNotification().getBody());
+        Log.d("Firebase Message", remoteMessage.getNotification().getBody());
         mNotificationService.dispatchNotification();
     }
 
