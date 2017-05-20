@@ -43,4 +43,9 @@
     <string name="total_number_of_compartment">Total Number Of Compartment</string>
     <string name="emergency_contact">Emergency Contact</string>
     <string name="edit_medicine">Edit Medicine</string>
+    <string-array name="compartmentNumberArray">
+        <item>Compartment Number</item>
+        <item>6</item>
+        <item>10</item>
+    </string-array>
 </resources>
