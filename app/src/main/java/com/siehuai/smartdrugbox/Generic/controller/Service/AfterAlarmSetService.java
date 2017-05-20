@@ -57,8 +57,7 @@ public class AfterAlarmSetService extends Service {
         PendingIntent mPendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{intent}, 0);
 
         mNotificationService = new NotificationService(this);
-        mNotificationService.createNotification(
-                this, "Alarm is Ringing", "Click Me", mPendingIntent, true, R.drawable.medicine_box_icon);
+        mNotificationService.createNotification("Alarm is Ringing", "Click Me", mPendingIntent, true, R.drawable.medicine_box_icon);
     }
 
     private void alarmStateHandler(String state, String id) {

@@ -24,14 +24,13 @@ public class NotificationService {
 
 
     @TargetApi(16)
-    public void createNotification(Context context,
-                                   String title,
+    public void createNotification(String title,
                                    String bodyText,
                                    PendingIntent contentIntent,
                                    boolean autoCancel,
                                    int iconResId
     ) {
-        mNotification = new Notification.Builder(context)
+        mNotification = new Notification.Builder(mContext)
                 .setContentTitle(title)
                 .setContentText(bodyText)
                 .setContentIntent(contentIntent)
@@ -41,6 +40,6 @@ public class NotificationService {
     }
 
     public void dispatchNotification() {
-        mNmanager.notify((int) Math.random(), mNotification);
+        mNmanager.notify(0, mNotification);
     }
 }
