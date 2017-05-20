@@ -9,6 +9,10 @@
         android:clickable="true"
         tools:context="com.siehuai.smartdrugbox.User.view.MedicineBox.EditCompartmentDetailsFragment">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="600dp">
@@ -37,8 +41,8 @@
                     android:layout_below="@+id/editText_medicineName"
                     android:layout_centerVertical="true"
                     android:ems="10"
-                    android:hint="Drug Store"
-                    android:inputType="number"
+                    android:hint="@string/drug_store"
+                    android:inputType="text"
                     android:textColor="@color/grey_500"/>
 
                 <Button
@@ -54,6 +58,8 @@
                     android:text="@string/confirm"/>
 
             </RelativeLayout>
+
+        </ScrollView>
     </FrameLayout>
 
 </layout>
