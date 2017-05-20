@@ -3,7 +3,6 @@ package com.siehuai.smartdrugbox.User.view;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class U_MainActivity extends AppCompatActivity {
+public class U_MainActivity extends U_BaseActivity {
 
     ActivityUserMainBinding mBinding;
     MedicineDetailsRemoteHelper mMedicineDbHelper;

@@ -56,12 +56,12 @@
             android:name=".Generic.controller.Service.AfterAlarmSetService"
             android:enabled="true">
         </service>
-        <service android:name=".Generic.controller.FirebaseService.MyFirebaseMessageService">
+        <service android:name=".User.controller.FirebaseService.U_FirebaseMessageService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-        <service android:name=".Generic.controller.FirebaseService.MyFirebaseInstanceIDService">
+        <service android:name=".User.controller.FirebaseService.U_FirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
@@ -103,6 +103,8 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".Generic.view.BaseActivity">
+        </activity>
+        <activity android:name=".User.view.U_BaseActivity">
         </activity>
     </application>
 
