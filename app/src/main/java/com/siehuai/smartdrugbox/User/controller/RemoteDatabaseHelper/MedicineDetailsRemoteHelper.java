@@ -1,10 +1,9 @@
 package com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper;
 
 import com.google.firebase.database.DatabaseReference;
-import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
-public class MedicineDetailsRemoteHelper extends RemoteDbHelper {
+public class MedicineDetailsRemoteHelper extends UserRemoteDbHelper {
 
     private DatabaseReference mDatabase;
     private DatabaseReference.CompletionListener mOnCompleteListener;
