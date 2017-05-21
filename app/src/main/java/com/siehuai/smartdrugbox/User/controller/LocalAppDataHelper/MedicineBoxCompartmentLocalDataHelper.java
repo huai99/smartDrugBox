@@ -64,6 +64,16 @@ public class MedicineBoxCompartmentLocalDataHelper extends Observable implements
         }
     }
 
+    public MedicineBoxCompartment findOneFromRemote(Iterator<?> iterator) {
+        MedicineBoxCompartment medicineBoxCompartment = null;
+        while (iterator.hasNext()) {
+            Map<String, Object> map = (Map<String, Object>) iterator.next();
+            medicineBoxCompartment
+                    = UserUtils.convertRawToMedicineCompartment(mObjectMapper, map);
+        }
+        return medicineBoxCompartment;
+    }
+
     @Override
     public Object returnAppData() {
         return mMedicineBoxCompartmentList;
