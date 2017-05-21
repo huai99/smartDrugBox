@@ -20,8 +20,8 @@ import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
 import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
 import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.User.controller.MedicineBoxDetailsDbHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
-import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
 import com.siehuai.smartdrugbox.User.view.MedicineBox.MedicineBoxActivity;
 import com.siehuai.smartdrugbox.User.view.UserViewMedicine.UserViewMedicineActivity;
@@ -34,7 +34,6 @@ import java.util.Map;
 public class U_MainActivity extends U_BaseActivity {
 
     ActivityUserMainBinding mBinding;
-    MedicineDetailsRemoteHelper mMedicineDbHelper;
     MedicineBoxDetailsRemoteHelper mMedicineBoxDetailsRemoteHelper;
 
     @Override
@@ -44,10 +43,10 @@ public class U_MainActivity extends U_BaseActivity {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_main);
 
-        mMedicineDbHelper = new MedicineDetailsRemoteHelper();
+        mMedicineBoxDetailsDbHelper = new MedicineBoxDetailsDbHelper();
 
         PostsDatabaseHelper postsDbHelper = PostsDatabaseHelper.getInstance(this);
-        
+
         getAllMedicineBoxData();
 
         initAlarmData(postsDbHelper);
