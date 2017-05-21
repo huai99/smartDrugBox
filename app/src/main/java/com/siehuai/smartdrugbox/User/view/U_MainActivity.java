@@ -20,7 +20,6 @@ import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
 import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.User.controller.MedicineBoxDetailsDbHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
 import com.siehuai.smartdrugbox.User.view.MedicineBox.MedicineBoxActivity;
@@ -42,8 +41,6 @@ public class U_MainActivity extends U_BaseActivity {
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_main);
-
-        mMedicineBoxDetailsDbHelper = new MedicineBoxDetailsDbHelper();
 
         PostsDatabaseHelper postsDbHelper = PostsDatabaseHelper.getInstance(this);
 
