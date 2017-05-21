@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.siehuai.smartdrugbox.Generic.common.FireBaseUtils;
+import com.siehuai.smartdrugbox.Generic.controller.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxCompartmentLocalDataHelper;
@@ -90,11 +91,12 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
         });
     }
 
-    public void find(String id) {
+    public void find(final String id, final IDbOnDataChangeListener dataChangeListener) {
         mDatabase.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                transferDatatoLocalWithoutSerializer(dataSnapshot, FLAG_FIND);
+                Iterator iterator = transferDatatoLocalWithoutSerializer(dataSnapshot, FLAG_FIND);
+                dataChangeListener.onDataChange(localDataHelper.findOneFromRemote(iterator));
             }
 
             @Override
@@ -104,18 +106,21 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
         });
     }
 
-    private void transferDatatoLocalWithoutSerializer(DataSnapshot dataSnapshot, int flag) {
+//    TODO:Another function to handle single value instead of using if-else
+    private Iterator<Map<String, Object>> transferDatatoLocalWithoutSerializer(DataSnapshot dataSnapshot, int flag) {
         Iterator<Map<String, Object>> mapObjectIterator = null;
         if (flag == FLAG_READ) {
             Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
             mapObjectIterator
                     = FireBaseUtils.SpecialConvertDataSnapshotIterator(iterator);
-        } else if (flag == FLAG_FIND) {
-            ArrayList<Map<String, Object>> list = new ArrayList<>();
-            list.add((Map<String, Object>) dataSnapshot.getValue());
-            mapObjectIterator = list.iterator();
+            localDataHelper.read(mapObjectIterator);
+            return mapObjectIterator;
+        } else {
+            ArrayList<DataSnapshot> list = new ArrayList<>();
+            list.add(dataSnapshot);
+            mapObjectIterator = FireBaseUtils.SpecialConvertDataSnapshotIterator(list.iterator());
+            return mapObjectIterator;
         }
-        localDataHelper.read(mapObjectIterator);
     }
 
     public String generateNewId() {

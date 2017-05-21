@@ -3,6 +3,7 @@ package com.siehuai.smartdrugbox.User.view.MedicineBox;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.siehuai.smartdrugbox.Generic.controller.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineBoxCompartmentMenuAdapter;
 import com.siehuai.smartdrugbox.User.controller.BtnOnClickListener.MedicineBox.CompartmentFragmentOnClickListener;
-import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxCompartmentLocalDataHelper;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
@@ -24,8 +26,6 @@ import com.siehuai.smartdrugbox.databinding.FragmentViewMedicineBoxCompartmentBi
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Observable;
-import java.util.Observer;
 
 public class ViewMedicineBoxCompartmentFragment extends Fragment {
 
@@ -34,10 +34,20 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
     FragmentViewMedicineBoxCompartmentBinding mBinding;
     protected RecyclerView.LayoutManager mLayoutManager;
     MedicineBoxDetails mMedicineBoxDetails;
+    MedicineBoxCompartmentRemoteHelper mRemoteHelper;
+    String medicineBoxDetailsId;
 
     public ViewMedicineBoxCompartmentFragment() {
         // Required empty public constructor
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        medicineBoxDetailsId = bundle.getString("id");
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +56,8 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
                 inflater, R.layout.fragment_view_medicine_box_compartment, container, false);
 
         View view = mBinding.getRoot();
+
+        mRemoteHelper = new MedicineBoxCompartmentRemoteHelper();
 
         setUpGridView(view);
 
@@ -59,9 +71,8 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
         setRecycleViewLayoutManager();
         adapter = new MedicineBoxCompartmentMenuAdapter();
         adapter.addObserver(new CompartmentFragmentOnClickListener(this));
-        MenuResource resource = setUpMenuResource();
-        adapter.setResourceArrayList(resource);
         mRecyclerView.setAdapter(adapter);
+        setUpResourceInAdapter();
     }
 
     private void setRecycleViewLayoutManager() {
@@ -75,31 +86,24 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
         mRecyclerView.scrollToPosition(scrollPosition);
     }
 
-    public MenuResource setUpMenuResource() {
+    public void setUpResourceInAdapter() {
         final MenuResource resource = new CompartmentDetailsMenuResource();
-        final MedicineBoxCompartmentLocalDataHelper localDataHelper = MedicineBoxCompartmentLocalDataHelper.getInstance();
-        Observer observer = new Observer() {
+        final ArrayList<CompartmentDetails> resourceList = new ArrayList<>();
+        resource.setResourceList(resourceList);
+        adapter.setResourceArrayList(resource);
+        mRemoteHelper.find(medicineBoxDetailsId, new IDbOnDataChangeListener() {
             @Override
-            public void update(Observable o, Object arg) {
-                ArrayList<MedicineBoxCompartment> compartments = (ArrayList<MedicineBoxCompartment>) localDataHelper.returnAppData();
-                Collection<CompartmentDetails> values = compartments.get(0).getCompartmentDetailsMap().values();
-                ArrayList<CompartmentDetails> resourceList = new ArrayList<>();
+            public void onDataChange(Object data) {
+                resourceList.clear();
+                MedicineBoxCompartment compartments = (MedicineBoxCompartment) data;
+                Collection<CompartmentDetails> values = compartments.getCompartmentDetailsMap().values();
+
                 for (CompartmentDetails compartmentDetails : values) {
                     resourceList.add(compartmentDetails);
                 }
                 resource.setResourceList(resourceList);
                 adapter.notifyDataSetChanged();
             }
-        };
-        localDataHelper.addObserver(observer);
-        ArrayList<MedicineBoxCompartment> compartments = (ArrayList<MedicineBoxCompartment>) localDataHelper.returnAppData();
-        Collection<CompartmentDetails> values = compartments.get(0).getCompartmentDetailsMap().values();
-        ArrayList<CompartmentDetails> resourceList = new ArrayList<>();
-        for (CompartmentDetails compartmentDetails : values) {
-            resourceList.add(compartmentDetails);
-        }
-        resource.setResourceList(resourceList);
-        return resource;
+        });
     }
-
 }
