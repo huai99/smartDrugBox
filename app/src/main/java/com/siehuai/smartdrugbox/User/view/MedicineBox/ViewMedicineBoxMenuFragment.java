@@ -13,17 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.siehuai.smartdrugbox.Generic.controller.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineBoxMenuAdapter;
 import com.siehuai.smartdrugbox.User.controller.BtnOnClickListener.MedicineBox.ViewMedicineBoxMenuOnClickListener;
 import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxDetailsLocalDataHelper;
+import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
 import com.siehuai.smartdrugbox.User.data.MenuResource.MedicineBoxMenuResource;
 import com.siehuai.smartdrugbox.databinding.FragmentViewMedicineBoxMenuBinding;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 public class ViewMedicineBoxMenuFragment extends Fragment {
 
@@ -88,18 +88,14 @@ public class ViewMedicineBoxMenuFragment extends Fragment {
     public MenuResource setUpMenuResource() {
         final MenuResource resource = new MedicineBoxMenuResource();
         final MedicineBoxDetailsLocalDataHelper localDataHelper = MedicineBoxDetailsLocalDataHelper.getInstance();
-        Observer observer = new Observer() {
+        localDataHelper.findAll(new IDbOnDataChangeListener() {
             @Override
-            public void update(Observable o, Object arg) {
-                resource.setResourceList((ArrayList<?>) localDataHelper.returnAppData());
+            public void onDataChange(Object data) {
+                ArrayList<MedicineBoxDetails> list = (ArrayList<MedicineBoxDetails>) data;
+                resource.setResourceList(list);
                 adapter.notifyDataSetChanged();
             }
-        };
-        localDataHelper.addObserver(observer);
-        ArrayList<?> resourceList = (ArrayList<?>) localDataHelper.returnAppData();
-        resource.setResourceList(resourceList);
-        if (resourceList.size() == 0) {
-        }
+        });
         setupMenuOnClickListener();
         return resource;
     }

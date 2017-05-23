@@ -3,6 +3,7 @@ package com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper;
 import android.util.Log;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
+import com.siehuai.smartdrugbox.Generic.controller.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.ILocalAppDataHelper;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
@@ -48,7 +49,17 @@ public class MedicineBoxDetailsLocalDataHelper extends Observable implements ILo
             Log.d("Medicine Box Details", value.toString());
         }
         setChanged();
-        notifyObservers();
+        notifyObservers(mMedicineBoxDetailList);
+    }
+
+    public void findAll(final IDbOnDataChangeListener listener){
+        final Observer observer = new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                listener.onDataChange(arg);
+            }
+        };
+        addObserver(observer);
     }
 
     public static MedicineBoxDetailsLocalDataHelper getInstance() {
