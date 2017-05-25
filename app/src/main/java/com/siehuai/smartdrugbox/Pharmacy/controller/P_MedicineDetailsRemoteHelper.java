@@ -70,7 +70,7 @@ public class P_MedicineDetailsRemoteHelper extends RemoteDbHelper {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                transferDatatoLocal(dataSnapshot);
+                localDataHelper.read(transferDatatoLocal(dataSnapshot));
             }
 
             @Override
@@ -80,11 +80,11 @@ public class P_MedicineDetailsRemoteHelper extends RemoteDbHelper {
         });
     }
 
-    private void transferDatatoLocal(DataSnapshot dataSnapshot) {
+    private Iterator<P_MedicineDetails> transferDatatoLocal(DataSnapshot dataSnapshot) {
         Iterator<DataSnapshot> iterator = dataSnapshot.child(DataType.PharmacyMedicineDetails).getChildren().iterator();
 
         Iterator<P_MedicineDetails> medicineDetailsIterator
                 = FireBaseUtils.convertDataSnapshotIterator(iterator, P_MedicineDetails.class);
-        localDataHelper.read(medicineDetailsIterator);
+        return medicineDetailsIterator;
     }
 }
