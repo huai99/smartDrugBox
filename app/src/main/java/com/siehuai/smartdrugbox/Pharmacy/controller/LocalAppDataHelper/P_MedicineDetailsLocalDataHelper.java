@@ -8,7 +8,6 @@ import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Observer;
 
 
 public class P_MedicineDetailsLocalDataHelper extends AbstractLocalAppDataHelper {
@@ -17,6 +16,9 @@ public class P_MedicineDetailsLocalDataHelper extends AbstractLocalAppDataHelper
 
     private static P_MedicineDetailsLocalDataHelper instance;
     private static Object lock = new Object();
+
+    private P_MedicineDetailsLocalDataHelper() {
+    }
 
     @Override
     public void read(Iterator<?> iterator) {
@@ -49,15 +51,5 @@ public class P_MedicineDetailsLocalDataHelper extends AbstractLocalAppDataHelper
     @Override
     public Object returnAppData() {
         return mMedicineDetailList;
-    }
-
-    @Override
-    public synchronized void addObserver(Observer o) {
-        super.addObserver(o);
-    }
-
-    @Override
-    protected synchronized void setChanged() {
-        super.setChanged();
     }
 }
