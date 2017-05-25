@@ -1,7 +1,8 @@
 package com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.ILocalAppDataHelper;
+import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.AbstractLocalAppDataHelper;
+import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
 import com.siehuai.smartdrugbox.User.view.UserUtils;
@@ -12,29 +13,14 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-public class MedicineBoxCompartmentLocalDataHelper extends Observable implements ILocalAppDataHelper {
+public class MedicineBoxCompartmentLocalDataHelper extends AbstractLocalAppDataHelper {
 
     private ObjectMapper mObjectMapper = new ObjectMapper();
 
-    private ArrayList<IDbData> mMedicineBoxCompartmentList = new ArrayList<>();
+    private ArrayList<IDbData> mMedicineBoxCompartmentList = dataList;
 
     private static MedicineBoxCompartmentLocalDataHelper instance;
     private static Object lock = new Object();
-
-    @Override
-    public void insert(Object obj) {
-
-    }
-
-    @Override
-    public void delete(Object obj) {
-
-    }
-
-    @Override
-    public void update(Object obj) {
-
-    }
 
     @Override
     public void read(Iterator<?> iterator) {
@@ -46,7 +32,7 @@ public class MedicineBoxCompartmentLocalDataHelper extends Observable implements
             mMedicineBoxCompartmentList.add(medicineBoxCompartment);
         }
         setChanged();
-        notifyObservers();
+        notifyObservers(mMedicineBoxCompartmentList);
     }
 
     public static MedicineBoxCompartmentLocalDataHelper getInstance() {
@@ -82,11 +68,6 @@ public class MedicineBoxCompartmentLocalDataHelper extends Observable implements
     @Override
     public synchronized void addObserver(Observer o) {
         super.addObserver(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        super.notifyObservers();
     }
 
     @Override
