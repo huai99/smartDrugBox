@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.siehuai.smartdrugbox.Generic.controller.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineBoxMenuAdapter;
@@ -59,8 +59,7 @@ public class ViewMedicineBoxMenuFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         setRecycleViewLayoutManager();
         adapter = new MedicineBoxMenuAdapter();
-        MenuResource resource = setUpMenuResource();
-        adapter.setResourceArrayList(resource);
+        adapter.setResourceArrayList(setUpMenuResource());
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -87,12 +86,15 @@ public class ViewMedicineBoxMenuFragment extends Fragment {
 
     public MenuResource setUpMenuResource() {
         final MenuResource resource = new MedicineBoxMenuResource();
+        ArrayList<MedicineBoxDetails> list = new ArrayList<>();
+        resource.setResourceList(list);
         final MedicineBoxDetailsLocalDataHelper localDataHelper = MedicineBoxDetailsLocalDataHelper.getInstance();
         localDataHelper.findAll(new IDbOnDataChangeListener() {
             @Override
             public void onDataChange(Object data) {
-                ArrayList<MedicineBoxDetails> list = (ArrayList<MedicineBoxDetails>) data;
-                resource.setResourceList(list);
+                ArrayList<MedicineBoxDetails> changedList = (ArrayList<MedicineBoxDetails>) data;
+                resource.setResourceList(changedList);
+                adapter.setResourceArrayList(resource);
                 adapter.notifyDataSetChanged();
             }
         });
