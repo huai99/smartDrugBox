@@ -11,16 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.siehuai.smartdrugbox.Generic.common.Utils;
+import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.Pharmacy.controller.LocalAppDataHelper.P_MedicineDetailsLocalDataHelper;
 import com.siehuai.smartdrugbox.Pharmacy.controller.P_MedicineDetailsMenuAdapter;
 import com.siehuai.smartdrugbox.Pharmacy.data.MenuResource.P_MedicineDetailsMenuResource;
 import com.siehuai.smartdrugbox.Pharmacy.data.MenuResource.PreviewMenuResourceDecorator;
+import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
 import com.siehuai.smartdrugbox.R;
 
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.Collection;
 
 public class P_PreviewCatalogueFragment extends Fragment {
 
@@ -70,20 +71,16 @@ public class P_PreviewCatalogueFragment extends Fragment {
     public MenuResource setUpMenuResource() {
         final MenuResource resource = new PreviewMenuResourceDecorator(new P_MedicineDetailsMenuResource());
         final P_MedicineDetailsLocalDataHelper localDataHelper = P_MedicineDetailsLocalDataHelper.getInstance();
-        Observer observer = new Observer() {
+        localDataHelper.findAll(new IDbOnDataChangeListener() {
             @Override
-            public void update(Observable o, Object arg) {
-                resource.setResourceList((ArrayList<?>) localDataHelper.returnAppData());
+            public void onDataChange(Object data) {
+                Collection<P_MedicineDetails> changedList = (Collection<P_MedicineDetails>) data;
+                resource.setResourceList(Utils.convertCollectionToArrayList(changedList));
+                adapter.setResourceArrayList(resource);
                 adapter.notifyDataSetChanged();
                 hideProgressBar();
             }
-        };
-        localDataHelper.addObserver(observer);
-        ArrayList<?> resourceList = (ArrayList<?>) localDataHelper.returnAppData();
-        resource.setResourceList(resourceList);
-        if (resourceList.size() == 0) {
-            showProgressBar();
-        }
+        });
         return resource;
     }
 

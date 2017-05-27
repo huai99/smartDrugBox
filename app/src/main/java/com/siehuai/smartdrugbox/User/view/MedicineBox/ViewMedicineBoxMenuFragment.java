@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
@@ -24,6 +25,7 @@ import com.siehuai.smartdrugbox.User.data.MenuResource.MedicineBoxMenuResource;
 import com.siehuai.smartdrugbox.databinding.FragmentViewMedicineBoxMenuBinding;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class ViewMedicineBoxMenuFragment extends Fragment {
 
@@ -92,8 +94,8 @@ public class ViewMedicineBoxMenuFragment extends Fragment {
         localDataHelper.findAll(new IDbOnDataChangeListener() {
             @Override
             public void onDataChange(Object data) {
-                ArrayList<MedicineBoxDetails> changedList = (ArrayList<MedicineBoxDetails>) data;
-                resource.setResourceList(changedList);
+                Collection<MedicineBoxDetails> changedList = (Collection<MedicineBoxDetails>) data;
+                resource.setResourceList(Utils.convertCollectionToArrayList(changedList));
                 adapter.setResourceArrayList(resource);
                 adapter.notifyDataSetChanged();
             }

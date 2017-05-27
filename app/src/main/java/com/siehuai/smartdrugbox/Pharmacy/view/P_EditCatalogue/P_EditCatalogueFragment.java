@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.Pharmacy.controller.LocalAppDataHelper.P_MedicineDetailsLocalDataHelper;
@@ -20,6 +21,7 @@ import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
 import com.siehuai.smartdrugbox.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class P_EditCatalogueFragment extends Fragment {
@@ -76,8 +78,8 @@ public class P_EditCatalogueFragment extends Fragment {
         localDataHelper.findAll(new IDbOnDataChangeListener() {
             @Override
             public void onDataChange(Object data) {
-                ArrayList<P_MedicineDetails> changedList = (ArrayList<P_MedicineDetails>) data;
-                resource.setResourceList(changedList);
+                Collection<P_MedicineDetails> changedList = (Collection<P_MedicineDetails>) data;
+                resource.setResourceList(Utils.convertCollectionToArrayList(changedList));
                 adapter.setResourceArrayList(resource);
                 adapter.notifyDataSetChanged();
                 hideProgressBar();

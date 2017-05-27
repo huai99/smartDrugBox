@@ -6,12 +6,12 @@ import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.AbstractLo
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class MedicineBoxDetailsLocalDataHelper extends AbstractLocalAppDataHelper {
 
-    private ArrayList<IDbData> mMedicineBoxDetailList = dataList;
+    private Map<String, IDbData> mMedicineBoxDetailMap = dataMap;
 
     private static MedicineBoxDetailsLocalDataHelper instance;
     private static Object lock = new Object();
@@ -21,20 +21,20 @@ public class MedicineBoxDetailsLocalDataHelper extends AbstractLocalAppDataHelpe
 
     @Override
     public void read(Iterator<?> iterator) {
-        mMedicineBoxDetailList.clear();
+        mMedicineBoxDetailMap.clear();
         while (iterator.hasNext()) {
             IDbData value = (MedicineBoxDetails) iterator.next();
             String key = value.getId();
-            mMedicineBoxDetailList.add(value);
+            mMedicineBoxDetailMap.put(key, value);
             Log.d("Medicine Box Details", value.toString());
         }
         setChanged();
-        notifyObservers(mMedicineBoxDetailList);
+        notifyObservers(mMedicineBoxDetailMap.values());
     }
 
     @Override
     public Object returnAppData() {
-        return mMedicineBoxDetailList;
+        return mMedicineBoxDetailMap.values();
     }
 
     public static MedicineBoxDetailsLocalDataHelper getInstance() {
