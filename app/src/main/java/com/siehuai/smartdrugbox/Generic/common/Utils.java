@@ -12,6 +12,7 @@ import com.siehuai.smartdrugbox.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static com.siehuai.smartdrugbox.Generic.data.GlobalConst.REQUEST_GET_FROM_MEDIA;
 import static com.siehuai.smartdrugbox.Generic.data.GlobalConst.REQUEST_TAKE_PHOTO;
@@ -78,5 +79,13 @@ public class Utils {
 
     public static String LogTagGenerate(Context context) {
         return context.getClass().getSimpleName();
+    }
+
+    public static <T> ArrayList<T> convertCollectionToArrayList(Collection<T> collection) {
+        ArrayList<T> list = new ArrayList<>();
+        for (T item : collection) {
+            list.add(item);
+        }
+        return list;
     }
 }
