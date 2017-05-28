@@ -69,7 +69,7 @@ public class CompartmentDetails implements IDbData, Parcelable {
         medicineBoxId = in.readString();
         runOutAlert = in.readInt() != 0;
         fillUpStatus = in.readInt() != 0;
-        medicineDetails = in.readParcelable(medicineDetails.getClass().getClassLoader());
+        medicineDetails = in.readParcelable(MedicineDetails.class.getClassLoader());
     }
 
     public static final Creator<CompartmentDetails> CREATOR = new Creator<CompartmentDetails>() {
