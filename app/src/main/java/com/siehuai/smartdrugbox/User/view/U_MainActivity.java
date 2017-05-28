@@ -50,7 +50,7 @@ public class U_MainActivity extends U_BaseActivity {
 
         setReminderBtn();
 
-        setOrderMedicineBtn();
+        setSetMedicineBtn();
 
         activateAlarm();
 
@@ -66,11 +66,11 @@ public class U_MainActivity extends U_BaseActivity {
         });
     }
 
-    public void setOrderMedicineBtn() {
+    public void setSetMedicineBtn() {
         mBinding.btnOrderMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                orderMedicine();
+                userSetMedicine();
             }
         });
     }
@@ -140,9 +140,6 @@ public class U_MainActivity extends U_BaseActivity {
 
     public boolean itemClickHandler(MenuItem item) {
         switch (item.getItemId()) {
-            case (R.id.option_setMedicine):
-                userSetMedicine();
-                return true;
             case (R.id.option_viewMedicine):
                 userViewMedicine();
                 return true;
