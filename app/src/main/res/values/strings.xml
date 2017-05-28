@@ -51,4 +51,5 @@
         <item>6</item>
         <item>10</item>
     </string-array>
+    <string name="title_activity_order_medicine">OrderMedicineActivity</string>
 </resources>
