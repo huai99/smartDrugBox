@@ -106,14 +106,16 @@ public class MedicineDetails implements IDbData, Parcelable {
     }
 
     protected MedicineDetails(Parcel in) {
+        //the sequence of this need to correspond to writeToParcel variable sequence
         id = in.readString();
         medicineName = in.readString();
         drugstore = in.readString();
+        description = in.readString();
         medicineMoreInfo = in.readString();
         frequencyOfTaking = in.readString();
         medicineImg = in.readString();
-        description = in.readString();
         price = in.readDouble();
+
     }
 
     public static final Creator<MedicineDetails> CREATOR = new Creator<MedicineDetails>() {
@@ -138,9 +140,9 @@ public class MedicineDetails implements IDbData, Parcelable {
         dest.writeString(id);
         dest.writeString(medicineName);
         dest.writeString(drugstore);
+        dest.writeString(description);
         dest.writeString(medicineMoreInfo);
         dest.writeString(frequencyOfTaking);
-        dest.writeString(description);
         dest.writeString(medicineImg);
         dest.writeDouble(price);
     }
