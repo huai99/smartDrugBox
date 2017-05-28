@@ -1,6 +1,6 @@
 package com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper;
 
-import com.siehuai.smartdrugbox.Pharmacy.controller.P_MedicineDetailsRemoteHelper;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MedicineDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineDetailsRemoteHelper;

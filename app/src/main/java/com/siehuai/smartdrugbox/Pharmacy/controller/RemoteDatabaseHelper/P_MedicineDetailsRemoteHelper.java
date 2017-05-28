@@ -1,11 +1,10 @@
-package com.siehuai.smartdrugbox.Pharmacy.controller;
+package com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.siehuai.smartdrugbox.Generic.common.FireBaseUtils;
-import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.Pharmacy.controller.LocalAppDataHelper.P_MedicineDetailsLocalDataHelper;
@@ -13,7 +12,7 @@ import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
 
 import java.util.Iterator;
 
-public class P_MedicineDetailsRemoteHelper extends RemoteDbHelper {
+public class P_MedicineDetailsRemoteHelper extends PharmacyRemoteDbHelper {
 
     DatabaseReference mDatabase;
     private DatabaseReference.CompletionListener mOnCompleteListener;
