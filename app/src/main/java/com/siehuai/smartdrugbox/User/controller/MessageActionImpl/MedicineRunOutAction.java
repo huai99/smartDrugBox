@@ -8,10 +8,12 @@ import android.util.Log;
 import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.controller.MessageAction.AbstractMessageAction;
 import com.siehuai.smartdrugbox.Generic.controller.Service.NotificationService;
-import com.siehuai.smartdrugbox.Generic.view.MainActivity;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
+import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
+import com.siehuai.smartdrugbox.User.data.MedicineDetails;
+import com.siehuai.smartdrugbox.User.view.MedicineBox.OrderMedicineActivity;
 
 import java.util.Map;
 
@@ -30,7 +32,7 @@ public class MedicineRunOutAction extends AbstractMessageAction {
 
     @Override
     public void execute(Map<String, String> data) {
-        String id = data.get("id");
+        final String key = "Compartment " + data.get("id");
         String medicineBoxId = data.get("medicineBoxId");
         MedicineBoxCompartmentRemoteHelper remoteHelper = new MedicineBoxCompartmentRemoteHelper();
         remoteHelper.find(medicineBoxId, new IDbOnDataChangeListener() {
@@ -38,13 +40,15 @@ public class MedicineRunOutAction extends AbstractMessageAction {
             public void onDataChange(Object data) {
                 MedicineBoxCompartment medicineBoxCompartment = (MedicineBoxCompartment) data;
                 Log.d("Firebase Message", medicineBoxCompartment.toString());
+                Intent intent = new Intent(mContext, OrderMedicineActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                CompartmentDetails compartmentDetails = medicineBoxCompartment.getCompartmentDetailsMap().get(key);
+                intent.putExtra("CompartmentDetails", compartmentDetails);
+                createNotification(intent);
+                Log.d("Firebase Message", getMessageBody());
+                mNotificationService.dispatchNotification();
             }
         });
-        Intent intent = new Intent(mContext,MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        createNotification(intent);
-        Log.d("Firebase Message", getMessageBody());
-        mNotificationService.dispatchNotification();
     }
 
     private void createNotification(Intent intent) {
