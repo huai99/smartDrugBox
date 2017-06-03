@@ -67,6 +67,17 @@
             </intent-filter>
         </service>
 
+        <service android:name=".Pharmacy.controller.FirebaseService.P_FirebaseMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".Pharmacy.controller.FirebaseService.P_FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
         <activity android:name=".User.view.OffAlarmActivity">
         </activity>
         <activity android:name=".User.view.UserSetMedicine.UserSetMedicineActivity">
