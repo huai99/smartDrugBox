@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.MedicineOrderRemoteHelper;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
+import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
@@ -77,7 +79,10 @@ public class OrderMedicineActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                        MedicineOrderRemoteHelper remoteHelper = MedicineOrderRemoteHelper.getInstance();
+                        String id = remoteHelper.generateNewId();
+                        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true);
+                        remoteHelper.insert(medicineOrder);
                     }
                 },
                 new DialogInterface.OnClickListener() {
