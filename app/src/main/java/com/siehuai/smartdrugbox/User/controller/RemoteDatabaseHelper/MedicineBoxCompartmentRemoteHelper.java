@@ -1,15 +1,17 @@
 package com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.siehuai.smartdrugbox.Generic.common.FireBaseUtils;
-import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
-import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxCompartmentLocalDataHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
+import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
+import com.siehuai.smartdrugbox.User.view.UserUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,27 +20,18 @@ import java.util.Map;
 public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
 
     DatabaseReference mDatabase;
+    private ObjectMapper mObjectMapper = new ObjectMapper();
     private DatabaseReference.CompletionListener mOnCompleteListener;
-    private MedicineBoxCompartmentLocalDataHelper localDataHelper;
+    private Map<String, IDbData> mMedicineBoxCompartmentMap = dataMap;
+    private static MedicineBoxCompartmentRemoteHelper instance;
     private String key;
     private int FLAG_READ = 0;
     private int FLAG_FIND = 1;
 
     public MedicineBoxCompartmentRemoteHelper() {
-        super();
         mDatabase = getDatabaseObj().child(DataType.MedicineBox).child(DataType.MedicineBoxCompartmentDetails);
         mOnCompleteListener = returnDefaultOnCompleteListener();
-        localDataHelper = MedicineBoxCompartmentLocalDataHelper.getInstance();
-    }
-
-    @Override
-    protected DatabaseReference getDatabaseObj() {
-        return super.getDatabaseObj();
-    }
-
-    @Override
-    protected DatabaseReference.CompletionListener returnDefaultOnCompleteListener() {
-        return super.returnDefaultOnCompleteListener();
+        read();
     }
 
     @Override
@@ -56,7 +49,6 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
         }
         iDbData.setId(getKey());
         mDatabase.child(iDbData.getId()).setValue(iDbData, mOnCompleteListener);
-        localDataHelper.insert(iDbData);
     }
 
     @Override
@@ -91,12 +83,34 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
         });
     }
 
+    public void read(Iterator<?> iterator) {
+        mMedicineBoxCompartmentMap.clear();
+        while (iterator.hasNext()) {
+            Map<String, Object> map = (Map<String, Object>) iterator.next();
+            MedicineBoxCompartment medicineBoxCompartment
+                    = UserUtils.convertRawToMedicineCompartment(mObjectMapper, map);
+            mMedicineBoxCompartmentMap.put(medicineBoxCompartment.getId(), medicineBoxCompartment);
+        }
+        setChanged();
+        notifyObservers(mMedicineBoxCompartmentMap.values());
+    }
+
+    private MedicineBoxCompartment findOneFromRemote(Iterator<?> iterator) {
+        MedicineBoxCompartment medicineBoxCompartment = null;
+        while (iterator.hasNext()) {
+            Map<String, Object> map = (Map<String, Object>) iterator.next();
+            medicineBoxCompartment
+                    = UserUtils.convertRawToMedicineCompartment(mObjectMapper, map);
+        }
+        return medicineBoxCompartment;
+    }
+
     public void find(final String id, final IDbOnDataChangeListener dataChangeListener) {
         mDatabase.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator iterator = transferDatatoLocalWithoutSerializer(dataSnapshot, FLAG_FIND);
-                dataChangeListener.onDataChange(localDataHelper.findOneFromRemote(iterator));
+                dataChangeListener.onDataChange(findOneFromRemote(iterator));
             }
 
             @Override
@@ -113,7 +127,7 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
             Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
             mapObjectIterator
                     = FireBaseUtils.SpecialConvertDataSnapshotIterator(iterator);
-            localDataHelper.read(mapObjectIterator);
+            read(mapObjectIterator);
             return mapObjectIterator;
         } else {
             ArrayList<DataSnapshot> list = new ArrayList<>();
@@ -136,5 +150,20 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public static MedicineBoxCompartmentRemoteHelper getInstance() {
+        if (instance == null) {
+            synchronized (lock) {
+                if (instance == null) {
+                    instance = new MedicineBoxCompartmentRemoteHelper();
+                    return instance;
+                } else {
+                    return instance;
+                }
+            }
+        } else {
+            return instance;
+        }
     }
 }

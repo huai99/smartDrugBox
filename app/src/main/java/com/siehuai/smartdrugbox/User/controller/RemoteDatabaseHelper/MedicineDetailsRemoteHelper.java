@@ -3,10 +3,17 @@ package com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper;
 import com.google.firebase.database.DatabaseReference;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
+import java.util.Map;
+
 public class MedicineDetailsRemoteHelper extends UserRemoteDbHelper {
 
     private DatabaseReference mDatabase;
     private DatabaseReference.CompletionListener mOnCompleteListener;
+    private String key;
+    private static MedicineDetailsRemoteHelper instance;
+    private static Object lock = new Object();
+    private Map<String, IDbData> mMedicineDetailsMap = dataMap;
+
 
     public MedicineDetailsRemoteHelper() {
         super();

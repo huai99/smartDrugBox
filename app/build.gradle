@@ -67,6 +67,7 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4:1.6.4'
     testCompile 'org.powermock:powermock-module-junit4-rule:1.6.4'
     testCompile 'org.powermock:powermock-classloading-xstream:1.6.4'
+    compile 'javax.annotation:javax.annotation-api:1.2'
 }
 
 
