@@ -5,14 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.controller.MessageAction.AbstractMessageAction;
 import com.siehuai.smartdrugbox.Generic.controller.Service.NotificationService;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
-import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 import com.siehuai.smartdrugbox.User.view.MedicineBox.OrderMedicineActivity;
 
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper;
+package com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper;
 
 public interface IDbOnDataChangeListener {
 
