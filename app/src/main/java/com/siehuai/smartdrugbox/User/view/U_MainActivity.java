@@ -17,10 +17,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
-import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
 import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
 import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
 import com.siehuai.smartdrugbox.User.view.MedicineBox.MedicineBoxActivity;
 import com.siehuai.smartdrugbox.User.view.UserViewMedicine.UserViewMedicineActivity;
@@ -33,7 +31,6 @@ import java.util.Map;
 public class U_MainActivity extends U_BaseActivity {
 
     ActivityUserMainBinding mBinding;
-    MedicineBoxDetailsRemoteHelper mMedicineBoxDetailsRemoteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +41,6 @@ public class U_MainActivity extends U_BaseActivity {
 
         PostsDatabaseHelper postsDbHelper = PostsDatabaseHelper.getInstance(this);
 
-        getAllMedicineBoxData();
-
         initAlarmData(postsDbHelper);
 
         setReminderBtn();
@@ -53,7 +48,6 @@ public class U_MainActivity extends U_BaseActivity {
         setSetMedicineBtn();
 
         activateAlarm();
-
     }
 
     public void setReminderBtn() {
@@ -157,10 +151,4 @@ public class U_MainActivity extends U_BaseActivity {
         Intent intent = new Intent(U_MainActivity.this, UserViewMedicineActivity.class);
         startActivity(intent);
     }
-
-    private void getAllMedicineBoxData() {
-        mMedicineBoxDetailsRemoteHelper = (MedicineBoxDetailsRemoteHelper) RemoteDbFactory.createRemoteDbHelper(RemoteDbFactory.RemoteDataType.MedicineBoxDetails);
-        mMedicineBoxDetailsRemoteHelper.read();
-    }
-
 }

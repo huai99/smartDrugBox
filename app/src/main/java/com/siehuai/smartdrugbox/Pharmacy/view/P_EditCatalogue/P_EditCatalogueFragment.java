@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
-import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
-import com.siehuai.smartdrugbox.Pharmacy.controller.LocalAppDataHelper.P_MedicineDetailsLocalDataHelper;
 import com.siehuai.smartdrugbox.Pharmacy.controller.P_MedicineDetailsMenuAdapter;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MedicineDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.Pharmacy.data.MenuResource.P_MedicineDetailsMenuResource;
 import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineDetails;
 import com.siehuai.smartdrugbox.R;
@@ -74,8 +74,8 @@ public class P_EditCatalogueFragment extends Fragment {
         ArrayList<P_MedicineDetails> list = new ArrayList<>();
         resource.setResourceList(list);
         showProgressBar();
-        final P_MedicineDetailsLocalDataHelper localDataHelper = P_MedicineDetailsLocalDataHelper.getInstance();
-        localDataHelper.findAll(new IDbOnDataChangeListener() {
+        final P_MedicineDetailsRemoteHelper remoteHelper = P_MedicineDetailsRemoteHelper.getInstance();
+        remoteHelper.findAll(new IDbOnDataChangeListener() {
             @Override
             public void onDataChange(Object data) {
                 Collection<P_MedicineDetails> changedList = (Collection<P_MedicineDetails>) data;

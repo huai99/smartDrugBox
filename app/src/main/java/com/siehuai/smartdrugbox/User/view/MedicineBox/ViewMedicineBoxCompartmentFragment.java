@@ -13,12 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
-import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineBoxCompartmentMenuAdapter;
 import com.siehuai.smartdrugbox.User.controller.BtnOnClickListener.MedicineBox.CompartmentFragmentOnClickListener;
-import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxCompartmentLocalDataHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
@@ -37,7 +36,6 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     MedicineBoxDetails mMedicineBoxDetails;
     MedicineBoxCompartmentRemoteHelper mRemoteHelper;
-    MedicineBoxCompartmentLocalDataHelper mLocalDataHelper;
     String medicineBoxDetailsId;
 
     public ViewMedicineBoxCompartmentFragment() {
@@ -63,8 +61,6 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
         mRemoteHelper = new MedicineBoxCompartmentRemoteHelper();
 
         mRemoteHelper.read();
-
-        mLocalDataHelper = MedicineBoxCompartmentLocalDataHelper.getInstance();
 
         setUpGridView(view);
 
@@ -98,7 +94,8 @@ public class ViewMedicineBoxCompartmentFragment extends Fragment {
         final ArrayList<CompartmentDetails> resourceList = new ArrayList<>();
         resource.setResourceList(resourceList);
         adapter.setResourceArrayList(resource);
-        mLocalDataHelper.find(medicineBoxDetailsId, new IDbOnDataChangeListener() {
+        MedicineBoxCompartmentRemoteHelper remoteHelper = MedicineBoxCompartmentRemoteHelper.getInstance();
+        remoteHelper.find(medicineBoxDetailsId, new IDbOnDataChangeListener() {
             @Override
             public void onDataChange(Object data) {
                 resourceList.clear();

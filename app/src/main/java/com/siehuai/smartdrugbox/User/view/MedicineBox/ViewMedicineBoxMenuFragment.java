@@ -14,12 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
-import com.siehuai.smartdrugbox.Generic.controller.LocalAppDataHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineBoxMenuAdapter;
 import com.siehuai.smartdrugbox.User.controller.BtnOnClickListener.MedicineBox.ViewMedicineBoxMenuOnClickListener;
-import com.siehuai.smartdrugbox.User.controller.LocalAppDataHelper.MedicineBoxDetailsLocalDataHelper;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxDetails;
 import com.siehuai.smartdrugbox.User.data.MenuResource.MedicineBoxMenuResource;
 import com.siehuai.smartdrugbox.databinding.FragmentViewMedicineBoxMenuBinding;
@@ -90,8 +90,8 @@ public class ViewMedicineBoxMenuFragment extends Fragment {
         final MenuResource resource = new MedicineBoxMenuResource();
         ArrayList<MedicineBoxDetails> list = new ArrayList<>();
         resource.setResourceList(list);
-        final MedicineBoxDetailsLocalDataHelper localDataHelper = MedicineBoxDetailsLocalDataHelper.getInstance();
-        localDataHelper.findAll(new IDbOnDataChangeListener() {
+        MedicineBoxDetailsRemoteHelper remoteHelper = MedicineBoxDetailsRemoteHelper.getInstance();
+        remoteHelper.findAll(new IDbOnDataChangeListener() {
             @Override
             public void onDataChange(Object data) {
                 Collection<MedicineBoxDetails> changedList = (Collection<MedicineBoxDetails>) data;
