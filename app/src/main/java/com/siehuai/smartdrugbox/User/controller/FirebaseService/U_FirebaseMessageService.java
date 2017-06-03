@@ -5,12 +5,9 @@ import android.content.Intent;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.siehuai.smartdrugbox.Generic.controller.MessageAction.IMessageAction;
-import com.siehuai.smartdrugbox.Generic.controller.Service.NotificationService;
 import com.siehuai.smartdrugbox.User.controller.MessageActionImpl.UserMessageActionFactory;
 
 public class U_FirebaseMessageService extends FirebaseMessagingService {
-
-    NotificationService mNotificationService;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
