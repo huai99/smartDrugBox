@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IRemoteDbHelper;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
+import com.siehuai.smartdrugbox.Pharmacy.controller.SubscribeToEventHelper;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.databinding.ActivityPMainBinding;
 
@@ -18,6 +19,7 @@ public class P_MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SubscribeToEventHelper.subscribeToTopic("medicineOrder");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_main);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_p_main);
