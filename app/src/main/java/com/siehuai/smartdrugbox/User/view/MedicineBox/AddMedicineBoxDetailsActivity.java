@@ -33,6 +33,7 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
     private ActivityAddMedicineBoxDetailsBinding mBinding;
     private String userName;
     private String userImg;
+    private String address;
     private int compartmentNumber;
     private String emergencyContact;
     private MedicineBoxDetailsRemoteHelper mMedicineBoxDetailsRemoteHelper;
@@ -82,6 +83,7 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
     private void getAllInputDetails() {
         userName = mBinding.editTextUserName.getText().toString();
         userImg = Utils.BitMaptoBase64(this, mBitmap);
+        address = mBinding.editTextAddress.getText().toString();
         emergencyContact = mBinding.editTextEmergencyContact.getText().toString();
         compartmentNumber = Utils.safeParseInteger(mBinding.spinner.getSelectedItem().toString());
     }
@@ -113,7 +115,7 @@ public class AddMedicineBoxDetailsActivity extends AppCompatActivity {
     }
 
     private void insertMedicineBoxRemote() {
-        MedicineBoxDetails medicineBoxDetails = new MedicineBoxDetails(null, userName, userImg, compartmentNumber, 0, emergencyContact);
+        MedicineBoxDetails medicineBoxDetails = new MedicineBoxDetails(null, userName, userImg, compartmentNumber, 0, emergencyContact, address);
         mMedicineBoxDetailsRemoteHelper.attachOnCompleteListener(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

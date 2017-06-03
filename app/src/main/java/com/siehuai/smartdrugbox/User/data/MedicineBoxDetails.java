@@ -10,23 +10,19 @@ public class MedicineBoxDetails implements IDbData {
     private int totalSlotNumber;
     private int fillNumber;
     private String emergencyContact;
+    private String patientAddress;
 
     public MedicineBoxDetails() {
     }
 
-    public MedicineBoxDetails(String id,
-                              String userName,
-                              String userImg,
-                              int totalSlotNumber,
-                              int fillNumber,
-                              String emergencyContact
-    ) {
+    public MedicineBoxDetails(String id, String userName, String userImg, int totalSlotNumber, int fillNumber, String emergencyContact, String patientAddress) {
         this.id = id;
         this.userName = userName;
         this.userImg = userImg;
         this.totalSlotNumber = totalSlotNumber;
         this.fillNumber = fillNumber;
         this.emergencyContact = emergencyContact;
+        this.patientAddress = patientAddress;
     }
 
     @Override
@@ -77,5 +73,13 @@ public class MedicineBoxDetails implements IDbData {
 
     public void setEmergencyContact(String emergencyContact) {
         this.emergencyContact = emergencyContact;
+    }
+
+    public String getPatientAddress() {
+        return patientAddress;
+    }
+
+    public void setPatientAddress(String patientAddress) {
+        this.patientAddress = patientAddress;
     }
 }

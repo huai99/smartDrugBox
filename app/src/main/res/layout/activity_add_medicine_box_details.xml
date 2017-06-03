@@ -74,13 +74,26 @@
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:tag="@string/compartment_number"
-                android:layout_below="@id/editText_emergencyContact"
+                android:layout_below="@+id/editText_address"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="11dp"
                 android:layout_marginTop="20dp"
                 android:entries="@array/compartmentNumberArray"
                 android:layout_alignLeft="@id/editText_emergencyContact"
                 android:layout_marginRight="11dp"/>
+
+            <EditText
+                android:id="@+id/editText_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/spinner"
+                android:layout_alignStart="@+id/spinner"
+                android:layout_below="@+id/editText_emergencyContact"
+                android:layout_marginTop="11dp"
+                android:ems="10"
+                android:textColor="@color/grey_500"
+                android:inputType="textPersonName"
+                android:text="@string/address"/>
 
 
         </RelativeLayout>
