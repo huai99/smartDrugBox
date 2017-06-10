@@ -13,8 +13,6 @@ import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
 public class MedicineOrderRemoteHelper extends RemoteDbHelper {
 
@@ -27,6 +25,7 @@ public class MedicineOrderRemoteHelper extends RemoteDbHelper {
     private MedicineOrderRemoteHelper() {
         mDatabase = getDatabaseObj().child(DataType.MedicineOrder);
         mOnCompleteListener = returnDefaultOnCompleteListener();
+        read();
     }
 
     @Override
@@ -88,26 +87,12 @@ public class MedicineOrderRemoteHelper extends RemoteDbHelper {
 
     private void transferDatatoLocal(DataSnapshot dataSnapshot) {
         Iterator<DataSnapshot> iterator = dataSnapshot
-                .child(DataType.MedicineOrder)
                 .getChildren()
                 .iterator();
 
         Iterator<MedicineOrder> medicineOrderIterator
                 = FireBaseUtils.convertDataSnapshotIterator(iterator, MedicineOrder.class);
         read(medicineOrderIterator);
-    }
-
-
-    public void findAll(final IDbOnDataChangeListener listener) {
-        final Observer observer = new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                listener.onDataChange(arg);
-            }
-        };
-        addObserver(observer);
-        setChanged();
-        notifyObservers(mMedicineOrderMap.values());
     }
 
     public static MedicineOrderRemoteHelper getInstance() {
@@ -125,7 +110,7 @@ public class MedicineOrderRemoteHelper extends RemoteDbHelper {
         }
     }
 
-    public String generateNewId(){
+    public String generateNewId() {
         String key = mDatabase.push().getKey();
         setKey(key);
         return key;

@@ -110,6 +110,10 @@
             android:name=".User.view.MedicineBox.OrderMedicineActivity"
             android:label="@string/title_activity_order_medicine">
         </activity>
+        <activity
+            android:name=".Pharmacy.view.P_ViewMedicineOrder.P_ViewMedicineOrder"
+            android:label="@string/title_activity_p__view_medicine_order">
+        </activity>
     </application>
 
 </manifest>
