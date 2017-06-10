@@ -106,6 +106,7 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
         mContactList = mIListResource.getResourceTextMap().get(ListResourceFieldConst.CONTACT);
         mMedicineList = mIListResource.getResourceTextMap().get(ListResourceFieldConst.MEDICINE);
         mAvailabilityList = mIListResource.getResourceTextMap().get(ListResourceFieldConst.AVAILABILITY);
+        mIDbDataList = (ArrayList<IDbData>) mIListResource.getResourceList();
     }
 
     public ListAdapterObservable getClickListenerObservable() {
