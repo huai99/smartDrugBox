@@ -53,4 +53,6 @@
     </string-array>
     <string name="title_activity_order_medicine">OrderMedicineActivity</string>
     <string name="address">Address</string>
+    <string name="title_activity_p__view_medicine_order">P_ViewMedicineOrder</string>
+    <string name="action_settings">Settings</string>
 </resources>
