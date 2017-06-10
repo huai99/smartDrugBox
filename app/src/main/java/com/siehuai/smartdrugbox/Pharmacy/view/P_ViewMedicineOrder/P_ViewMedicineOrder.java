@@ -42,7 +42,7 @@ public class P_ViewMedicineOrder extends AppCompatActivity {
         adapter = new P_MedicineOrderIListAdapter();
         mRecyclerView.setAdapter(adapter);
         adapter.setResourceArrayList(setupListResource());
-//        adapter.addObserver(new P_EditCatalogueClickListener(getActivity()));
+        adapter.addObserver(new MedicineOrderListClickListener());
     }
 
     public void setRecycleViewLayoutManager() {
