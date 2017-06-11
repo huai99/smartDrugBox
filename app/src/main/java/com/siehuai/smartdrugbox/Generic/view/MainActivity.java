@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 
+import com.siehuai.smartdrugbox.Pharmacy.controller.SubscribeToEventHelper;
 import com.siehuai.smartdrugbox.Pharmacy.view.P_MainActivity;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.view.U_MainActivity;
@@ -17,6 +18,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SubscribeToEventHelper.unSubscribeTopic("medicineOrder");
         setContentView(R.layout.activity_main);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setUserBtnOnClick();

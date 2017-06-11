@@ -8,4 +8,9 @@ public class SubscribeToEventHelper {
         FirebaseMessaging.getInstance().subscribeToTopic(topic);
         return;
     }
+
+    public static void unSubscribeTopic(String topic) {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
+        return;
+    }
 }
