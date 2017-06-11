@@ -1,8 +1,11 @@
 package com.siehuai.smartdrugbox.Generic.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 
-public class MedicineOrder implements IDbData {
+public class MedicineOrder implements IDbData,Parcelable {
 
     String id;
     String userName;
@@ -71,5 +74,42 @@ public class MedicineOrder implements IDbData {
 
     public void setAvailability(boolean availability) {
         this.availability = availability;
+    }
+
+    protected MedicineOrder(Parcel in) {
+        id = in.readString();
+        userName = in.readString();
+        address = in.readString();
+        contact = in.readString();
+        medicineDetails = in.readParcelable(MedicineDetails.class.getClassLoader());
+        availability = in.readInt() != 0;
+    }
+
+    public static final Parcelable.Creator<MedicineOrder> CREATOR = new Parcelable.Creator<MedicineOrder>() {
+        @Override
+        public MedicineOrder createFromParcel(Parcel in) {
+            return new MedicineOrder(in);
+        }
+
+        @Override
+        public MedicineOrder[] newArray(int size) {
+            return new MedicineOrder[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+       dest.writeString(id);
+        dest.writeString(userName);
+        dest.writeString(address);
+        dest.writeString(contact);
+        dest.writeParcelable(medicineDetails,flags);
+        dest.writeInt(availability ? 1 : 0);
+
     }
 }
