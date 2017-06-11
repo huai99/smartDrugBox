@@ -6,16 +6,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IRemoteDbHelper;
-import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.RemoteDbFactory;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.DaggerRemoteHelperComponent;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MedicineDetailsRemoteHelper;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.RemoteHelperComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.SubscribeToEventHelper;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.databinding.ActivityPMainBinding;
 
+import javax.inject.Inject;
+
 public class P_MainActivity extends AppCompatActivity {
 
     ActivityPMainBinding mBinding;
-    IRemoteDbHelper mDbHelper;
+
+    @Inject
+    P_MedicineDetailsRemoteHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,8 @@ public class P_MainActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_p_main);
         setUpEditCatalogueBtnOnClick();
         setUpAddMedicineBtnOnClick();
-        getAllRemoteData();
+        RemoteHelperComponent remoteHelperComponent = DaggerRemoteHelperComponent.create();
+        remoteHelperComponent.inject(this);
     }
 
     private void setUpEditCatalogueBtnOnClick() {
@@ -34,6 +40,7 @@ public class P_MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(P_MainActivity.this, P_EditTabActivity.class);
                 startActivity(intent);
+                getAllRemoteData();
             }
         });
     }
@@ -49,7 +56,7 @@ public class P_MainActivity extends AppCompatActivity {
     }
 
     private void getAllRemoteData() {
-        mDbHelper = RemoteDbFactory.createRemoteDbHelper(RemoteDbFactory.RemoteDataType.PharmacyMedicineDetails);
+//        mDbHelper = RemoteDbFactory.createRemoteDbHelper(RemoteDbFactory.RemoteDataType.PharmacyMedicineDetails);
         mDbHelper.read();
     }
 
