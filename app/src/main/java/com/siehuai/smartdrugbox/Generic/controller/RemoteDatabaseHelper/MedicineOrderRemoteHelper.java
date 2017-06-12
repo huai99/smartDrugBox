@@ -23,7 +23,7 @@ public class MedicineOrderRemoteHelper extends RemoteDbHelper {
     private static MedicineOrderRemoteHelper instance;
 
     private MedicineOrderRemoteHelper() {
-        mDatabase = getDatabaseObj().child(DataType.MedicineOrder);
+        mDatabase = getDatabaseObj().child(DataType.MedicineOrder).child(DataType.Active);
         mOnCompleteListener = returnDefaultOnCompleteListener();
         read();
     }
@@ -40,7 +40,7 @@ public class MedicineOrderRemoteHelper extends RemoteDbHelper {
         DatabaseReference newRef = mDatabase.push();
         if (key == null) {
             key = newRef.getKey();
-        }else{
+        } else {
             key = getKey();
         }
         dbData.setId(key);
