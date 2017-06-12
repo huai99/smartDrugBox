@@ -5,7 +5,7 @@ import com.siehuai.smartdrugbox.Pharmacy.view.P_MainActivity;
 import dagger.Component;
 
 @Component(modules = P_RemoteHelperModule.class)
-public interface RemoteHelperComponent {
+public interface P_RemoteHelperComponent {
 
     void inject(P_MainActivity mainActivity);
 
