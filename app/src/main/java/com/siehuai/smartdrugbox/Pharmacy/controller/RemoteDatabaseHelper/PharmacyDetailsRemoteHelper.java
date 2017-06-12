@@ -1,25 +1,23 @@
 package com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper;
 
-import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.siehuai.smartdrugbox.Generic.common.FireBaseUtils;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.Pharmacy.data.PharmacyDetails;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 public class PharmacyDetailsRemoteHelper extends PharmacyRemoteDbHelper {
 
     DatabaseReference mDatabase;
     private DatabaseReference.CompletionListener mOnCompleteListener;
-    private Map<String, IDbData> mPharmacyDetailsMap = dataMap;
     private static PharmacyDetailsRemoteHelper instance;
+    PharmacyDetails mPharmacyDetails;
 
     public PharmacyDetailsRemoteHelper() {
         super();
@@ -70,24 +68,23 @@ public class PharmacyDetailsRemoteHelper extends PharmacyRemoteDbHelper {
         });
     }
 
-    private void read(Iterator<?> iterator) {
-        mPharmacyDetailsMap.clear();
-        while (iterator.hasNext()) {
-            PharmacyDetails value = (PharmacyDetails) iterator.next();
-            String key = value.getId();
-            mPharmacyDetailsMap.put(key, value);
-            Log.d("P_Medicine", value.toString());
-        }
+    @Override
+    public void findAll(final IDbOnDataChangeListener listener) {
+        final Observer observer = new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                listener.onDataChange(arg);
+            }
+        };
+        addObserver(observer);
         setChanged();
-        notifyObservers(mPharmacyDetailsMap.values());
+        notifyObservers(mPharmacyDetails);
     }
 
     private void transferDatatoLocal(DataSnapshot dataSnapshot) {
-        Iterator<DataSnapshot> iterator = dataSnapshot.child(DataType.PharmacyDetails).getChildren().iterator();
-
-        Iterator<PharmacyDetails> pharmacyDetailsIterator
-                = FireBaseUtils.convertDataSnapshotIterator(iterator, PharmacyDetails.class);
-        read(pharmacyDetailsIterator);
+        mPharmacyDetails = dataSnapshot.child(DataType.PharmacyDetails).getValue(PharmacyDetails.class);
+        setChanged();
+        notifyObservers(mPharmacyDetails);
     }
 
     public static PharmacyDetailsRemoteHelper getInstance() {
