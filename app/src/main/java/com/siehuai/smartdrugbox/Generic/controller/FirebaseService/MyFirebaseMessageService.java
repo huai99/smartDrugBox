@@ -16,6 +16,7 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         String userGroup = remoteMessage.getData().get("userGroup");
         IMessageAction messageAction;
+        //TODO: Mix User and Pharmacy logic together, not a good idea
         Log.d("MyFirebaseMessage", userGroup);
         if (userGroup.equals("User")) {
             messageAction = UserMessageActionFactory.messageActionDispatch(remoteMessage, this);
