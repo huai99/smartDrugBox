@@ -13,16 +13,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.MedicineOrderRemoteHelper;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
 import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.DaggerP_RemoteHelperComponent;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_RemoteHelperComponent;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.PharmacyDetailsRemoteHelper;
+import com.siehuai.smartdrugbox.Pharmacy.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 import com.siehuai.smartdrugbox.databinding.FragmentPViewMedicineOrderDetailsBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+import javax.inject.Inject;
+
+
 public class P_ViewMedicineOrderDetailsFragment extends Fragment {
 
     MedicineOrder mMedicineOrder;
@@ -35,8 +41,13 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
     String medicineName;
     String description;
     String medicineMoreInfo;
-    String medicineImg;
     Bitmap mBitmap;
+
+    @Inject
+    MedicineOrderRemoteHelper mMedicineOrderRemoteHelper;
+
+    @Inject
+    PharmacyDetailsRemoteHelper mPharmacyDetailsRemoteHelper;
 
     public P_ViewMedicineOrderDetailsFragment() {
         // Required empty public constructor
@@ -48,6 +59,11 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
         Bundle bundle = getArguments();
         mMedicineOrder = bundle.getParcelable("order");
         Log.d("ViewOrderDetails", String.valueOf(mMedicineOrder));
+//        GenericRemoteHelperComponent genericRemoteHelperComponent = DaggerGenericRemoteHelperComponent.create();
+//        genericRemoteHelperComponent.inject(this);
+
+        P_RemoteHelperComponent p_remoteHelperComponent = DaggerP_RemoteHelperComponent.create();
+        p_remoteHelperComponent.inject(this);
     }
 
     @Override
@@ -66,6 +82,8 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
         } else {
             promptErrorDialog();
         }
+
+        setUpAcceptOrderBtn();
 
         return view;
     }
@@ -96,6 +114,23 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+            }
+        });
+    }
+
+    private void setUpAcceptOrderBtn() {
+        mBinding.btnAcceptOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPharmacyDetailsRemoteHelper.findAll(new IDbOnDataChangeListener() {
+                    @Override
+                    public void onDataChange(Object data) {
+                        PharmacyDetails pharmacyDetails = (PharmacyDetails) data;
+                        mMedicineOrder.setPharmacyDetails(pharmacyDetails);
+                        mMedicineOrder.setAvailability(false);
+                        mMedicineOrderRemoteHelper.update(mMedicineOrder);
+                    }
+                });
             }
         });
     }

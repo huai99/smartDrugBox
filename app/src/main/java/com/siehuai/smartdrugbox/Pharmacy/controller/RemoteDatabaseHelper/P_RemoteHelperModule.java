@@ -1,5 +1,7 @@
 package com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper;
 
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.MedicineOrderRemoteHelper;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -14,4 +16,10 @@ public class P_RemoteHelperModule {
     static PharmacyDetailsRemoteHelper providePharmacyDetailsHelper() {
         return PharmacyDetailsRemoteHelper.getInstance();
     }
+
+    @Provides
+    static MedicineOrderRemoteHelper provideMedicineOrderRemoteHelper() {
+        return MedicineOrderRemoteHelper.getInstance();
+    }
+
 }
