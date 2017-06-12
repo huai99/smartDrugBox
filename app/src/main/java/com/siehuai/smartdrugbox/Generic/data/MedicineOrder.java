@@ -3,9 +3,10 @@ package com.siehuai.smartdrugbox.Generic.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.siehuai.smartdrugbox.Pharmacy.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 
-public class MedicineOrder implements IDbData,Parcelable {
+public class MedicineOrder implements IDbData, Parcelable {
 
     String id;
     String userName;
@@ -13,17 +14,19 @@ public class MedicineOrder implements IDbData,Parcelable {
     String contact;
     MedicineDetails medicineDetails;
     boolean availability;
+    PharmacyDetails pharmacyDetails;
 
     public MedicineOrder() {
     }
 
-    public MedicineOrder(String id, String userName, String address, String contact, MedicineDetails medicineDetails, boolean availability) {
+    public MedicineOrder(String id, String userName, String address, String contact, MedicineDetails medicineDetails, boolean availability, PharmacyDetails pharmacyDetails) {
         this.id = id;
         this.userName = userName;
         this.address = address;
         this.contact = contact;
         this.medicineDetails = medicineDetails;
         this.availability = availability;
+        this.pharmacyDetails = pharmacyDetails;
     }
 
     @Override
@@ -76,6 +79,14 @@ public class MedicineOrder implements IDbData,Parcelable {
         this.availability = availability;
     }
 
+    public PharmacyDetails getPharmacyDetails() {
+        return pharmacyDetails;
+    }
+
+    public void setPharmacyDetails(PharmacyDetails pharmacyDetails) {
+        this.pharmacyDetails = pharmacyDetails;
+    }
+
     protected MedicineOrder(Parcel in) {
         id = in.readString();
         userName = in.readString();
@@ -83,6 +94,7 @@ public class MedicineOrder implements IDbData,Parcelable {
         contact = in.readString();
         medicineDetails = in.readParcelable(MedicineDetails.class.getClassLoader());
         availability = in.readInt() != 0;
+        pharmacyDetails = in.readParcelable(PharmacyDetails.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<MedicineOrder> CREATOR = new Parcelable.Creator<MedicineOrder>() {
@@ -104,12 +116,12 @@ public class MedicineOrder implements IDbData,Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-       dest.writeString(id);
+        dest.writeString(id);
         dest.writeString(userName);
         dest.writeString(address);
         dest.writeString(contact);
-        dest.writeParcelable(medicineDetails,flags);
+        dest.writeParcelable(medicineDetails, flags);
         dest.writeInt(availability ? 1 : 0);
-
+        dest.writeParcelable(pharmacyDetails, flags);
     }
 }

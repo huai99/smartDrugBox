@@ -42,7 +42,7 @@ public class OrderMedicineActivity extends AppCompatActivity {
             initData();
             initView();
             promptAlertDialog();
-        }else{
+        } else {
             promptErrorDialog();
         }
     }
@@ -81,7 +81,7 @@ public class OrderMedicineActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         MedicineOrderRemoteHelper remoteHelper = MedicineOrderRemoteHelper.getInstance();
                         String id = remoteHelper.generateNewId();
-                        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true);
+                        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, null);
                         remoteHelper.insert(medicineOrder);
                     }
                 },
