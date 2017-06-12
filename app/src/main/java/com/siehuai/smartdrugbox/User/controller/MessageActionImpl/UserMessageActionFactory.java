@@ -17,6 +17,11 @@ public class UserMessageActionFactory {
                 medicineRunOutAction.setMessageTitle(title);
                 medicineRunOutAction.setMessageBody(body);
                 return medicineRunOutAction;
+            case "MedicineOrderAcceptedAction":
+                MedicineOrderAcceptedAction acceptedOrderAction = new MedicineOrderAcceptedAction(context);
+                acceptedOrderAction.setMessageTitle(title);
+                acceptedOrderAction.setMessageBody(body);
+                return acceptedOrderAction;
             default:
                 return null;
         }
