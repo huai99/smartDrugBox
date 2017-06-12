@@ -185,7 +185,7 @@
                     android:textColor="@color/black"/>
 
                 <Button
-                    android:id="@+id/refillBtn"
+                    android:id="@+id/btn_acceptOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/imageView_medicine"
@@ -194,7 +194,7 @@
                     android:layout_marginEnd="24dp"
                     android:layout_marginRight="24dp"
                     android:layout_marginTop="10dp"
-                    android:text="Refill Now"/>
+                    android:text="Accept order"/>
 
             </RelativeLayout>
 
