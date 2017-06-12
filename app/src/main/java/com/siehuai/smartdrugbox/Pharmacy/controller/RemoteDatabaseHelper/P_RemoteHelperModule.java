@@ -9,4 +9,9 @@ public class P_RemoteHelperModule {
     static P_MedicineDetailsRemoteHelper providePharmacyMedicineHelper() {
         return P_MedicineDetailsRemoteHelper.getInstance();
     }
+
+    @Provides
+    static PharmacyDetailsRemoteHelper providePharmacyDetailsHelper() {
+        return PharmacyDetailsRemoteHelper.getInstance();
+    }
 }

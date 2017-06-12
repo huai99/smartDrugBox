@@ -9,5 +9,6 @@ public class DataType {
     public static String RegistrationToken = "registrationToken";
     public static String MedicineOrder = "Medicine-Order";
     public static String Active = "Active";
+    public static String PharmacyDetails = "Pharmacy-Details";
 
 }
