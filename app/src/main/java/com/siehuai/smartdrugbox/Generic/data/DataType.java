@@ -8,4 +8,6 @@ public class DataType {
     public static String MedicineBox = "Medicine-Box";
     public static String RegistrationToken = "registrationToken";
     public static String MedicineOrder = "Medicine-Order";
+    public static String Active = "Active";
+
 }
