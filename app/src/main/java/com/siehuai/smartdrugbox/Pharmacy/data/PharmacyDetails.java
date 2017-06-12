@@ -17,6 +17,9 @@ public class PharmacyDetails implements IDbData, Parcelable {
     private String contactNumber;
     private String email;
 
+    public PharmacyDetails() {
+    }
+
     @Override
     public void setId(String id) {
         this.id = id;
