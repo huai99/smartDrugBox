@@ -15,6 +15,7 @@ import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class CheckMedicineHelper {
 
@@ -34,7 +35,11 @@ public class CheckMedicineHelper {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            ArrayList<MedicineDetails> medicineDetailsList = objectMapper.readValue(response, ArrayList.class);
+                            ArrayList<LinkedHashMap> linkedHashMapList = objectMapper.readValue(response, ArrayList.class);
+                            ArrayList<MedicineDetails> medicineDetailsList = new ArrayList<>();
+                            for (LinkedHashMap hashMap : linkedHashMapList) {
+                                medicineDetailsList.add(convertLinkedHashMapToMedicineDetails(hashMap));
+                            }
                             listener.onResponseComplete(medicineDetailsList);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -63,6 +68,32 @@ public class CheckMedicineHelper {
             }
         };
         mRequestQueue.add(stringRequest);
+    }
+
+    private MedicineDetails convertLinkedHashMapToMedicineDetails(LinkedHashMap<String, Object> linkedHashMap) {
+        MedicineDetails medicineDetails = new MedicineDetails();
+        String description = (String) linkedHashMap.get("description");
+        Integer frequencyOfTaking = (Integer) linkedHashMap.get("frequencyOfTaking");
+        String id = (String) linkedHashMap.get("id");
+        String medicineImage = (String) linkedHashMap.get("medicineImage");
+        String medicineMoreInfo = (String) linkedHashMap.get("medicineMoreInfo");
+        String medicineName = (String) linkedHashMap.get("medicineName");
+        String drugstore = (String) linkedHashMap.get("drugstore");
+        if (linkedHashMap.get("price") instanceof Integer) {
+            Integer price = (Integer) linkedHashMap.get("price");
+            medicineDetails.setPrice(price);
+        } else if (linkedHashMap.get("price") instanceof Double) {
+            Double price = (Double) linkedHashMap.get("price");
+            medicineDetails.setPrice(price);
+        }
+        medicineDetails.setDescription(description);
+        medicineDetails.setFrequencyOfTaking(frequencyOfTaking.toString());
+        medicineDetails.setId(id);
+        medicineDetails.setMedicineImg(medicineImage);
+        medicineDetails.setMedicineMoreInfo(medicineMoreInfo);
+        medicineDetails.setMedicineName(medicineName);
+        medicineDetails.setDrugstore(drugstore);
+        return medicineDetails;
     }
 
 }
