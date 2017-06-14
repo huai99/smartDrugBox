@@ -25,7 +25,7 @@ public class SetAlarmService {
         mAlarmManager = (AlarmManager) this.mContext.getSystemService(Context.ALARM_SERVICE);
     }
 
-    @TargetApi(22)
+    @TargetApi(19)
     public void setAlarmOn(AlarmData alarmData) {
         Calendar calendar = Calendar.getInstance();
 

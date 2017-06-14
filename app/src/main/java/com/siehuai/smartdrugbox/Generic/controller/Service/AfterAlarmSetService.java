@@ -5,13 +5,12 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.Generic.controller.HardwareController.HardwareControllerImpl.BuzzerController;
+import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.view.OffAlarmActivity;
 
 public class AfterAlarmSetService extends Service {
@@ -29,7 +28,7 @@ public class AfterAlarmSetService extends Service {
         return null;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @TargetApi(16)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 

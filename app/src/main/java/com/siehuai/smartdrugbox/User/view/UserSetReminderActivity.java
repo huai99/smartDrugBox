@@ -63,7 +63,7 @@ public class UserSetReminderActivity extends AppCompatActivity {
         });
     }
 
-    @TargetApi(22)
+    @TargetApi(16)
     protected void setDialogOkButton(Button okBtn) {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override

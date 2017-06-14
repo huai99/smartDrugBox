@@ -65,7 +65,7 @@ public class AlarmDialog extends TimePickerDialog {
         super.updateTime(hourOfDay, minuteOfHour);
     }
 
-    @TargetApi(22)
+    @TargetApi(16)
     protected void setConfirmBtn(final Calendar calendar) {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,7 +22,7 @@ public class GetImgFrmGalleryResponse implements IOnActivityResultResponse {
         mActivity = activity;
     }
 
-    @TargetApi(20)
+    @TargetApi(19)
     @Override
     public void execute(int resultCode, Intent data) {
         if (data != null) {

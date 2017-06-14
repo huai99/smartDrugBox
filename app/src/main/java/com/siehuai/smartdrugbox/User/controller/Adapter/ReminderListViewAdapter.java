@@ -147,7 +147,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         lastExpandedGroupPosition = groupPosition;
     }
 
-    @TargetApi(17)
+    @TargetApi(19)
     private void switchToggleAction(final Switch aSwitch,
                                    final int position) {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -183,7 +183,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
     }
 
     //TODO: The alarm will go off immediately if the time is past already
-    @TargetApi(23)
+    @TargetApi(19)
     private void setAlarmOn(AlarmData alarmData) {
         mSetAlarmService.setAlarmOn(alarmData);
     }
