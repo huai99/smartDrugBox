@@ -83,6 +83,7 @@ public class OrderMedicineActivity extends AppCompatActivity {
                         String id = remoteHelper.generateNewId();
                         MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, null);
                         remoteHelper.insert(medicineOrder);
+                        dialog.cancel();
                     }
                 },
                 new DialogInterface.OnClickListener() {
@@ -101,5 +102,9 @@ public class OrderMedicineActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
+    }
+
+    private void promptOptionDialog(){
+
     }
 }
