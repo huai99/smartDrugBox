@@ -120,27 +120,35 @@ public class OrderMedicineActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MedicineOrderRemoteHelper remoteHelper = MedicineOrderRemoteHelper.getInstance();
-                        String id = remoteHelper.generateNewId();
-                        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, null);
-                        remoteHelper.insert(medicineOrder);
+                        systemManageOrderMedicine();
                         dialog.cancel();
                     }
                 },
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mCheckMedicineHelper.sendRequestToViewPharmacyMenu(mMedicineDetails.getMedicineName(),
-                                new IResponseReturnListener() {
-                                    @Override
-                                    public void onResponseComplete(Object response) {
-                                        ArrayList<MedicineDetails> medicineDetailList = (ArrayList<MedicineDetails>) response;
-                                    }
-                                });
+                        selfManageOrderMedicine();
                         dialog.cancel();
                     }
                 }
         );
+    }
+
+    private void systemManageOrderMedicine() {
+        MedicineOrderRemoteHelper remoteHelper = MedicineOrderRemoteHelper.getInstance();
+        String id = remoteHelper.generateNewId();
+        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, null);
+        remoteHelper.insert(medicineOrder);
+    }
+
+    private void selfManageOrderMedicine() {
+        mCheckMedicineHelper.sendRequestToViewPharmacyMenu(mMedicineDetails.getMedicineName(),
+                new IResponseReturnListener() {
+                    @Override
+                    public void onResponseComplete(Object response) {
+                        ArrayList<MedicineDetails> medicineDetailList = (ArrayList<MedicineDetails>) response;
+                    }
+                });
     }
 
 
