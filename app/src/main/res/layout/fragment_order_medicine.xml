@@ -192,12 +192,28 @@
                     android:layout_marginRight="24dp"
                     android:layout_marginTop="10dp"
                     android:text="Refill Now"/>
-
             </RelativeLayout>
 
         </ScrollView>
 
+        <FrameLayout
+            android:id="@+id/progressBarHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:visibility="gone"
+            android:animateLayoutChanges="true"
+            android:background="#000000"
+            android:translationZ="5dp">
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:translationZ="5dp"/>
+        </FrameLayout>
     </FrameLayout>
 
 </layout>
