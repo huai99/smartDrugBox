@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineDetailsMenuAdapter;
-import com.siehuai.smartdrugbox.User.data.MenuResource.MedicineDetailsResource;
+import com.siehuai.smartdrugbox.User.data.MenuResource.MedicineDetailsMenuResource;
 
 public class MedicineCatalogueFragment extends Fragment {
 
@@ -36,7 +36,7 @@ public class MedicineCatalogueFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         setRecycleViewLayoutManager();
         MedicineDetailsMenuAdapter adapter = new MedicineDetailsMenuAdapter();
-        MedicineDetailsResource resource = new MedicineDetailsResource();
+        MedicineDetailsMenuResource resource = new MedicineDetailsMenuResource();
         adapter.setResourceArrayList(resource);
         mRecyclerView.setAdapter(adapter);
     }
