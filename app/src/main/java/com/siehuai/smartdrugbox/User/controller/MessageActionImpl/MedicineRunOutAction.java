@@ -12,7 +12,7 @@ import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
-import com.siehuai.smartdrugbox.User.view.MedicineBox.OrderMedicineActivity;
+import com.siehuai.smartdrugbox.User.view.OrderMedicine.OrderMedicineActivity;
 
 import java.util.Map;
 

@@ -107,7 +107,7 @@
         <activity android:name=".User.view.U_BaseActivity">
         </activity>
         <activity
-            android:name=".User.view.MedicineBox.OrderMedicineActivity"
+            android:name=".User.view.OrderMedicine.OrderMedicineActivity"
             android:label="@string/title_activity_order_medicine">
         </activity>
         <activity
