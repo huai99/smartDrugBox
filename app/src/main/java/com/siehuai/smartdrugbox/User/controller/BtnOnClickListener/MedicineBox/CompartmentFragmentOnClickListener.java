@@ -23,11 +23,11 @@ public class CompartmentFragmentOnClickListener implements Observer {
     public void update(Observable o, Object arg) {
         Bundle bundl = new Bundle();
         CompartmentDetails details = (CompartmentDetails) arg;
-        bundl.putParcelable("compartmentDetails",details);
+        bundl.putParcelable("compartmentDetails", details);
         ViewOrEditFragment viewOrEditFragment = new ViewOrEditFragment();
         viewOrEditFragment.setArguments(bundl);
         FragmentTransaction fragmentTransaction = mFragment.getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_getDrugStore, viewOrEditFragment);
+        fragmentTransaction.replace(R.id.fragment_view_medicine_box_compartment, viewOrEditFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
