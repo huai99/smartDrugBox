@@ -8,9 +8,11 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -42,6 +44,8 @@ public class OrderMedicineFragment extends Fragment {
     MedicineDetails mMedicineDetails;
     RequestQueue queue;
     CheckMedicineHelper mCheckMedicineHelper;
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
 
     public OrderMedicineFragment() {
         // Required empty public constructor
@@ -143,6 +147,10 @@ public class OrderMedicineFragment extends Fragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        inAnimation = new AlphaAnimation(0f, 1f);
+                        inAnimation.setDuration(200);
+                        mBinding.progressBarHolder.setAnimation(inAnimation);
+                        mBinding.progressBarHolder.setVisibility(View.VISIBLE);
                         selfManageOrderMedicine();
                         dialog.cancel();
                     }
@@ -162,7 +170,19 @@ public class OrderMedicineFragment extends Fragment {
                 new IResponseReturnListener() {
                     @Override
                     public void onResponseComplete(Object response) {
-                        ArrayList<MedicineDetails> medicineDetailList = (ArrayList<MedicineDetails>) response;
+                        ArrayList<MedicineDetails> medicineDetailsList = (ArrayList<MedicineDetails>) response;
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("medicineDetailsList", medicineDetailsList);
+                        ViewRequestedMedicineMenuFragment requestedMedicineMenuFragment = new ViewRequestedMedicineMenuFragment();
+                        requestedMedicineMenuFragment.setArguments(bundle);
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_order_medicine, requestedMedicineMenuFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        outAnimation = new AlphaAnimation(1f, 0f);
+                        outAnimation.setDuration(200);
+                        mBinding.progressBarHolder.setAnimation(outAnimation);
+                        mBinding.progressBarHolder.setVisibility(View.GONE);
                     }
                 });
     }
