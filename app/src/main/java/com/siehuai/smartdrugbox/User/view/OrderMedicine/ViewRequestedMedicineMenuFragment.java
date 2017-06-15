@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.MenuResource;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.MedicineDetailsMenuAdapter;
+import com.siehuai.smartdrugbox.User.controller.BtnOnClickListener.OrderMedicine.ViewRequestedMedicineMenuOnClickListener;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 import com.siehuai.smartdrugbox.User.data.MenuResource.MedicineDetailsMenuResource;
 import com.siehuai.smartdrugbox.databinding.FragmentViewRequestedMedicineMenuBinding;
@@ -62,6 +63,7 @@ public class ViewRequestedMedicineMenuFragment extends Fragment {
         setRecycleViewLayoutManager();
         adapter = new MedicineDetailsMenuAdapter();
         adapter.setResourceArrayList(setUpMenuResource());
+        adapter.addObserver(new ViewRequestedMedicineMenuOnClickListener(this));
         mRecyclerView.setAdapter(adapter);
     }
 
