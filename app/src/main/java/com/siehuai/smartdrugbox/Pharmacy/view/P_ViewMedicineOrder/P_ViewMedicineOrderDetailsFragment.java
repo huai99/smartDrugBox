@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,10 +57,6 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         mMedicineOrder = bundle.getParcelable("order");
-        Log.d("ViewOrderDetails", String.valueOf(mMedicineOrder));
-//        GenericRemoteHelperComponent genericRemoteHelperComponent = DaggerGenericRemoteHelperComponent.create();
-//        genericRemoteHelperComponent.inject(this);
-
         P_RemoteHelperComponent p_remoteHelperComponent = DaggerP_RemoteHelperComponent.create();
         p_remoteHelperComponent.inject(this);
     }
