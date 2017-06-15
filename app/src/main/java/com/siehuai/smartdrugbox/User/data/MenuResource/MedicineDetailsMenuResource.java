@@ -27,7 +27,7 @@ public class MedicineDetailsMenuResource implements MenuResource {
 
     @Override
     public ArrayList<?> getResourceList() {
-        return null;
+        return mMedicineDetailsList;
     }
 
     @Override
