@@ -12,9 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.MedicineOrderRemoteHelper;
+import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
+import com.siehuai.smartdrugbox.Generic.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.User.controller.DaggerU_DependencyInjectionComponent;
+import com.siehuai.smartdrugbox.User.controller.U_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 import com.siehuai.smartdrugbox.databinding.FragmentViewRequestedMedicineDetailsBinding;
+
+import javax.inject.Inject;
 
 public class ViewRequestedMedicineDetailsFragment extends Fragment {
 
@@ -27,6 +34,10 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
     String description;
     String medicineMoreInfo;
     Bitmap mBitmap;
+    PharmacyDetails mPharmacyDetails;
+
+    @Inject
+    MedicineOrderRemoteHelper mMedicineOrderRemoteHelper;
 
     public ViewRequestedMedicineDetailsFragment() {
         // Required empty public constructor
@@ -38,6 +49,8 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
         Bundle bundle = getArguments();
         mMedicineDetails = bundle.getParcelable("medicineDetails");
         Log.d("Requested Medicine", String.valueOf(mMedicineDetails));
+        U_DependencyInjectionComponent uDependencyInjectionComponent = DaggerU_DependencyInjectionComponent.create();
+        uDependencyInjectionComponent.inject(this);
     }
 
     @Override
@@ -49,6 +62,7 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
         if (mMedicineDetails != null) {
             initData();
             initView();
+            setUpSendOrderBtn();
         }
         return view;
     }
@@ -62,6 +76,7 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
         description = mMedicineDetails.getDescription();
         medicineMoreInfo = mMedicineDetails.getMedicineMoreInfo();
         mBitmap = Utils.Base64toBitMap(mMedicineDetails.getMedicineImage());
+        mPharmacyDetails = mMedicineDetails.getPharmacyDetails();
     }
 
 
@@ -73,6 +88,17 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
         mBinding.editTextDescription.setText(description);
         mBinding.editTextMoreInfo.setText(medicineMoreInfo);
         mBinding.imageViewMedicine.setImageBitmap(mBitmap);
+    }
+
+    private void setUpSendOrderBtn() {
+        mBinding.btnSendOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = mMedicineOrderRemoteHelper.generateNewId();
+                MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, mPharmacyDetails, true);
+                mMedicineOrderRemoteHelper.insert(medicineOrder);
+            }
+        });
     }
 
 }
