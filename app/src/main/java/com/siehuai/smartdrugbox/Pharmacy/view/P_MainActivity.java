@@ -3,7 +3,6 @@ package com.siehuai.smartdrugbox.Pharmacy.view;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.DaggerP_RemoteHelperComponent;
@@ -15,7 +14,7 @@ import com.siehuai.smartdrugbox.databinding.ActivityPMainBinding;
 
 import javax.inject.Inject;
 
-public class P_MainActivity extends AppCompatActivity {
+public class P_MainActivity extends P_MainBaseActivity {
 
     ActivityPMainBinding mBinding;
 
