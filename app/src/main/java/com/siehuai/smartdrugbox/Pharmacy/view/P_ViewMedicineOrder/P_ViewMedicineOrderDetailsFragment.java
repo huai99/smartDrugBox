@@ -20,7 +20,7 @@ import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.DaggerP_RemoteHelperComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_RemoteHelperComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.PharmacyDetailsRemoteHelper;
-import com.siehuai.smartdrugbox.Pharmacy.data.PharmacyDetails;
+import com.siehuai.smartdrugbox.Generic.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 import com.siehuai.smartdrugbox.databinding.FragmentPViewMedicineOrderDetailsBinding;

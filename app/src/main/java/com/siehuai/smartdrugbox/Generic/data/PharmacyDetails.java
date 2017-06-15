@@ -1,9 +1,7 @@
-package com.siehuai.smartdrugbox.Pharmacy.data;
+package com.siehuai.smartdrugbox.Generic.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
 public class PharmacyDetails implements IDbData, Parcelable {
 

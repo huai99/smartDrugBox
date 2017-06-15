@@ -7,7 +7,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.DataType;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
-import com.siehuai.smartdrugbox.Pharmacy.data.PharmacyDetails;
+import com.siehuai.smartdrugbox.Generic.data.PharmacyDetails;
 
 import java.util.Observable;
 import java.util.Observer;

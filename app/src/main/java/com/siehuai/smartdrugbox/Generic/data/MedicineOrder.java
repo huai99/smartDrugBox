@@ -3,7 +3,6 @@ package com.siehuai.smartdrugbox.Generic.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.siehuai.smartdrugbox.Pharmacy.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 
 public class MedicineOrder implements IDbData, Parcelable {

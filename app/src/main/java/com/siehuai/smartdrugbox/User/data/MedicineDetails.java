@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
+import com.siehuai.smartdrugbox.Generic.data.PharmacyDetails;
 
 @IgnoreExtraProperties
 public class MedicineDetails implements IDbData, Parcelable {
@@ -12,7 +13,7 @@ public class MedicineDetails implements IDbData, Parcelable {
     private String id;
     private String medicineName;
     private String drugstore;
-    private U_PharmacyDetails pharmacyDetails;
+    private PharmacyDetails pharmacyDetails;
     private String description;
     private String medicineMoreInfo;
     private int frequencyOfTaking;
@@ -24,7 +25,7 @@ public class MedicineDetails implements IDbData, Parcelable {
 
     public MedicineDetails(String id,
                            String medicineName,
-                           U_PharmacyDetails pharmacyDetails,
+                           PharmacyDetails pharmacyDetails,
                            String description,
                            String medicineMoreInfo,
                            int frequencyOfTaking,
@@ -41,11 +42,11 @@ public class MedicineDetails implements IDbData, Parcelable {
         this.price = price;
     }
 
-    public U_PharmacyDetails getPharmacyDetails() {
+    public PharmacyDetails getPharmacyDetails() {
         return pharmacyDetails;
     }
 
-    public void setPharmacyDetails(U_PharmacyDetails pharmacyDetails) {
+    public void setPharmacyDetails(PharmacyDetails pharmacyDetails) {
         this.pharmacyDetails = pharmacyDetails;
     }
 
@@ -110,7 +111,7 @@ public class MedicineDetails implements IDbData, Parcelable {
         //the sequence of this need to correspond to writeToParcel variable sequence
         id = in.readString();
         medicineName = in.readString();
-        pharmacyDetails = in.readParcelable(U_PharmacyDetails.class.getClassLoader());
+        pharmacyDetails = in.readParcelable(PharmacyDetails.class.getClassLoader());
         description = in.readString();
         medicineMoreInfo = in.readString();
         frequencyOfTaking = in.readInt();
