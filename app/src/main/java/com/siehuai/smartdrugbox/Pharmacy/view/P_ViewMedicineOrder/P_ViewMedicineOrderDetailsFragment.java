@@ -95,7 +95,7 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
         medicineName = String.valueOf(mMedicineDetails.getMedicineName());
         description = mMedicineDetails.getDescription();
         medicineMoreInfo = mMedicineDetails.getMedicineMoreInfo();
-        mBitmap = Utils.Base64toBitMap(mMedicineDetails.getMedicineImg());
+        mBitmap = Utils.Base64toBitMap(mMedicineDetails.getMedicineImage());
     }
 
 

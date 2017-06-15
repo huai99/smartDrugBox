@@ -14,8 +14,8 @@ public class MedicineDetails implements IDbData, Parcelable {
     private String drugstore;
     private String description;
     private String medicineMoreInfo;
-    private String frequencyOfTaking;
-    private String medicineImg;
+    private int frequencyOfTaking;
+    private String medicineImage;
     private double price;
 
     public MedicineDetails() {
@@ -26,8 +26,8 @@ public class MedicineDetails implements IDbData, Parcelable {
                            String drugstore,
                            String description,
                            String medicineMoreInfo,
-                           String frequencyOfTaking,
-                           String medicineImg,
+                           int frequencyOfTaking,
+                           String medicineImage,
                            double price
                            ) {
         this.id = id;
@@ -36,7 +36,7 @@ public class MedicineDetails implements IDbData, Parcelable {
         this.description = description;
         this.medicineMoreInfo = medicineMoreInfo;
         this.frequencyOfTaking = frequencyOfTaking;
-        this.medicineImg = medicineImg;
+        this.medicineImage = medicineImage;
         this.price = price;
     }
 
@@ -81,20 +81,20 @@ public class MedicineDetails implements IDbData, Parcelable {
         this.medicineMoreInfo = medicineMoreInfo;
     }
 
-    public String getFrequencyOfTaking() {
+    public int getFrequencyOfTaking() {
         return frequencyOfTaking;
     }
 
-    public void setFrequencyOfTaking(String frequencyOfTaking) {
+    public void setFrequencyOfTaking(int frequencyOfTaking) {
         this.frequencyOfTaking = frequencyOfTaking;
     }
 
-    public String getMedicineImg() {
-        return medicineImg;
+    public String getMedicineImage() {
+        return medicineImage;
     }
 
-    public void setMedicineImg(String medicineImg) {
-        this.medicineImg = medicineImg;
+    public void setMedicineImage(String medicineImage) {
+        this.medicineImage = medicineImage;
     }
 
     public double getPrice() {
@@ -112,8 +112,8 @@ public class MedicineDetails implements IDbData, Parcelable {
         drugstore = in.readString();
         description = in.readString();
         medicineMoreInfo = in.readString();
-        frequencyOfTaking = in.readString();
-        medicineImg = in.readString();
+        frequencyOfTaking = in.readInt();
+        medicineImage = in.readString();
         price = in.readDouble();
 
     }
@@ -142,8 +142,8 @@ public class MedicineDetails implements IDbData, Parcelable {
         dest.writeString(drugstore);
         dest.writeString(description);
         dest.writeString(medicineMoreInfo);
-        dest.writeString(frequencyOfTaking);
-        dest.writeString(medicineImg);
+        dest.writeInt(frequencyOfTaking);
+        dest.writeString(medicineImage);
         dest.writeDouble(price);
     }
 

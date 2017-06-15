@@ -44,7 +44,7 @@ public class MedicineDetailsMenuResource implements MenuResource {
         mImageList.clear();
         for (MedicineDetails medicineDetails : mMedicineDetailsList) {
             if (!imgHashMap.containsKey(medicineDetails.getId())) {
-                Bitmap bitmap = Utils.Base64toBitMap(medicineDetails.getMedicineImg());
+                Bitmap bitmap = Utils.Base64toBitMap(medicineDetails.getMedicineImage());
                 mImageList.add(bitmap);
                 imgHashMap.put(medicineDetails.getId(), bitmap);
             } else {

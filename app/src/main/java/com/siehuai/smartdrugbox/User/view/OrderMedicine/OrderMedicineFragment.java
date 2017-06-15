@@ -81,11 +81,11 @@ public class OrderMedicineFragment extends Fragment {
     private void initData() {
         name = mMedicineDetails.getMedicineName();
         drugStore = mMedicineDetails.getDrugstore();
-        frequency = mMedicineDetails.getFrequencyOfTaking();
+        frequency = String.valueOf(mMedicineDetails.getFrequencyOfTaking());
         price = String.valueOf(mMedicineDetails.getPrice());
         description = mMedicineDetails.getDescription();
         moreInfo = mMedicineDetails.getMedicineMoreInfo();
-        mBitmap = Utils.Base64toBitMap(mMedicineDetails.getMedicineImg());
+        mBitmap = Utils.Base64toBitMap(mMedicineDetails.getMedicineImage());
     }
 
 
