@@ -12,6 +12,7 @@ public class MedicineDetails implements IDbData, Parcelable {
     private String id;
     private String medicineName;
     private String drugstore;
+    private U_PharmacyDetails pharmacyDetails;
     private String description;
     private String medicineMoreInfo;
     private int frequencyOfTaking;
@@ -23,16 +24,16 @@ public class MedicineDetails implements IDbData, Parcelable {
 
     public MedicineDetails(String id,
                            String medicineName,
-                           String drugstore,
+                           U_PharmacyDetails pharmacyDetails,
                            String description,
                            String medicineMoreInfo,
                            int frequencyOfTaking,
                            String medicineImage,
                            double price
-                           ) {
+    ) {
         this.id = id;
         this.medicineName = medicineName;
-        this.drugstore = drugstore;
+        this.pharmacyDetails = pharmacyDetails;
         this.description = description;
         this.medicineMoreInfo = medicineMoreInfo;
         this.frequencyOfTaking = frequencyOfTaking;
@@ -40,12 +41,12 @@ public class MedicineDetails implements IDbData, Parcelable {
         this.price = price;
     }
 
-    public String getDrugstore() {
-        return drugstore;
+    public U_PharmacyDetails getPharmacyDetails() {
+        return pharmacyDetails;
     }
 
-    public void setDrugstore(String drugstore) {
-        this.drugstore = drugstore;
+    public void setPharmacyDetails(U_PharmacyDetails pharmacyDetails) {
+        this.pharmacyDetails = pharmacyDetails;
     }
 
     public String getId() {
@@ -109,13 +110,20 @@ public class MedicineDetails implements IDbData, Parcelable {
         //the sequence of this need to correspond to writeToParcel variable sequence
         id = in.readString();
         medicineName = in.readString();
-        drugstore = in.readString();
+        pharmacyDetails = in.readParcelable(U_PharmacyDetails.class.getClassLoader());
         description = in.readString();
         medicineMoreInfo = in.readString();
         frequencyOfTaking = in.readInt();
         medicineImage = in.readString();
         price = in.readDouble();
+    }
 
+    public String getDrugstore() {
+        return pharmacyDetails.getPharmacyName();
+    }
+
+    public void setDrugstore(String drugstore) {
+        this.drugstore = drugstore;
     }
 
     public static final Creator<MedicineDetails> CREATOR = new Creator<MedicineDetails>() {
@@ -139,7 +147,7 @@ public class MedicineDetails implements IDbData, Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(medicineName);
-        dest.writeString(drugstore);
+        dest.writeParcelable(pharmacyDetails, flags);
         dest.writeString(description);
         dest.writeString(medicineMoreInfo);
         dest.writeInt(frequencyOfTaking);

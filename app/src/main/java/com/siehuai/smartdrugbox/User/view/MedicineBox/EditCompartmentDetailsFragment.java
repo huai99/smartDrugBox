@@ -22,6 +22,7 @@ import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
+import com.siehuai.smartdrugbox.User.data.U_PharmacyDetails;
 
 public class EditCompartmentDetailsFragment extends Fragment {
 
@@ -134,7 +135,9 @@ public class EditCompartmentDetailsFragment extends Fragment {
         String id = null;
         medicineDetails.setId(id);
         medicineDetails.setMedicineName(medicineName);
-        medicineDetails.setDrugstore(drugStoreName);
+        U_PharmacyDetails pharmacyDetails = new U_PharmacyDetails();
+        pharmacyDetails.setPharmacyName(drugStoreName);
+        medicineDetails.setPharmacyDetails(pharmacyDetails);
         return medicineDetails;
     }
 
