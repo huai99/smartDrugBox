@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.siehuai.smartdrugbox.Generic.controller.HTTPHelper.IResponseReturnListener;
 import com.siehuai.smartdrugbox.Generic.data.FirebaseCloudFunctions.HttpFunctionURL;
@@ -71,29 +72,7 @@ public class CheckMedicineHelper {
     }
 
     private MedicineDetails convertLinkedHashMapToMedicineDetails(LinkedHashMap<String, Object> linkedHashMap) {
-        MedicineDetails medicineDetails = new MedicineDetails();
-        String description = (String) linkedHashMap.get("description");
-        Integer frequencyOfTaking = (Integer) linkedHashMap.get("frequencyOfTaking");
-        String id = (String) linkedHashMap.get("id");
-        String medicineImage = (String) linkedHashMap.get("medicineImage");
-        String medicineMoreInfo = (String) linkedHashMap.get("medicineMoreInfo");
-        String medicineName = (String) linkedHashMap.get("medicineName");
-        String drugstore = (String) linkedHashMap.get("drugstore");
-        if (linkedHashMap.get("price") instanceof Integer) {
-            Integer price = (Integer) linkedHashMap.get("price");
-            medicineDetails.setPrice(price);
-        } else if (linkedHashMap.get("price") instanceof Double) {
-            Double price = (Double) linkedHashMap.get("price");
-            medicineDetails.setPrice(price);
-        }
-        medicineDetails.setDescription(description);
-        medicineDetails.setFrequencyOfTaking(frequencyOfTaking.toString());
-        medicineDetails.setId(id);
-        medicineDetails.setMedicineImg(medicineImage);
-        medicineDetails.setMedicineMoreInfo(medicineMoreInfo);
-        medicineDetails.setMedicineName(medicineName);
-        medicineDetails.setDrugstore(drugstore);
-        return medicineDetails;
+        return objectMapper.convertValue(linkedHashMap, new TypeReference<MedicineDetails>() {});
     }
 
 }
