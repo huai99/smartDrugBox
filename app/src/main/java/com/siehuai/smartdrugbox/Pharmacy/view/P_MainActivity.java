@@ -3,6 +3,8 @@ package com.siehuai.smartdrugbox.Pharmacy.view;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.DaggerP_RemoteHelperComponent;
@@ -29,6 +31,8 @@ public class P_MainActivity extends P_MainBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p_main);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_p_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         setUpEditCatalogueBtnOnClick();
         setUpAddMedicineBtnOnClick();
         getAllRemoteData();
@@ -58,5 +62,9 @@ public class P_MainActivity extends P_MainBaseActivity {
         mDbHelper.read();
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_pharmacy_main, menu);
+        return true;
+    }
 }
