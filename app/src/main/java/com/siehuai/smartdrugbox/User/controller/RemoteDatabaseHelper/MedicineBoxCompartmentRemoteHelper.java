@@ -106,7 +106,7 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
     }
 
     public void find(final String id, final IDbOnDataChangeListener dataChangeListener) {
-        mDatabase.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterator iterator = transferDatatoLocalWithoutSerializer(dataSnapshot, FLAG_FIND);
