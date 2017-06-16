@@ -19,6 +19,11 @@ public class P_MessageActionFactory {
                 newMedicineOrderAction.setMessageTitle(title);
                 newMedicineOrderAction.setMessageBody(body);
                 return newMedicineOrderAction;
+            case "NewSpecializedOrderAction":
+                NewSpecializedOrderAction newSpecializedOrderAction = new NewSpecializedOrderAction(context);
+                newSpecializedOrderAction.setMessageTitle(title);
+                newSpecializedOrderAction.setMessageBody(body);
+                return newSpecializedOrderAction;
             default:
                 return null;
         }
