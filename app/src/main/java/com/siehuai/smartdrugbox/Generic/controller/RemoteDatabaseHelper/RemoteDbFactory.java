@@ -3,7 +3,6 @@ package com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MedicineDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxDetailsRemoteHelper;
-import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineDetailsRemoteHelper;
 
 
 public class RemoteDbFactory {
@@ -16,13 +15,11 @@ public class RemoteDbFactory {
 
     public static RemoteDbHelper createRemoteDbHelper(RemoteDataType dataType) {
         if (dataType == RemoteDataType.PharmacyMedicineDetails) {
-            return new P_MedicineDetailsRemoteHelper();
-        } else if (dataType == RemoteDataType.UserMedicineDetails) {
-            return new MedicineDetailsRemoteHelper();
+            return P_MedicineDetailsRemoteHelper.getInstance();
         } else if (dataType == RemoteDataType.CompartmentDetails) {
-            return new MedicineBoxCompartmentRemoteHelper();
+            return MedicineBoxCompartmentRemoteHelper.getInstance();
         } else {
-            return new MedicineBoxDetailsRemoteHelper();
+            return MedicineBoxDetailsRemoteHelper.getInstance();
         }
     }
 }
