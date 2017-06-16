@@ -18,7 +18,7 @@ import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.IListResource;
 import com.siehuai.smartdrugbox.Pharmacy.controller.OnClickListener.P_ViewMedicineOrder.MedicineOrderListClickListener;
 import com.siehuai.smartdrugbox.Pharmacy.controller.P_MedicineOrderIListAdapter;
-import com.siehuai.smartdrugbox.Pharmacy.data.P_MedicineOrderListResource;
+import com.siehuai.smartdrugbox.Pharmacy.data.ListResource.P_MedicineOrderListResource;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.databinding.FragmentPViewMedicineOrderBinding;
 

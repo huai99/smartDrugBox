@@ -17,8 +17,8 @@ import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.Medicine
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
 import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
-import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.DaggerP_RemoteHelperComponent;
-import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_RemoteHelperComponent;
+import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.DaggerP_DependencyInjectionComponent;
+import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.P_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.PharmacyDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.Generic.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.R;
@@ -57,8 +57,8 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         mMedicineOrder = bundle.getParcelable("order");
-        P_RemoteHelperComponent p_remoteHelperComponent = DaggerP_RemoteHelperComponent.create();
-        p_remoteHelperComponent.inject(this);
+        P_DependencyInjectionComponent p_dependencyInjectionComponent = DaggerP_DependencyInjectionComponent.create();
+        p_dependencyInjectionComponent.inject(this);
     }
 
     @Override
