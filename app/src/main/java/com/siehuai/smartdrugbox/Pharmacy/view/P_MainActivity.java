@@ -5,12 +5,14 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
-import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.DaggerP_RemoteHelperComponent;
+import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.DaggerP_DependencyInjectionComponent;
+import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.P_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MedicineDetailsRemoteHelper;
-import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_RemoteHelperComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.SubscribeToEventHelper;
+import com.siehuai.smartdrugbox.Pharmacy.view.OrderQueue.OrderQueueActivity;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.databinding.ActivityPMainBinding;
 
@@ -25,7 +27,7 @@ public class P_MainActivity extends P_MainBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        P_RemoteHelperComponent remoteHelperComponent = DaggerP_RemoteHelperComponent.create();
+        P_DependencyInjectionComponent remoteHelperComponent = DaggerP_DependencyInjectionComponent.create();
         remoteHelperComponent.inject(this);
         SubscribeToEventHelper.subscribeToTopic("medicineOrder");
         super.onCreate(savedInstanceState);
@@ -66,5 +68,21 @@ public class P_MainActivity extends P_MainBaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_pharmacy_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.order_queue:
+                goToOrderQueue();
+                break;
+            default:
+        }
+        return true;
+    }
+
+    private void goToOrderQueue() {
+        Intent intent = new Intent(this, OrderQueueActivity.class);
+        startActivity(intent);
     }
 }
