@@ -132,10 +132,10 @@ public class OrderMedicineFragment extends Fragment {
 
     private void promptOptionsDialog() {
         mAlertDialogService.provideCustomDialog(
-                "Options",
                 "Choose your preferred way of buying medicine",
-                "System Manage",
-                "Self Manage",
+                "Options",
+                "System manage",
+                "Choose from available pharmacy",
                 R.drawable.high_priority,
                 new DialogInterface.OnClickListener() {
                     @Override
