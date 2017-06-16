@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/miCompose"
+        android:id="@+id/order_queue"
         android:icon="@drawable/order_cart"
         app:showAsAction="ifRoom"
-        android:title="Compose">
+        android:title="Order Queue">
     </item>
 </menu>
