@@ -95,7 +95,8 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String id = mMedicineOrderRemoteHelper.generateNewId();
-                MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, mPharmacyDetails, true);
+                MedicineOrder medicineOrder =
+                        new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, mPharmacyDetails, true, false);
                 mMedicineOrderRemoteHelper.insert(medicineOrder);
             }
         });

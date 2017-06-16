@@ -161,7 +161,7 @@ public class OrderMedicineFragment extends Fragment {
     private void systemManageOrderMedicine() {
         MedicineOrderRemoteHelper remoteHelper = MedicineOrderRemoteHelper.getInstance();
         String id = remoteHelper.generateNewId();
-        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, null, false);
+        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, null, false,false);
         remoteHelper.insert(medicineOrder);
     }
 

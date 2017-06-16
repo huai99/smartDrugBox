@@ -7,14 +7,15 @@ import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 
 public class MedicineOrder implements IDbData, Parcelable {
 
-    String id;
-    String userName;
-    String address;
-    String contact;
-    MedicineDetails medicineDetails;
+    private String id;
+    private String userName;
+    private String address;
+    private String contact;
+    private MedicineDetails medicineDetails;
     boolean availability;
-    PharmacyDetails pharmacyDetails;
+    private PharmacyDetails pharmacyDetails;
     boolean targetSinglePharmacy;
+    boolean completionStatus;
 
     public MedicineOrder() {
     }
@@ -26,7 +27,9 @@ public class MedicineOrder implements IDbData, Parcelable {
                          MedicineDetails medicineDetails,
                          boolean availability,
                          PharmacyDetails pharmacyDetails,
-                         boolean targetSinglePharmacy) {
+                         boolean targetSinglePharmacy,
+                         boolean completionStatus
+                         ) {
         this.id = id;
         this.userName = userName;
         this.address = address;
@@ -35,6 +38,7 @@ public class MedicineOrder implements IDbData, Parcelable {
         this.availability = availability;
         this.pharmacyDetails = pharmacyDetails;
         this.targetSinglePharmacy = targetSinglePharmacy;
+        this.completionStatus = completionStatus;
     }
 
     @Override
@@ -103,6 +107,14 @@ public class MedicineOrder implements IDbData, Parcelable {
         this.targetSinglePharmacy = targetSinglePharmacy;
     }
 
+    public boolean isCompletionStatus() {
+        return completionStatus;
+    }
+
+    public void setCompletionStatus(boolean completionStatus) {
+        this.completionStatus = completionStatus;
+    }
+
     protected MedicineOrder(Parcel in) {
         id = in.readString();
         userName = in.readString();
@@ -112,6 +124,7 @@ public class MedicineOrder implements IDbData, Parcelable {
         availability = in.readInt() != 0;
         pharmacyDetails = in.readParcelable(PharmacyDetails.class.getClassLoader());
         targetSinglePharmacy = in.readInt() != 0;
+        completionStatus = in.readInt() != 0;
     }
 
     public static final Parcelable.Creator<MedicineOrder> CREATOR = new Parcelable.Creator<MedicineOrder>() {
@@ -141,6 +154,6 @@ public class MedicineOrder implements IDbData, Parcelable {
         dest.writeInt(availability ? 1 : 0);
         dest.writeParcelable(pharmacyDetails, flags);
         dest.writeInt(targetSinglePharmacy ? 1 : 0);
-
+        dest.writeInt(completionStatus ? 1 : 0);
     }
 }
