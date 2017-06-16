@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.Pharmacy.data;
+package com.siehuai.smartdrugbox.Pharmacy.data.ListResource;
 
 import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.IListResource;

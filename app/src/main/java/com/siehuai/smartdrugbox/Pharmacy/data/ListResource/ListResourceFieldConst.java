@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.Pharmacy.data;
+package com.siehuai.smartdrugbox.Pharmacy.data.ListResource;
 
 public class ListResourceFieldConst {
     public static String USERNAME = "userName";

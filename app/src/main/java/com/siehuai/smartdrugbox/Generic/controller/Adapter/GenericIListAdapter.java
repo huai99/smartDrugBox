@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.IListResource;
-import com.siehuai.smartdrugbox.Pharmacy.data.ListResourceFieldConst;
+import com.siehuai.smartdrugbox.Pharmacy.data.ListResource.ListResourceFieldConst;
 import com.siehuai.smartdrugbox.R;
 
 import java.util.ArrayList;
@@ -17,14 +17,14 @@ import java.util.Observer;
 public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIListAdapter.ViewHolder>
         implements IListAdapter {
 
-    public IListResource mIListResource;
-    ArrayList<IDbData> mIDbDataList;
-    ArrayList<String> mUserNameList = new ArrayList<>();
-    ArrayList<String> mContactList = new ArrayList<>();
-    ArrayList<String> mMedicineList = new ArrayList<>();
-    ArrayList<String> mAvailabilityList = new ArrayList<>();
+    protected IListResource mIListResource;
+    private ArrayList<IDbData> mIDbDataList;
+    private ArrayList<String> mUserNameList = new ArrayList<>();
+    private ArrayList<String> mContactList = new ArrayList<>();
+    private ArrayList<String> mMedicineList = new ArrayList<>();
+    private ArrayList<String> mAvailabilityList = new ArrayList<>();
 
-    public ListAdapterObservable mClickListenerObservable = new ListAdapterObservable();
+    private ListAdapterObservable mClickListenerObservable = new ListAdapterObservable();
 
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -36,7 +36,7 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
         TextView mAvailabilityText;
         int position;
 
-        protected ViewHolder(final View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
             mView = itemView;
             mUserNameText = (TextView) itemView.findViewById(R.id.text_userName);
@@ -45,7 +45,7 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
             mAvailabilityText = (TextView) itemView.findViewById(R.id.text_availability);
         }
 
-        protected void setPosition(int position) {
+        void setPosition(int position) {
             this.position = position;
         }
 
@@ -53,20 +53,20 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
             mView.setOnClickListener(listener);
         }
 
-        public void setUserNameText(String userName) {
+        void setUserNameText(String userName) {
             mUserNameText.setText(userName);
         }
 
 
-        public void setContactText(String contact) {
+        void setContactText(String contact) {
             mContactText.setText(contact);
         }
 
-        public void setMedicineText(String medicine) {
+        void setMedicineText(String medicine) {
             mMedicineText.setText(medicine);
         }
 
-        public void setAvailabilityText(String availability) {
+        void setAvailabilityText(String availability) {
             mAvailabilityText.setText(availability);
         }
     }
