@@ -167,7 +167,7 @@ public class OrderMedicineFragment extends Fragment {
             @Override
             public void onComplete(Object error) {
                 if (error == null) {
-                    promptSucessfulAlertDialog();
+                    promptSuccessfulAlertDialog();
                 } else {
                     promptErrorAlertDialog((String) error);
                 }
@@ -197,7 +197,7 @@ public class OrderMedicineFragment extends Fragment {
                 });
     }
 
-    private void promptSucessfulAlertDialog() {
+    private void promptSuccessfulAlertDialog() {
         mAlertDialogService.provideDefaultOkDialog("We will notified you when a pharmacy has accepted your order",
                 new DialogInterface.OnClickListener() {
                     @Override

@@ -2,7 +2,6 @@ package com.siehuai.smartdrugbox.User.view.OrderMedicine;
 
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -24,7 +23,6 @@ import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.DaggerU_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.User.controller.U_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
-import com.siehuai.smartdrugbox.User.view.U_MainActivity;
 import com.siehuai.smartdrugbox.databinding.FragmentViewRequestedMedicineDetailsBinding;
 
 import javax.inject.Inject;
@@ -109,7 +107,7 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
                     @Override
                     public void onComplete(Object error) {
                         if (error == null) {
-                            promptSucessfulAlertDialog();
+                            promptSuccessfulAlertDialog();
                         } else {
                             promptErrorAlertDialog((String) error);
                         }
@@ -119,7 +117,7 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
         });
     }
 
-    private void promptSucessfulAlertDialog() {
+    private void promptSuccessfulAlertDialog() {
         mAlertDialogService.provideDefaultOkDialog("Order successfully make, go back to main page?",
                 new DialogInterface.OnClickListener() {
                     @Override
