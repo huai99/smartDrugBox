@@ -28,17 +28,17 @@ public class P_OrderQueueListResource implements IListResource {
         ArrayList<String> userNameList = new ArrayList<>();
         ArrayList<String> contactList = new ArrayList<>();
         ArrayList<String> medicineList = new ArrayList<>();
-        ArrayList<String> availabilityList = new ArrayList<>();
+        ArrayList<String> completionStatusList = new ArrayList<>();
         for (MedicineOrder medicineOrder : medicineOrderList) {
             userNameList.add(medicineOrder.getUserName());
             contactList.add(medicineOrder.getContact());
             medicineList.add(medicineOrder.getMedicineDetails().getMedicineName());
-            availabilityList.add(String.valueOf(medicineOrder.isAvailability()));
+            completionStatusList.add(String.valueOf(medicineOrder.isCompletionStatus()));
         }
         mListMap.put(ListResourceFieldConst.COLUMN1, userNameList);
         mListMap.put(ListResourceFieldConst.COLUMN2, contactList);
         mListMap.put(ListResourceFieldConst.COLUMN3, medicineList);
-        mListMap.put(ListResourceFieldConst.COLUMN4, availabilityList);
+        mListMap.put(ListResourceFieldConst.COLUMN4, completionStatusList);
     }
 
     @Override
