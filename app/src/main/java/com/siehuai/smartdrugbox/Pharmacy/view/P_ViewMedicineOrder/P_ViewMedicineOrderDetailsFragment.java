@@ -17,10 +17,10 @@ import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.Medicine
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
 import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
+import com.siehuai.smartdrugbox.Generic.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.DaggerP_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.P_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.PharmacyDetailsRemoteHelper;
-import com.siehuai.smartdrugbox.Generic.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
 import com.siehuai.smartdrugbox.databinding.FragmentPViewMedicineOrderDetailsBinding;
@@ -122,6 +122,7 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
                     public void onDataChange(Object data) {
                         PharmacyDetails pharmacyDetails = (PharmacyDetails) data;
                         mMedicineOrder.setPharmacyDetails(pharmacyDetails);
+                        mMedicineOrder.getMedicineDetails().setPharmacyDetails(pharmacyDetails);
                         mMedicineOrder.setAvailability(false);
                         mMedicineOrderRemoteHelper.update(mMedicineOrder);
                     }
