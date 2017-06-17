@@ -13,6 +13,8 @@ public abstract class AbstractMessageAction implements IMessageAction {
     private String messageTitle;
     protected Context mContext;
     private String mSentTime;
+    private String sender;
+    private String priority;
     private NotificationService mNotificationService;
 
     public AbstractMessageAction(Context context) {
@@ -41,6 +43,22 @@ public abstract class AbstractMessageAction implements IMessageAction {
 
     public void setSentTime(String sentTime) {
         mSentTime = sentTime;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     protected void createNotification(Intent intent) {

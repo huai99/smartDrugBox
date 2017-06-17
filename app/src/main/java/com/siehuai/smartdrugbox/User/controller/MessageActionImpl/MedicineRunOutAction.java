@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.siehuai.smartdrugbox.Generic.controller.MessageAction.AbstractMessageAction;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
-import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MessageQueueRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
@@ -14,12 +13,7 @@ import com.siehuai.smartdrugbox.User.view.OrderMedicine.OrderMedicineActivity;
 
 import java.util.Map;
 
-import javax.inject.Inject;
-
 public class MedicineRunOutAction extends AbstractMessageAction {
-
-    @Inject
-    P_MessageQueueRemoteHelper mMessageQueueRemoteHelper;
 
     public MedicineRunOutAction(Context context) {
         super(context);

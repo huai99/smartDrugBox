@@ -11,6 +11,8 @@ public class P_MessageActionFactory {
 
     public static IMessageAction messageActionDispatch(RemoteMessage message, Context context) {
         String action = message.getData().get("action");
+        String sender = message.getData().get("sender");
+        String priority = message.getData().get("priority");
         String title = message.getNotification().getTitle();
         String body = message.getNotification().getBody();
         String sentTime = Utils.convertLongTimeToStringFormat(message.getSentTime(), "HH:mm:ss");
@@ -26,6 +28,8 @@ public class P_MessageActionFactory {
         abstractMessageAction.setMessageTitle(title);
         abstractMessageAction.setMessageBody(body);
         abstractMessageAction.setSentTime(sentTime);
+        abstractMessageAction.setPriority(priority);
+        abstractMessageAction.setSender(sender);
         return abstractMessageAction;
     }
 }

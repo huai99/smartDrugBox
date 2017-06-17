@@ -14,6 +14,8 @@ public class UserMessageActionFactory {
         String title = message.getNotification().getTitle();
         String body = message.getNotification().getBody();
         String sentTime = Utils.convertLongTimeToStringFormat(message.getSentTime(), "HH:mm:ss");
+        String sender = message.getData().get("sender");
+        String priority = message.getData().get("priority");
         AbstractMessageAction abstractMessageAction = null;
         switch (action) {
             case "MedicineRunOutAction":
@@ -26,6 +28,8 @@ public class UserMessageActionFactory {
         abstractMessageAction.setMessageTitle(title);
         abstractMessageAction.setMessageBody(body);
         abstractMessageAction.setSentTime(sentTime);
+        abstractMessageAction.setPriority(priority);
+        abstractMessageAction.setSender(sender);
         return abstractMessageAction;
     }
 }
