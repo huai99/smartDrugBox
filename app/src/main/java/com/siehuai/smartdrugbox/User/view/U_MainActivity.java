@@ -17,8 +17,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.data.Message;
 import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
 import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.User.controller.DaggerU_DependencyInjectionComponent;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.UserMessageQueueRemoteHelper;
+import com.siehuai.smartdrugbox.User.controller.U_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
 import com.siehuai.smartdrugbox.User.view.MedicineBox.MedicineBoxActivity;
 import com.siehuai.smartdrugbox.User.view.MessageQueue.U_MessageQueueActivity;
@@ -26,17 +31,28 @@ import com.siehuai.smartdrugbox.User.view.UserViewMedicine.UserViewMedicineActiv
 import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 public class U_MainActivity extends U_BaseActivity {
 
     ActivityUserMainBinding mBinding;
 
+    @Inject
+    UserMessageQueueRemoteHelper mMessageQueueRemoteHelper;
+
+    MenuItem mMenuItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        U_DependencyInjectionComponent remoteHelperComponent = DaggerU_DependencyInjectionComponent.create();
+        remoteHelperComponent.inject(this);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_main);
 
@@ -125,6 +141,8 @@ public class U_MainActivity extends U_BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_user_main, menu);
+        mMenuItem = menu.findItem(R.id.message_queue);
+        fetchMessageFrmRemote();
         return true;
     }
 
@@ -156,5 +174,20 @@ public class U_MainActivity extends U_BaseActivity {
     private void goToMessageQueue() {
         Intent intent = new Intent(this, U_MessageQueueActivity.class);
         startActivity(intent);
+    }
+
+    private void fetchMessageFrmRemote() {
+        mMessageQueueRemoteHelper.findAll(new IDbOnDataChangeListener() {
+            @Override
+            public void onDataChange(Object data) {
+                Collection<Message> changedList = (Collection<Message>) data;
+                for (Message message : changedList) {
+                    if (!message.isReadStatus()) {
+                        mMenuItem.setIcon(R.drawable.urgent_message_color);
+                        break;
+                    }
+                }
+            }
+        });
     }
 }
