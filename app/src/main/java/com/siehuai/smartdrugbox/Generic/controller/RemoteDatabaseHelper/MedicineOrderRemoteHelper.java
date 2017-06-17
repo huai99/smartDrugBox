@@ -37,6 +37,10 @@ public class MedicineOrderRemoteHelper extends RemoteDbHelper {
 
     @Override
     public void insert(IDbData dbData) {
+        insert(dbData, null);
+    }
+
+    public void insert(IDbData dbData, final IDbOnCompleteListener listener) {
         DatabaseReference newRef = mDatabase.push();
         if (key == null) {
             key = newRef.getKey();
@@ -44,7 +48,18 @@ public class MedicineOrderRemoteHelper extends RemoteDbHelper {
             key = getKey();
         }
         dbData.setId(key);
-        mDatabase.child(dbData.getId()).setValue(dbData, mOnCompleteListener);
+        mDatabase.child(dbData.getId()).setValue(dbData, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (listener != null) {
+                    if (databaseError == null) {
+                        listener.onComplete(null);
+                    } else {
+                        listener.onComplete(databaseError.getMessage());
+                    }
+                }
+            }
+        });
     }
 
 

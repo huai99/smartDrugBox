@@ -1,6 +1,8 @@
 package com.siehuai.smartdrugbox.User.view.OrderMedicine;
 
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,13 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnCompleteListener;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.MedicineOrderRemoteHelper;
+import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
+import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
 import com.siehuai.smartdrugbox.Generic.data.MedicineOrder;
 import com.siehuai.smartdrugbox.Generic.data.PharmacyDetails;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.DaggerU_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.User.controller.U_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.User.data.MedicineDetails;
+import com.siehuai.smartdrugbox.User.view.U_MainActivity;
 import com.siehuai.smartdrugbox.databinding.FragmentViewRequestedMedicineDetailsBinding;
 
 import javax.inject.Inject;
@@ -35,6 +41,7 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
     String medicineMoreInfo;
     Bitmap mBitmap;
     PharmacyDetails mPharmacyDetails;
+    AlertDialogService mAlertDialogService;
 
     @Inject
     MedicineOrderRemoteHelper mMedicineOrderRemoteHelper;
@@ -49,6 +56,7 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
         Bundle bundle = getArguments();
         mMedicineDetails = bundle.getParcelable("medicineDetails");
         Log.d("Requested Medicine", String.valueOf(mMedicineDetails));
+        mAlertDialogService = AlertDialogServiceFactory.createAlertDialogService(getContext());
         U_DependencyInjectionComponent uDependencyInjectionComponent = DaggerU_DependencyInjectionComponent.create();
         uDependencyInjectionComponent.inject(this);
     }
@@ -97,7 +105,40 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
                 String id = mMedicineOrderRemoteHelper.generateNewId();
                 MedicineOrder medicineOrder =
                         new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, mPharmacyDetails, true, false);
-                mMedicineOrderRemoteHelper.insert(medicineOrder);
+                mMedicineOrderRemoteHelper.insert(medicineOrder, new IDbOnCompleteListener() {
+                    @Override
+                    public void onComplete(Object error) {
+                        if (error == null) {
+                            promptSucessfulAlertDialog();
+                        } else {
+                            promptErrorAlertDialog((String) error);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void promptSucessfulAlertDialog() {
+        mAlertDialogService.provideDefaultOkDialog("Order successfully make, go back to main page?",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finish();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+    }
+
+    private void promptErrorAlertDialog(String errorMessage) {
+        mAlertDialogService.provideDefaultErrorDialog(errorMessage, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
         });
     }

@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.HTTPHelper.IResponseReturnListener;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnCompleteListener;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.MedicineOrderRemoteHelper;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogService;
 import com.siehuai.smartdrugbox.Generic.controller.Service.AlertDialogServiceFactory;
@@ -161,8 +162,17 @@ public class OrderMedicineFragment extends Fragment {
     private void systemManageOrderMedicine() {
         MedicineOrderRemoteHelper remoteHelper = MedicineOrderRemoteHelper.getInstance();
         String id = remoteHelper.generateNewId();
-        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, null, false,false);
-        remoteHelper.insert(medicineOrder);
+        MedicineOrder medicineOrder = new MedicineOrder(id, "Sie Huai", "", "8284", mMedicineDetails, true, null, false, false);
+        remoteHelper.insert(medicineOrder, new IDbOnCompleteListener() {
+            @Override
+            public void onComplete(Object error) {
+                if (error == null) {
+                    promptSucessfulAlertDialog();
+                } else {
+                    promptErrorAlertDialog((String) error);
+                }
+            }
+        });
     }
 
     private void selfManageOrderMedicine() {
@@ -186,5 +196,30 @@ public class OrderMedicineFragment extends Fragment {
                     }
                 });
     }
+
+    private void promptSucessfulAlertDialog() {
+        mAlertDialogService.provideDefaultOkDialog("We will notified you when a pharmacy has accepted your order",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finish();
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+    }
+
+    private void promptErrorAlertDialog(String errorMessage) {
+        mAlertDialogService.provideDefaultErrorDialog(errorMessage, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+    }
+
 
 }
