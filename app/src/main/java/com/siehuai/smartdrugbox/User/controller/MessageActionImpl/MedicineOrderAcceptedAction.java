@@ -3,13 +3,12 @@ package com.siehuai.smartdrugbox.User.controller.MessageActionImpl;
 import android.content.Context;
 import android.content.Intent;
 
-import com.siehuai.smartdrugbox.Generic.controller.MessageAction.AbstractMessageAction;
 import com.siehuai.smartdrugbox.Generic.view.MainActivity;
 
 import java.util.Map;
 
 
-public class MedicineOrderAcceptedAction extends AbstractMessageAction {
+public class MedicineOrderAcceptedAction extends UserAbstractMessageAction {
 
     Context mContext;
 

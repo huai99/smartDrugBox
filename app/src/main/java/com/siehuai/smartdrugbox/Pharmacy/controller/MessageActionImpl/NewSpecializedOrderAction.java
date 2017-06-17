@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.siehuai.smartdrugbox.Generic.controller.MessageAction.AbstractMessageAction;
 import com.siehuai.smartdrugbox.Pharmacy.view.OrderQueue.OrderQueueActivity;
 
 import java.util.Map;
 
-public class NewSpecializedOrderAction extends AbstractMessageAction {
+public class NewSpecializedOrderAction extends P_AbstractMessageAction {
+
 
     public NewSpecializedOrderAction(Context context) {
         super(context);

@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper;
+package com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,24 +11,20 @@ import com.siehuai.smartdrugbox.Generic.data.Message;
 import java.util.Iterator;
 import java.util.Map;
 
-public class P_MessageQueueRemoteHelper extends PharmacyRemoteDbHelper {
+public class UserMessageQueueRemoteHelper extends UserRemoteDbHelper {
 
     DatabaseReference mDatabase;
-    private DatabaseReference.CompletionListener mOnCompleteListener;
     private String key;
     private Map<String, IDbData> mMessageMap = dataMap;
-    private static P_MessageQueueRemoteHelper instance;
+    private static UserMessageQueueRemoteHelper instance;
 
-    public P_MessageQueueRemoteHelper() {
+    public UserMessageQueueRemoteHelper() {
         mDatabase = getDatabaseObj().child("Message-Queue");
         read();
     }
 
     @Override
     public void attachOnCompleteListener(DatabaseReference.CompletionListener listener) {
-        if (listener != null) {
-            mOnCompleteListener = listener;
-        }
     }
 
     @Override
@@ -87,11 +83,11 @@ public class P_MessageQueueRemoteHelper extends PharmacyRemoteDbHelper {
         read(messageIterator);
     }
 
-    public static P_MessageQueueRemoteHelper getInstance() {
+    public static UserMessageQueueRemoteHelper getInstance() {
         if (instance == null) {
             synchronized (lock) {
                 if (instance == null) {
-                    instance = new P_MessageQueueRemoteHelper();
+                    instance = new UserMessageQueueRemoteHelper();
                     return instance;
                 } else {
                     return instance;

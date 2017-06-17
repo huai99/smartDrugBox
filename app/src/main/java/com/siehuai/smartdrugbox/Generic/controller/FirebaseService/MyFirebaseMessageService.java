@@ -23,7 +23,7 @@ public class MyFirebaseMessageService extends FirebaseMessagingService {
         } else {
             messageAction = P_MessageActionFactory.messageActionDispatch(remoteMessage, this);
         }
-        messageAction.execute(remoteMessage.getData());
+        messageAction.execute();
     }
 
     @Override

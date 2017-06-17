@@ -7,6 +7,8 @@ import android.content.Intent;
 import com.siehuai.smartdrugbox.Generic.controller.Service.NotificationService;
 import com.siehuai.smartdrugbox.R;
 
+import java.util.Map;
+
 public abstract class AbstractMessageAction implements IMessageAction {
 
     private String messageBody;
@@ -15,6 +17,7 @@ public abstract class AbstractMessageAction implements IMessageAction {
     private String mSentTime;
     private String sender;
     private String priority;
+    private Map<String, String> data;
     private NotificationService mNotificationService;
 
     public AbstractMessageAction(Context context) {
@@ -61,6 +64,14 @@ public abstract class AbstractMessageAction implements IMessageAction {
         this.priority = priority;
     }
 
+    public Map<String, String> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, String> data) {
+        this.data = data;
+    }
+
     protected void createNotification(Intent intent) {
         PendingIntent mPendingIntent = PendingIntent.getActivities(mContext, 0, new Intent[]{intent}, PendingIntent.FLAG_ONE_SHOT);
         mNotificationService = new NotificationService(mContext);
@@ -70,4 +81,5 @@ public abstract class AbstractMessageAction implements IMessageAction {
         mNotificationService.dispatchNotification();
     }
 
+    public abstract void execute(Map<String, String> data);
 }

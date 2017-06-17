@@ -30,6 +30,7 @@ public class UserMessageActionFactory {
         abstractMessageAction.setSentTime(sentTime);
         abstractMessageAction.setPriority(priority);
         abstractMessageAction.setSender(sender);
+        abstractMessageAction.setData(message.getData());
         return abstractMessageAction;
     }
 }
