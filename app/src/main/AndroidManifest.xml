@@ -120,6 +120,14 @@
             android:name=".Pharmacy.view.OrderQueue.OrderQueueActivity"
             android:label="@string/title_activity_order_queue">
         </activity>
+        <activity
+            android:name=".Pharmacy.view.MessageQueue.P_MessageQueueActivity"
+            android:label="@string/title_activity_message_queue">
+        </activity>
+        <activity
+            android:name=".User.view.MedicineBox.MessageQueue.U_MessageQueueActivity"
+            android:label="@string/title_activity_u__message_queue">
+        </activity>
     </application>
 
 </manifest>

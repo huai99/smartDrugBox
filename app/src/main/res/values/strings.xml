@@ -56,4 +56,6 @@
     <string name="title_activity_p__view_medicine_order">P_ViewMedicineOrder</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_order_queue">OrderQueueActivity</string>
+    <string name="title_activity_message_queue">MessageQueueActivity</string>
+    <string name="title_activity_u__message_queue">U_MessageQueueActivity</string>
 </resources>

@@ -21,6 +21,7 @@ import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
 import com.siehuai.smartdrugbox.User.view.MedicineBox.MedicineBoxActivity;
+import com.siehuai.smartdrugbox.User.view.MedicineBox.MessageQueue.U_MessageQueueActivity;
 import com.siehuai.smartdrugbox.User.view.UserViewMedicine.UserViewMedicineActivity;
 import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
 
@@ -129,18 +130,18 @@ public class U_MainActivity extends U_BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return !itemClickHandler(item) && super.onOptionsItemSelected(item);
-    }
-
-    public boolean itemClickHandler(MenuItem item) {
         switch (item.getItemId()) {
             case (R.id.option_viewMedicine):
                 userViewMedicine();
+                return true;
+            case R.id.message_queue:
+                goToMessageQueue();
                 return true;
             default:
                 return false;
         }
     }
+
 
     public void userSetMedicine() {
         Intent intent = new Intent(U_MainActivity.this, MedicineBoxActivity.class);
@@ -149,6 +150,11 @@ public class U_MainActivity extends U_BaseActivity {
 
     public void userViewMedicine() {
         Intent intent = new Intent(U_MainActivity.this, UserViewMedicineActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToMessageQueue() {
+        Intent intent = new Intent(this, U_MessageQueueActivity.class);
         startActivity(intent);
     }
 }

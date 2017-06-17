@@ -12,6 +12,7 @@ import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.Da
 import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.P_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MedicineDetailsRemoteHelper;
 import com.siehuai.smartdrugbox.Pharmacy.controller.SubscribeToEventHelper;
+import com.siehuai.smartdrugbox.Pharmacy.view.MessageQueue.P_MessageQueueActivity;
 import com.siehuai.smartdrugbox.Pharmacy.view.OrderQueue.OrderQueueActivity;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.databinding.ActivityPMainBinding;
@@ -76,6 +77,9 @@ public class P_MainActivity extends P_MainBaseActivity {
             case R.id.order_queue:
                 goToOrderQueue();
                 break;
+            case R.id.message_queue:
+                goToMessageQueue();
+                break;
             default:
         }
         return true;
@@ -83,6 +87,11 @@ public class P_MainActivity extends P_MainBaseActivity {
 
     private void goToOrderQueue() {
         Intent intent = new Intent(this, OrderQueueActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToMessageQueue() {
+        Intent intent = new Intent(this, P_MessageQueueActivity.class);
         startActivity(intent);
     }
 }

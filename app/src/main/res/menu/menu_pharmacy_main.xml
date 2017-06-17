@@ -6,4 +6,11 @@
         app:showAsAction="ifRoom"
         android:title="Order Queue">
     </item>
+
+    <item
+        android:id="@+id/message_queue"
+        android:icon="@drawable/message_icon"
+        app:showAsAction="ifRoom"
+        android:title="Message">
+    </item>
 </menu>
