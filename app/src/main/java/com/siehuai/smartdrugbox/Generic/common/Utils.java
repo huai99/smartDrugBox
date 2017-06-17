@@ -11,8 +11,11 @@ import android.util.Base64;
 import com.siehuai.smartdrugbox.R;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import static com.siehuai.smartdrugbox.Generic.data.GlobalConst.REQUEST_GET_FROM_MEDIA;
 import static com.siehuai.smartdrugbox.Generic.data.GlobalConst.REQUEST_TAKE_PHOTO;
@@ -87,5 +90,11 @@ public class Utils {
             list.add(item);
         }
         return list;
+    }
+
+    public static String convertLongTimeToStringFormat(long receivedTime, String format) {
+        Date date = new Date(receivedTime);
+        DateFormat formatter = new SimpleDateFormat(format);
+        return formatter.format(date);
     }
 }

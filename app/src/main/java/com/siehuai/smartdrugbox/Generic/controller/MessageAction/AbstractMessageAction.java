@@ -12,6 +12,7 @@ public abstract class AbstractMessageAction implements IMessageAction {
     private String messageBody;
     private String messageTitle;
     protected Context mContext;
+    private String mSentTime;
     private NotificationService mNotificationService;
 
     public AbstractMessageAction(Context context) {
@@ -34,6 +35,14 @@ public abstract class AbstractMessageAction implements IMessageAction {
         this.messageTitle = messageTitle;
     }
 
+    public String getSentTime() {
+        return mSentTime;
+    }
+
+    public void setSentTime(String sentTime) {
+        mSentTime = sentTime;
+    }
+
     protected void createNotification(Intent intent) {
         PendingIntent mPendingIntent = PendingIntent.getActivities(mContext, 0, new Intent[]{intent}, PendingIntent.FLAG_ONE_SHOT);
         mNotificationService = new NotificationService(mContext);
@@ -42,4 +51,5 @@ public abstract class AbstractMessageAction implements IMessageAction {
         mNotificationService.createNotification(title, content, mPendingIntent, true, R.drawable.ok_hand_icon);
         mNotificationService.dispatchNotification();
     }
+
 }
