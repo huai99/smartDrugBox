@@ -1,5 +1,6 @@
 package com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper;
 
+import com.siehuai.smartdrugbox.Pharmacy.view.MessageQueue.P_MessageQueueFragment;
 import com.siehuai.smartdrugbox.Pharmacy.view.OrderQueue.OrderQueueFragment;
 import com.siehuai.smartdrugbox.Pharmacy.view.P_MainActivity;
 import com.siehuai.smartdrugbox.Pharmacy.view.P_ViewMedicineOrder.P_ViewMedicineOrderDetailsFragment;
@@ -14,4 +15,6 @@ public interface P_DependencyInjectionComponent {
     void inject(P_ViewMedicineOrderDetailsFragment fragment);
 
     void inject(OrderQueueFragment fragment);
+
+    void inject(P_MessageQueueFragment fragment);
 }

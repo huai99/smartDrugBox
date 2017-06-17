@@ -47,6 +47,7 @@
                 android:layout_toEndOf="@+id/userName"
                 android:layout_toRightOf="@+id/userName"
                 android:text="Contact"
+                android:layout_alignTop="@id/userName"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -59,6 +60,7 @@
                 android:layout_toEndOf="@+id/textView7"
                 android:layout_toRightOf="@+id/textView7"
                 android:text="Medicine"
+                android:layout_alignTop="@id/textView7"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -70,6 +72,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/field_interval_dist"
                 android:text="Completed"
+                android:layout_alignTop="@id/textView10"
                 android:textColor="@color/black"/>
 
         </RelativeLayout>

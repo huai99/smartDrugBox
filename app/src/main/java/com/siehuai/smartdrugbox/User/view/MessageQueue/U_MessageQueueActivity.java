@@ -1,4 +1,4 @@
-package com.siehuai.smartdrugbox.User.view.MedicineBox.MessageQueue;
+package com.siehuai.smartdrugbox.User.view.MessageQueue;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

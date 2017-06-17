@@ -21,7 +21,7 @@ import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
 import com.siehuai.smartdrugbox.User.view.MedicineBox.MedicineBoxActivity;
-import com.siehuai.smartdrugbox.User.view.MedicineBox.MessageQueue.U_MessageQueueActivity;
+import com.siehuai.smartdrugbox.User.view.MessageQueue.U_MessageQueueActivity;
 import com.siehuai.smartdrugbox.User.view.UserViewMedicine.UserViewMedicineActivity;
 import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
 

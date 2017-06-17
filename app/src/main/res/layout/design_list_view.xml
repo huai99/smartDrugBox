@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="100dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
     >
@@ -31,10 +31,10 @@
 
     <TextView
         android:id="@+id/text_column3"
-        android:layout_width="@dimen/field_width"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/text_column2"
-        android:layout_alignBottom="@+id/text_column2"
+        android:background="@color/white"
+        android:layout_alignTop="@id/text_column2"
         android:layout_marginLeft="@dimen/field_interval_dist"
         android:layout_marginStart="@dimen/field_interval_dist"
         android:layout_toEndOf="@+id/text_column2"
