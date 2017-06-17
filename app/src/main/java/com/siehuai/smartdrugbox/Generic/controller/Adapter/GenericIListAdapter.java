@@ -19,10 +19,10 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
 
     protected IListResource mIListResource;
     private ArrayList<IDbData> mIDbDataList;
-    private ArrayList<String> mUserNameList = new ArrayList<>();
-    private ArrayList<String> mContactList = new ArrayList<>();
-    private ArrayList<String> mMedicineList = new ArrayList<>();
-    private ArrayList<String> mAvailabilityList = new ArrayList<>();
+    private ArrayList<String> mColumn1List = new ArrayList<>();
+    private ArrayList<String> mColumn2List = new ArrayList<>();
+    private ArrayList<String> mColumn3List = new ArrayList<>();
+    private ArrayList<String> mColumn4List = new ArrayList<>();
 
     private ListAdapterObservable mClickListenerObservable = new ListAdapterObservable();
 
@@ -30,19 +30,19 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
-        TextView mUserNameText;
-        TextView mContactText;
-        TextView mMedicineText;
-        TextView mAvailabilityText;
+        TextView mColumn1Text;
+        TextView mColumn2Text;
+        TextView mColumn3Text;
+        TextView mColumn4Text;
         int position;
 
         ViewHolder(final View itemView) {
             super(itemView);
             mView = itemView;
-            mUserNameText = (TextView) itemView.findViewById(R.id.text_userName);
-            mContactText = (TextView) itemView.findViewById(R.id.text_contact);
-            mMedicineText = (TextView) itemView.findViewById(R.id.text_medicine);
-            mAvailabilityText = (TextView) itemView.findViewById(R.id.text_availability);
+            mColumn1Text = (TextView) itemView.findViewById(R.id.text_column1);
+            mColumn2Text = (TextView) itemView.findViewById(R.id.text_column2);
+            mColumn3Text = (TextView) itemView.findViewById(R.id.text_column3);
+            mColumn4Text = (TextView) itemView.findViewById(R.id.text_column4);
         }
 
         void setPosition(int position) {
@@ -53,21 +53,21 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
             mView.setOnClickListener(listener);
         }
 
-        void setUserNameText(String userName) {
-            mUserNameText.setText(userName);
+        void setColumn1Text(String userName) {
+            mColumn1Text.setText(userName);
         }
 
 
-        void setContactText(String contact) {
-            mContactText.setText(contact);
+        void setColumn2Text(String contact) {
+            mColumn2Text.setText(contact);
         }
 
-        void setMedicineText(String medicine) {
-            mMedicineText.setText(medicine);
+        void setColumn3Text(String medicine) {
+            mColumn3Text.setText(medicine);
         }
 
-        void setAvailabilityText(String availability) {
-            mAvailabilityText.setText(availability);
+        void setColumn4Text(String availability) {
+            mColumn4Text.setText(availability);
         }
     }
 
@@ -80,10 +80,10 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
 
     @Override
     public void onBindViewHolder(final GenericIListAdapter.ViewHolder holder, int position) {
-        holder.setUserNameText(mUserNameList.get(position));
-        holder.setContactText(mContactList.get(position));
-        holder.setMedicineText(mMedicineList.get(position));
-        holder.setAvailabilityText(mAvailabilityList.get(position));
+        holder.setColumn1Text(mColumn1List.get(position));
+        holder.setColumn2Text(mColumn2List.get(position));
+        holder.setColumn3Text(mColumn3List.get(position));
+        holder.setColumn4Text(mColumn4List.get(position));
         holder.setPosition(position);
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,10 +102,10 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
 
 
     private void initResource() {
-        mUserNameList = mIListResource.getResourceTextMap().get(ListResourceFieldConst.USERNAME);
-        mContactList = mIListResource.getResourceTextMap().get(ListResourceFieldConst.CONTACT);
-        mMedicineList = mIListResource.getResourceTextMap().get(ListResourceFieldConst.MEDICINE);
-        mAvailabilityList = mIListResource.getResourceTextMap().get(ListResourceFieldConst.AVAILABILITY);
+        mColumn1List = mIListResource.getResourceTextMap().get(ListResourceFieldConst.COLUMN1);
+        mColumn2List = mIListResource.getResourceTextMap().get(ListResourceFieldConst.COLUMN2);
+        mColumn3List = mIListResource.getResourceTextMap().get(ListResourceFieldConst.COLUMN3);
+        mColumn4List = mIListResource.getResourceTextMap().get(ListResourceFieldConst.COLUMN4);
         mIDbDataList = (ArrayList<IDbData>) mIListResource.getResourceList();
     }
 
@@ -120,4 +120,5 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
     public void deleteObserver(Observer o) {
         mClickListenerObservable.deleteObserver(o);
     }
+
 }

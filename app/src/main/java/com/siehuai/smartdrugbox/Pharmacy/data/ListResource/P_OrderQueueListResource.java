@@ -35,10 +35,10 @@ public class P_OrderQueueListResource implements IListResource {
             medicineList.add(medicineOrder.getMedicineDetails().getMedicineName());
             availabilityList.add(String.valueOf(medicineOrder.isAvailability()));
         }
-        mListMap.put(ListResourceFieldConst.USERNAME, userNameList);
-        mListMap.put(ListResourceFieldConst.CONTACT, contactList);
-        mListMap.put(ListResourceFieldConst.MEDICINE, medicineList);
-        mListMap.put(ListResourceFieldConst.AVAILABILITY, availabilityList);
+        mListMap.put(ListResourceFieldConst.COLUMN1, userNameList);
+        mListMap.put(ListResourceFieldConst.COLUMN2, contactList);
+        mListMap.put(ListResourceFieldConst.COLUMN3, medicineList);
+        mListMap.put(ListResourceFieldConst.COLUMN4, availabilityList);
     }
 
     @Override
