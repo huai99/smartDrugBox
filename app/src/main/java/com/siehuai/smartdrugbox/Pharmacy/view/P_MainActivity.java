@@ -8,14 +8,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.Generic.data.Message;
 import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.DaggerP_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.DependencyInjectionHelper.P_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MedicineDetailsRemoteHelper;
+import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_MessageQueueRemoteHelper;
 import com.siehuai.smartdrugbox.Pharmacy.controller.SubscribeToEventHelper;
 import com.siehuai.smartdrugbox.Pharmacy.view.MessageQueue.P_MessageQueueActivity;
 import com.siehuai.smartdrugbox.Pharmacy.view.OrderQueue.OrderQueueActivity;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.databinding.ActivityPMainBinding;
+
+import java.util.Collection;
 
 import javax.inject.Inject;
 
@@ -25,6 +30,11 @@ public class P_MainActivity extends P_MainBaseActivity {
 
     @Inject
     P_MedicineDetailsRemoteHelper mDbHelper;
+
+    @Inject
+    P_MessageQueueRemoteHelper mMessageQueueRemoteHelper;
+
+    MenuItem mMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +78,8 @@ public class P_MainActivity extends P_MainBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_pharmacy_main, menu);
+        mMenuItem = menu.findItem(R.id.message_queue);
+        fetchMessageFrmRemote();
         return true;
     }
 
@@ -93,5 +105,20 @@ public class P_MainActivity extends P_MainBaseActivity {
     private void goToMessageQueue() {
         Intent intent = new Intent(this, P_MessageQueueActivity.class);
         startActivity(intent);
+    }
+
+    private void fetchMessageFrmRemote() {
+        mMessageQueueRemoteHelper.findAll(new IDbOnDataChangeListener() {
+            @Override
+            public void onDataChange(Object data) {
+                Collection<Message> changedList = (Collection<Message>) data;
+                for (Message message : changedList) {
+                    if (!message.isReadStatus()) {
+                        mMenuItem.setIcon(R.drawable.urgent_message_color);
+                        break;
+                    }
+                }
+            }
+        });
     }
 }
