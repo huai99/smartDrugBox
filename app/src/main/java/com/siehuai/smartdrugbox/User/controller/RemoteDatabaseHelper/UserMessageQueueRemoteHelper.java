@@ -45,6 +45,8 @@ public class UserMessageQueueRemoteHelper extends UserRemoteDbHelper {
 
     @Override
     public void update(IDbData dbData) {
+        String id = dbData.getId();
+        mDatabase.child(id).setValue(dbData);
     }
 
     private void read(Iterator<?> iterator) {

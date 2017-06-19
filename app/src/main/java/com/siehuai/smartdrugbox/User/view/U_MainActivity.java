@@ -181,6 +181,7 @@ public class U_MainActivity extends U_BaseActivity {
             @Override
             public void onDataChange(Object data) {
                 Collection<Message> changedList = (Collection<Message>) data;
+                mMenuItem.setIcon(R.drawable.message_color);
                 for (Message message : changedList) {
                     if (!message.isReadStatus()) {
                         mMenuItem.setIcon(R.drawable.urgent_message_color);

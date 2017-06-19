@@ -22,6 +22,7 @@ import com.siehuai.smartdrugbox.Pharmacy.controller.RemoteDatabaseHelper.P_Messa
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.databinding.FragmentPMessageQueueBinding;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.inject.Inject;
@@ -92,7 +93,15 @@ public class P_MessageQueueFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+        setAllMessageAsRead(Utils.convertCollectionToArrayList((ArrayList<Message>)listResource.getResourceList()));
         return listResource;
+    }
+
+    private void setAllMessageAsRead(ArrayList<Message> messageList) {
+        for (Message message : messageList) {
+            message.setReadStatus(true);
+            mQueueRemoteHelper.update(message);
+        }
     }
 
 }

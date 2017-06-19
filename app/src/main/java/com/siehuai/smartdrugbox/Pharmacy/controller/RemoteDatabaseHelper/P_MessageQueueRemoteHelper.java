@@ -49,6 +49,8 @@ public class P_MessageQueueRemoteHelper extends PharmacyRemoteDbHelper {
 
     @Override
     public void update(IDbData dbData) {
+        String id = dbData.getId();
+        mDatabase.child(id).setValue(dbData);
     }
 
     private void read(Iterator<?> iterator) {
