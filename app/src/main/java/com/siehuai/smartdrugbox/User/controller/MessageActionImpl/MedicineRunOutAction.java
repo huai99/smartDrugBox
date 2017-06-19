@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 import com.siehuai.smartdrugbox.User.data.MedicineBoxCompartment;
@@ -32,7 +33,7 @@ public class MedicineRunOutAction extends UserAbstractMessageAction {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 CompartmentDetails compartmentDetails = medicineBoxCompartment.getCompartmentDetailsMap().get(key);
                 intent.putExtra("CompartmentDetails", compartmentDetails);
-                createNotification(intent);
+                createNotification(intent, R.drawable.medicine_box_icon);
                 Log.d("Firebase Message", getMessageBody());
             }
         });

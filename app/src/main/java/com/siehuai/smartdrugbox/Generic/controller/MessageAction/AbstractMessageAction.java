@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.siehuai.smartdrugbox.Generic.controller.Service.NotificationService;
-import com.siehuai.smartdrugbox.R;
 
 import java.util.Map;
 
@@ -72,12 +71,12 @@ public abstract class AbstractMessageAction implements IMessageAction {
         this.data = data;
     }
 
-    protected void createNotification(Intent intent) {
+    protected void createNotification(Intent intent,int notificationIcon) {
         PendingIntent mPendingIntent = PendingIntent.getActivities(mContext, 0, new Intent[]{intent}, PendingIntent.FLAG_ONE_SHOT);
         mNotificationService = new NotificationService(mContext);
         String title = getMessageTitle();
         String content = getMessageBody();
-        mNotificationService.createNotification(title, content, mPendingIntent, true, R.drawable.ok_hand_icon);
+        mNotificationService.createNotification(title, content, mPendingIntent, true, notificationIcon);
         mNotificationService.dispatchNotification();
     }
 
