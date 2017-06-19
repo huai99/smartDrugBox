@@ -1,10 +1,14 @@
 package com.siehuai.smartdrugbox.Generic.data.ListResource.ListResourceImpl;
 
+import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.data.MenuResource.IListResource;
 import com.siehuai.smartdrugbox.Generic.data.Message;
 import com.siehuai.smartdrugbox.Pharmacy.data.ListResource.ListResourceFieldConst;
+import com.siehuai.smartdrugbox.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +16,7 @@ public class MessageQueueListResource implements IListResource {
 
     private ArrayList<Message> messageList;
     private Map<String, ArrayList> mListMap = new HashMap<>();
+    private ArrayList<Integer> mColorList = new ArrayList<>();
 
     @Override
     public int getResourceSize() {
@@ -30,7 +35,7 @@ public class MessageQueueListResource implements IListResource {
         ArrayList<String> messageTitleList = new ArrayList<>();
         ArrayList<String> priorityList = new ArrayList<>();
         for (Message message : messageList) {
-            timeStampList.add(message.getTime());
+            timeStampList.add(Utils.convertLongTimeToStringFormat(message.getTime(), "HH:mm:ss"));
             senderList.add(message.getSender());
             messageTitleList.add(message.getTitle());
             priorityList.add(message.getPriority());
@@ -49,6 +54,28 @@ public class MessageQueueListResource implements IListResource {
     @Override
     public void setResourceList(ArrayList<?> resourceList) {
         messageList = (ArrayList<Message>) resourceList;
+        Collections.sort(messageList, new Comparator<Message>() {
+            @Override
+            public int compare(Message o1, Message o2) {
+                return (int)(o2.getTime() - o1.getTime()) ;
+            }
+        });
         setResourceTextMap();
+        setColorList();
+    }
+
+    public void setColorList() {
+        for (Message message : messageList) {
+            if (message.isReadStatus()) {
+                mColorList.add(R.color.white);
+            } else {
+                mColorList.add(R.color.grey_400);
+            }
+        }
+    }
+
+    @Override
+    public ArrayList<?> getColorList() {
+        return mColorList;
     }
 }
