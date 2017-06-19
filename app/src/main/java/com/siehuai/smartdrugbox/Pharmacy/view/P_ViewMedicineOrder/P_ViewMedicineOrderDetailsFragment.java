@@ -113,6 +113,21 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
         });
     }
 
+    private void promptSuccessfulDialog() {
+        mAlertDialogService.provideDefaultOkDialog("We will direct this order to your order queue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getActivity().finish();
+                dialog.cancel();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+    }
+
     private void setUpAcceptOrderBtn() {
         mBinding.btnAcceptOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +140,7 @@ public class P_ViewMedicineOrderDetailsFragment extends Fragment {
                         mMedicineOrder.getMedicineDetails().setPharmacyDetails(pharmacyDetails);
                         mMedicineOrder.setAvailability(false);
                         mMedicineOrderRemoteHelper.update(mMedicineOrder);
+                        promptSuccessfulDialog();
                     }
                 });
             }
