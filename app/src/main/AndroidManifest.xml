@@ -97,7 +97,10 @@
         <activity
             android:name=".Pharmacy.view.P_EditCatalogue.P_EditCatalogueDetailActivity"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".User.view.MedicineBox.MedicineBoxActivity">
+        <activity
+            android:name=".User.view.MedicineBox.MedicineBoxActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
         <activity
             android:name=".User.view.MedicineBox.AddMedicineBoxDetailsActivity"
