@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "576175988866",
-    "firebase_url": "https://smartdrugbox-57a64.firebaseio.com",
-    "project_id": "smartdrugbox-57a64",
-    "storage_bucket": "smartdrugbox-57a64.appspot.com"
+    "project_number": "563498538512",
+    "firebase_url": "https://smartdrugbox-6be17.firebaseio.com",
+    "project_id": "smartdrugbox-6be17",
+    "storage_bucket": "smartdrugbox-6be17.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:576175988866:android:4c9fd7e2a4359905",
+        "mobilesdk_app_id": "1:563498538512:android:4c9fd7e2a4359905",
         "android_client_info": {
           "package_name": "com.siehuai.smartdrugbox"
         }
       },
       "oauth_client": [
         {
-          "client_id": "576175988866-a2q9rn7kbspi2pqvkq5nmv8k03m78jv8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.siehuai.smartdrugbox",
-            "certificate_hash": "f711dcfe32a186b7f96f98159615ad35b3064f56"
-          }
-        },
-        {
-          "client_id": "576175988866-mhqahdcioa6i9st1c10pg7esa8kc7url.apps.googleusercontent.com",
+          "client_id": "563498538512-n52v38j1e114beq4l32l2d5u2idam01k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAxp6WbAPkAXvTCrfBUIIgqJyvuKhY9pd4"
+          "current_key": "AIzaSyBi-8ygwV_k7y90L7EnlG4o4yNM6UWcjqk"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "576175988866-mhqahdcioa6i9st1c10pg7esa8kc7url.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
