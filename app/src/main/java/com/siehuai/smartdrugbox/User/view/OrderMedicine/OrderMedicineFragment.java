@@ -136,7 +136,7 @@ public class OrderMedicineFragment extends Fragment {
                 "Choose your preferred way of buying medicine",
                 "Options",
                 "System manage",
-                "Choose from available pharmacy",
+                "Self Manage",
                 R.drawable.high_priority,
                 new DialogInterface.OnClickListener() {
                     @Override
