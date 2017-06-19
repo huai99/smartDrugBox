@@ -10,8 +10,6 @@ import java.util.Map;
 
 public class MedicineOrderAcceptedAction extends UserAbstractMessageAction {
 
-    Context mContext;
-
     public MedicineOrderAcceptedAction(Context context) {
         super(context);
     }
