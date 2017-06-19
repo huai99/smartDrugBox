@@ -66,6 +66,7 @@ public class AfterAlarmSetService extends Service {
                 mRingtoneService.playRingtone();
                 mNotificationService.dispatchNotification();
                 mBuzzerController.turnOn();
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(mIntent);
                 break;
             case "no":
