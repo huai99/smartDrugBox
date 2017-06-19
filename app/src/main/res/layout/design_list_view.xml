@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@color/white"
+                android:background="@drawable/rectangular_frame"
                 android:orientation="horizontal"
+                android:layout_margin="5dp"
     >
 
     <TextView
@@ -16,6 +17,7 @@
         android:layout_marginLeft="@dimen/field_interval_dist"
         android:layout_marginStart="@dimen/field_interval_dist"
         android:layout_marginTop="10dp"
+        android:textSize="10sp"
         android:text="Column 1"/>
 
     <TextView
@@ -26,19 +28,20 @@
         android:layout_marginLeft="@dimen/field_interval_dist"
         android:layout_marginStart="@dimen/field_interval_dist"
         android:layout_toEndOf="@+id/text_column1"
+        android:textSize="10sp"
         android:layout_toRightOf="@+id/text_column1"
         android:text="Column 2"/>
 
     <TextView
         android:id="@+id/text_column3"
-        android:layout_width="150dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:layout_alignTop="@id/text_column2"
         android:layout_marginLeft="@dimen/field_interval_dist"
         android:layout_marginStart="@dimen/field_interval_dist"
         android:layout_toEndOf="@+id/text_column2"
         android:layout_toRightOf="@+id/text_column2"
+        android:textSize="10sp"
         android:text="Column 3"/>
 
     <TextView
@@ -47,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="@dimen/field_interval_dist"
         android:layout_alignTop="@+id/text_column3"
+        android:layout_marginLeft="@dimen/field_interval_dist"
+        android:textSize="10sp"
         android:text="Column 4"/>
 </RelativeLayout>

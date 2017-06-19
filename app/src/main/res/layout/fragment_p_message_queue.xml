@@ -23,7 +23,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/userName"
-                android:background="@color/white"
                 ></android.support.v7.widget.RecyclerView>
 
             <TextView

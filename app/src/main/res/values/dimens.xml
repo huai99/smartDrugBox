@@ -4,6 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="field_width">80dp</dimen>
-    <dimen name="field_interval_dist">15dp</dimen>
+    <dimen name="field_interval_dist">10dp</dimen>
     <dimen name="view_medicine_order_details_text_width">110dp</dimen>
 </resources>

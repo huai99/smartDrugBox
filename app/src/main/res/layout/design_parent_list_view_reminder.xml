@@ -24,8 +24,8 @@
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="230dp"
-            android:layout_marginStart="230dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginStart="150dp"
             android:focusable="false"
             android:id="@+id/switch_parent_view"
             />
