@@ -3,7 +3,6 @@ package com.siehuai.smartdrugbox.User.controller.MessageActionImpl;
 import android.content.Context;
 
 import com.google.firebase.messaging.RemoteMessage;
-import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.MessageAction.AbstractMessageAction;
 import com.siehuai.smartdrugbox.Generic.controller.MessageAction.IMessageAction;
 
@@ -13,7 +12,7 @@ public class UserMessageActionFactory {
         String action = message.getData().get("action");
         String title = message.getNotification().getTitle();
         String body = message.getNotification().getBody();
-        String sentTime = Utils.convertLongTimeToStringFormat(message.getSentTime(), "HH:mm:ss");
+        long sentTime = message.getSentTime();
         String sender = message.getData().get("sender");
         String priority = message.getData().get("priority");
         AbstractMessageAction abstractMessageAction = null;

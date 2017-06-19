@@ -3,7 +3,7 @@ package com.siehuai.smartdrugbox.Generic.data;
 public class Message implements IDbData {
 
     String id;
-    String time;
+    long time;
     String title;
     String details;
     boolean readStatus;
@@ -13,7 +13,7 @@ public class Message implements IDbData {
     public Message() {
     }
 
-    public Message(String id, String time, String title, String details, boolean readStatus, String sender, String priority) {
+    public Message(String id, long time, String title, String details, boolean readStatus, String sender, String priority) {
         this.id = id;
         this.time = time;
         this.title = title;
@@ -33,8 +33,12 @@ public class Message implements IDbData {
         return this.id;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String getTitle() {
@@ -45,9 +49,6 @@ public class Message implements IDbData {
         this.title = title;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public String getDetails() {
         return details;

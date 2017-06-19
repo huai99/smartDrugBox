@@ -3,7 +3,6 @@ package com.siehuai.smartdrugbox.Pharmacy.controller.MessageActionImpl;
 import android.content.Context;
 
 import com.google.firebase.messaging.RemoteMessage;
-import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.MessageAction.AbstractMessageAction;
 import com.siehuai.smartdrugbox.Generic.controller.MessageAction.IMessageAction;
 
@@ -15,7 +14,7 @@ public class P_MessageActionFactory {
         String priority = message.getData().get("priority");
         String title = message.getNotification().getTitle();
         String body = message.getNotification().getBody();
-        String sentTime = Utils.convertLongTimeToStringFormat(message.getSentTime(), "HH:mm:ss");
+        long sentTime = message.getSentTime();
         AbstractMessageAction abstractMessageAction = null;
         switch (action) {
             case "NewMedicineOrderAction":

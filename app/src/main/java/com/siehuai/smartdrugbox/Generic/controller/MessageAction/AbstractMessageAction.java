@@ -14,7 +14,7 @@ public abstract class AbstractMessageAction implements IMessageAction {
     private String messageBody;
     private String messageTitle;
     protected Context mContext;
-    private String mSentTime;
+    private long mSentTime;
     private String sender;
     private String priority;
     private Map<String, String> data;
@@ -40,11 +40,11 @@ public abstract class AbstractMessageAction implements IMessageAction {
         this.messageTitle = messageTitle;
     }
 
-    public String getSentTime() {
+    public long getSentTime() {
         return mSentTime;
     }
 
-    public void setSentTime(String sentTime) {
+    public void setSentTime(long sentTime) {
         mSentTime = sentTime;
     }
 
