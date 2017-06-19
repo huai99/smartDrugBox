@@ -15,4 +15,6 @@ public interface IListResource {
 
     void setResourceList(ArrayList<?> resourceList);
 
+    ArrayList<?> getColorList();
+
 }

@@ -23,6 +23,7 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
     private ArrayList<String> mColumn2List = new ArrayList<>();
     private ArrayList<String> mColumn3List = new ArrayList<>();
     private ArrayList<String> mColumn4List = new ArrayList<>();
+    private ArrayList<Integer> mColorList = new ArrayList<>();
 
     private ListAdapterObservable mClickListenerObservable = new ListAdapterObservable();
 
@@ -69,6 +70,10 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
         void setColumn4Text(String availability) {
             mColumn4Text.setText(availability);
         }
+
+        void setBackGroundResource(int color) {
+            mView.setBackgroundResource(color);
+        }
     }
 
     @Override
@@ -92,6 +97,9 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
                 mClickListenerObservable.notifyObservers(mIDbDataList.get(holder.getAdapterPosition()));
             }
         });
+        if (mColorList != null && mColorList.get(position) != null) {
+            holder.setBackGroundResource(mColorList.get(position));
+        }
     }
 
 
@@ -107,6 +115,7 @@ public abstract class GenericIListAdapter extends RecyclerView.Adapter<GenericIL
         mColumn3List = mIListResource.getResourceTextMap().get(ListResourceFieldConst.COLUMN3);
         mColumn4List = mIListResource.getResourceTextMap().get(ListResourceFieldConst.COLUMN4);
         mIDbDataList = (ArrayList<IDbData>) mIListResource.getResourceList();
+        mColorList = (ArrayList<Integer>) mIListResource.getColorList();
     }
 
     public ListAdapterObservable getClickListenerObservable() {

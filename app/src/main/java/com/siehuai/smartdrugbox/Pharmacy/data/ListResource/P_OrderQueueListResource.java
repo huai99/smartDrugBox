@@ -51,4 +51,9 @@ public class P_OrderQueueListResource implements IListResource {
         medicineOrderList = (ArrayList<MedicineOrder>) resourceList;
         setResourceTextMap();
     }
+
+    @Override
+    public ArrayList<?> getColorList() {
+        return null;
+    }
 }
