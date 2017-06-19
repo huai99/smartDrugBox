@@ -71,7 +71,7 @@ public class EditCompartmentDetailsFragment extends Fragment {
     private void initData() {
         if (checkIfMedicineAvailable(mCompartmentDetails.getMedicineDetails())) {
             medicineName = mMedicineDetails.getMedicineName();
-            drugStoreName = mMedicineDetails.getDrugstore();
+            drugStoreName = mMedicineDetails.getPharmacyDetails().getPharmacyName();
         }
     }
 

@@ -73,6 +73,7 @@ public class OrderMedicineFragment extends Fragment {
             initData();
             initView();
             promptAlertDialog();
+            setUpRefillBtn();
         } else {
             promptErrorDialog();
         }
@@ -81,7 +82,7 @@ public class OrderMedicineFragment extends Fragment {
 
     private void initData() {
         name = mMedicineDetails.getMedicineName();
-        drugStore = mMedicineDetails.getDrugstore();
+        drugStore = mMedicineDetails.getPharmacyDetails().getPharmacyName();
         frequency = String.valueOf(mMedicineDetails.getFrequencyOfTaking());
         price = String.valueOf(mMedicineDetails.getPrice());
         description = mMedicineDetails.getDescription();
@@ -217,6 +218,15 @@ public class OrderMedicineFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+            }
+        });
+    }
+
+    private void setUpRefillBtn() {
+        mBinding.refillBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptOptionsDialog();
             }
         });
     }

@@ -75,7 +75,7 @@ public class ViewRequestedMedicineDetailsFragment extends Fragment {
 
     private void initData() {
 
-        pharmacyName = mMedicineDetails.getDrugstore();
+        pharmacyName = mMedicineDetails.getPharmacyDetails().getPharmacyName();
         price = String.valueOf(mMedicineDetails.getPrice());
         frequencyOfTaking = String.valueOf(mMedicineDetails.getFrequencyOfTaking());
         medicineName = String.valueOf(mMedicineDetails.getMedicineName());

@@ -71,7 +71,7 @@ public class ViewCompartmentDetailsFragment extends Fragment {
     private void initData() {
         if (checkIfMedicineAvailable(mMedicineDetails)) {
             name = mMedicineDetails.getMedicineName();
-            drugStore = mMedicineDetails.getDrugstore();
+            drugStore = mMedicineDetails.getPharmacyDetails().getPharmacyName();
             frequency = String.valueOf(mMedicineDetails.getFrequencyOfTaking());
             price = String.valueOf(mMedicineDetails.getPrice());
             description = mMedicineDetails.getDescription();

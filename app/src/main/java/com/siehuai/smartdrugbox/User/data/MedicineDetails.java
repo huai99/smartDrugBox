@@ -12,7 +12,6 @@ public class MedicineDetails implements IDbData, Parcelable {
 
     private String id;
     private String medicineName;
-    private String drugstore;
     private PharmacyDetails pharmacyDetails;
     private String description;
     private String medicineMoreInfo;
@@ -117,14 +116,6 @@ public class MedicineDetails implements IDbData, Parcelable {
         frequencyOfTaking = in.readInt();
         medicineImage = in.readString();
         price = in.readDouble();
-    }
-
-    public String getDrugstore() {
-        return pharmacyDetails.getPharmacyName();
-    }
-
-    public void setDrugstore(String drugstore) {
-        this.drugstore = drugstore;
     }
 
     public static final Creator<MedicineDetails> CREATOR = new Creator<MedicineDetails>() {

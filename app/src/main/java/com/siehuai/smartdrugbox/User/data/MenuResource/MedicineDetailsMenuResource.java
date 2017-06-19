@@ -56,7 +56,7 @@ public class MedicineDetailsMenuResource implements MenuResource {
     private void setResourceTextList() {
         mTextList.clear();
         for (MedicineDetails medicineDetails : mMedicineDetailsList) {
-            mTextList.add(medicineDetails.getDrugstore());
+            mTextList.add(medicineDetails.getPharmacyDetails().getPharmacyName());
         }
     }
 
