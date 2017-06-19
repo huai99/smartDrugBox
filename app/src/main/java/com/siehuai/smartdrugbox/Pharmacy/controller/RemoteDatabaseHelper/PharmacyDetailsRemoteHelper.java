@@ -55,7 +55,7 @@ public class PharmacyDetailsRemoteHelper extends PharmacyRemoteDbHelper {
 
     @Override
     public void read() {
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 transferDatatoLocal(dataSnapshot);
