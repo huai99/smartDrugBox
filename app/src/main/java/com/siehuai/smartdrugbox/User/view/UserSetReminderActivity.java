@@ -10,7 +10,6 @@ import android.widget.ExpandableListView;
 import android.widget.TimePicker;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
-import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.ReminderListViewAdapter;
@@ -27,7 +26,6 @@ public class UserSetReminderActivity extends AppCompatActivity {
     AlarmDialog mAlarmDialog;
     CustomTimePickerDialogListener mCustomTimePickerDialogListener;
     ExpandableListView mExpandableListView;
-    PostsDatabaseHelper postsDbHelper;
     U_AlarmRemoteHelper mAlarmRemoteHelper;
 
     @Override
@@ -35,8 +33,6 @@ public class UserSetReminderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_user_set_reminder);
-
-        postsDbHelper = PostsDatabaseHelper.getInstance(this);
 
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_alarm);
 

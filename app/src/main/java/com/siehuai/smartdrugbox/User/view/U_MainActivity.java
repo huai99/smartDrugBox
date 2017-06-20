@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.Message;
 import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
@@ -53,10 +52,6 @@ public class U_MainActivity extends U_BaseActivity {
         remoteHelperComponent.inject(this);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_main);
-
-        PostsDatabaseHelper postsDbHelper = PostsDatabaseHelper.getInstance(this);
-
-        initAlarmData(postsDbHelper);
 
         setReminderBtn();
 
@@ -126,13 +121,6 @@ public class U_MainActivity extends U_BaseActivity {
 
             }
         });
-    }
-
-    public void initAlarmData(PostsDatabaseHelper helper) {
-
-       /* ArrayList<AlarmData> alarmArrayList = helper.getAllAlarmFrmDb();
-
-        helper.updateAlarmInLocal(alarmArrayList);*/
     }
 
     @Override
