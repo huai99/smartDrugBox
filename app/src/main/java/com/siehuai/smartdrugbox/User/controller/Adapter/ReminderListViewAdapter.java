@@ -13,11 +13,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
+import com.siehuai.smartdrugbox.Generic.common.Utils;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnCompleteListener;
 import com.siehuai.smartdrugbox.Generic.controller.Service.SetAlarmService;
+import com.siehuai.smartdrugbox.R;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.U_AlarmRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
-import com.siehuai.smartdrugbox.User.data.AlarmDataHelper;
 
 import java.util.ArrayList;
 
@@ -25,22 +26,20 @@ import java.util.ArrayList;
 //TODO:Build an abstraction over this
 public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
-    private ArrayList<AlarmData> mParentList;
+    private ArrayList<AlarmData> mParentList = new ArrayList<>();
     private ExpandableListView mExpandableListView;
     private int lastExpandedGroupPosition;
     private Context mContext;
     private TextView mTextClock;
     private Switch mSwitch;
-    private PostsDatabaseHelper postsDbHelper;
+    private U_AlarmRemoteHelper mAlarmRemoteHelper;
     private SetAlarmService mSetAlarmService;
 
     public ReminderListViewAdapter(Context context,
-                                   ExpandableListView expandableListView,
-                                   ArrayList<AlarmData> parentList) {
+                                   ExpandableListView expandableListView) {
         mContext = context;
         mExpandableListView = expandableListView;
-        mParentList = parentList;
-        postsDbHelper = PostsDatabaseHelper.getInstance(context);
+        mAlarmRemoteHelper = U_AlarmRemoteHelper.getInstance();
         mSetAlarmService = new SetAlarmService(context);
     }
 
@@ -89,15 +88,15 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         }
         convertView.setTag(this.getGroup(groupPosition).toString());
 
-        AlarmData alarmData = AlarmDataHelper.getAlarmDataList().get(groupPosition);
+        AlarmData alarmData = mParentList.get(groupPosition);
 
         mTextClock = (TextView) convertView.findViewById(R.id.textClock_parent_view);
 
         mSwitch = (Switch) convertView.findViewById(R.id.switch_parent_view);
 
-        int mAlarmId = (int) alarmData.getAlarmID();
+        String mAlarmId = alarmData.getId();
 
-        int status = alarmData.isStatus();
+        boolean status = alarmData.isStatus();
 
         setSwitchInitialStatus(mSwitch, status);
 
@@ -122,7 +121,7 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.design_child_list_view_reminder, parent, false);
         }
 
-        AlarmData alarmData = AlarmDataHelper.getAlarmDataList().get(groupPosition);
+        AlarmData alarmData = mParentList.get(groupPosition);
 
         Button deleteBtn = (Button) convertView.findViewById(R.id.btn_delete);
 
@@ -149,36 +148,37 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
 
     @TargetApi(19)
     private void switchToggleAction(final Switch aSwitch,
-                                   final int position) {
+                                    final int position) {
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                AlarmData alarmData = AlarmDataHelper.getAlarmDataList().get(position);
+                AlarmData alarmData = mParentList.get(position);
                 if (isChecked) {
                     setAlarmOn(alarmData);
 //                    Set alarm on in db
-                    alarmData.setStatus(1);
+                    alarmData.setStatus(true);
                 } else {
                     cancelAlarm(alarmData);
                     //Set alarm off in db
-                    alarmData.setStatus(0);
+                    alarmData.setStatus(false);
                 }
-                addOrUpdateAlarmData(alarmData);
+                mAlarmRemoteHelper.update(alarmData);
             }
         });
     }
 
     private void setTextClock(AlarmData alarmData) {
 
-        if(alarmData.getHour()<12){
-            String hour_string = changeTimeToString(alarmData.getHour());
-            String minute_string = changeTimeToString(alarmData.getMinute());
-            mTextClock.setText(hour_string + ":" + minute_string+" a.m.");
+        if (Utils.safeParseInteger(alarmData.getHour()) < 12) {
+            String hour = alarmData.getHour();
+            String minute = alarmData.getMinute();
+            mTextClock.setText(hour + ":" + minute + " a.m.");
 
-        }else{
-            String hour_string = changeTimeToString(alarmData.getHour()-12);
-            String minute_string = changeTimeToString(alarmData.getMinute());
-            mTextClock.setText(hour_string + ":" + minute_string+" p.m.");
+        } else {
+            int hour = Utils.safeParseInteger(alarmData.getHour()) - 12;
+            String hour_string = String.valueOf(hour);
+            String minute_string = alarmData.getMinute();
+            mTextClock.setText(hour_string + ":" + minute_string + " p.m.");
         }
     }
 
@@ -204,37 +204,30 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int alarmId = (int) alarmData.getAlarmID();
-                if (postsDbHelper.deleteAlarmFromDb(alarmId)) {
-                    deleteAlarmLocal(alarmData);
-                    Toast.makeText(mContext, "Delete Successfully", Toast.LENGTH_SHORT).show();
-                    notifyDataSetChanged();
-                    if (mSwitch.isChecked()) {
-                        cancelAlarm(alarmData);
+                mAlarmRemoteHelper.delete(alarmData, new IDbOnCompleteListener() {
+                    @Override
+                    public void onComplete(Object error) {
+                        if (error == null) {
+                            Toast.makeText(mContext, "Delete Successfully", Toast.LENGTH_SHORT).show();
+                            if (mSwitch.isChecked()) {
+                                cancelAlarm(alarmData);
+                            }
+                        }
                     }
-                } else {
-                    Toast.makeText(mContext, "Delete Fail: " + String.valueOf(alarmId), Toast.LENGTH_SHORT).show();
-                }
+                });
             }
         });
     }
 
-    private boolean deleteAlarmLocal(AlarmData alarmData) {
-        return AlarmDataHelper.removeAlarm(alarmData);
+    private void setSwitchInitialStatus(Switch aSwitch, boolean status) {
+        aSwitch.setChecked(status);
     }
 
-    private void setSwitchInitialStatus(Switch aSwitch, int status) {
-        boolean switchStatus = status != 0;
 
-        aSwitch.setChecked(switchStatus);
-    }
-
-    private void addOrUpdateAlarmData(AlarmData mAlarmData) {
-        boolean result;
-        int resultNum = postsDbHelper.addOrUpdateAlarmFrmDb(mAlarmData);
-        result = (resultNum > 0);
-        postsDbHelper.addOrUpdateAlarmLocal(mAlarmData, result);
-        notifyDataSetChanged();
+    public void setParentList(ArrayList<AlarmData> parentList) {
+        if (parentList != null) {
+            mParentList = parentList;
+        }
     }
 
 }

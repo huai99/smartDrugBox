@@ -9,12 +9,16 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TimePicker;
 
-import com.siehuai.smartdrugbox.R;
-import com.siehuai.smartdrugbox.User.controller.CustomTimePickerDialogListener;
+import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.PostsDatabaseHelper;
+import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
+import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.ReminderListViewAdapter;
+import com.siehuai.smartdrugbox.User.controller.CustomTimePickerDialogListener;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.U_AlarmRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
-import com.siehuai.smartdrugbox.User.data.AlarmDataHelper;
+
+import java.util.Collection;
 
 public class UserSetReminderActivity extends AppCompatActivity {
 
@@ -24,6 +28,7 @@ public class UserSetReminderActivity extends AppCompatActivity {
     CustomTimePickerDialogListener mCustomTimePickerDialogListener;
     ExpandableListView mExpandableListView;
     PostsDatabaseHelper postsDbHelper;
+    U_AlarmRemoteHelper mAlarmRemoteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +42,11 @@ public class UserSetReminderActivity extends AppCompatActivity {
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.expandList_reminder);
 
-        reminderListViewAdapter = new ReminderListViewAdapter(
-                this,
-                mExpandableListView,
-                AlarmDataHelper.getAlarmDataList());
+        reminderListViewAdapter = new ReminderListViewAdapter(this, mExpandableListView);
+
+        mAlarmRemoteHelper = U_AlarmRemoteHelper.getInstance();
+
+        setupAlarmDataResource();
 
         mExpandableListView.setAdapter(reminderListViewAdapter);
 
@@ -48,6 +54,17 @@ public class UserSetReminderActivity extends AppCompatActivity {
 
         setFloatingActionButton();
 
+    }
+
+    private void setupAlarmDataResource() {
+        mAlarmRemoteHelper.findAll(new IDbOnDataChangeListener() {
+            @Override
+            public void onDataChange(Object data) {
+                Collection<AlarmData> collection = (Collection<AlarmData>) data;
+                reminderListViewAdapter.setParentList(Utils.convertCollectionToArrayList(collection));
+                reminderListViewAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     public void setFloatingActionButton() {
@@ -69,22 +86,28 @@ public class UserSetReminderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TimePicker mTimePicker = mAlarmDialog.getTimePicker();
-                int hour = mTimePicker.getCurrentHour();
-                int minute = mTimePicker.getCurrentMinute();
-                AlarmData alarmData = new AlarmData(hour, minute, 0, -1);
-                addOrUpdateAlarm(alarmData);
+                String hour;
+                String minute;
+                if (mTimePicker.getCurrentHour() < 10) {
+                    hour = "0" + String.valueOf(mTimePicker.getCurrentHour());
+                } else {
+                    hour = String.valueOf(mTimePicker.getCurrentHour());
+                }
+
+                if (mTimePicker.getCurrentMinute() < 10) {
+                    minute = "0" + String.valueOf(mTimePicker.getCurrentMinute());
+                } else {
+                    minute = String.valueOf(mTimePicker.getCurrentMinute());
+                }
+                AlarmData alarmData = new AlarmData(hour, minute, false, null);
+                addAlarm(alarmData);
                 mAlarmDialog.dismiss();
             }
         });
     }
 
-    public void addOrUpdateAlarm(AlarmData alarmData) {
-        boolean result;
-        int resultNum = postsDbHelper.addOrUpdateAlarmFrmDb(alarmData);
-        result = (resultNum > 0);
-        postsDbHelper.addOrUpdateAlarmLocal(alarmData, result);
-        //TODO: Think of a way to design that the reminderAdapter is not inside the database helper
-        postsDbHelper.notifyAdapterDataChange(reminderListViewAdapter);
+    public void addAlarm(AlarmData alarmData) {
+        mAlarmRemoteHelper.insert(alarmData);
     }
 
     protected void setDialogCancelBtn(Button cancelBtn) {

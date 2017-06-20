@@ -1,57 +1,57 @@
 package com.siehuai.smartdrugbox.User.data;
 
 
-public class AlarmData {
+import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
-    private int hour;
-    private int minute;
-    private int status;
-    private long alarmID;
+public class AlarmData implements IDbData {
 
-    public AlarmData(int hour,
-                     int minute,
-                     int status,
-                     long alarmID) {
+    private String hour;
+    private String minute;
+    private boolean status;
+    private String id;
+
+    public AlarmData() {
+    }
+
+    public AlarmData(String hour,
+                     String minute,
+                     boolean status,
+                     String id) {
         this.status = status;
-        this.alarmID = alarmID;
+        this.id = id;
         this.hour = hour;
         this.minute = minute;
     }
 
-    public int isStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
-
-    public int getStatus() {
-        return status;
+    public String getId() {
+        return id;
     }
 
-    public long getAlarmID() {
-        return alarmID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setAlarmID(long alarmID) {
-        this.alarmID = alarmID;
-    }
-
-    public int getHour() {
+    public String getHour() {
         return hour;
     }
 
-    public void setHour(int hour) {
+    public void setHour(String hour) {
         this.hour = hour;
     }
 
-    public int getMinute() {
+    public String getMinute() {
         return minute;
     }
 
-    public void setMinute(int minute) {
+    public void setMinute(String minute) {
         this.minute = minute;
     }
 }

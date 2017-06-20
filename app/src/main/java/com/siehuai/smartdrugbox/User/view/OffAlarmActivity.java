@@ -14,14 +14,11 @@ public class OffAlarmActivity extends AppCompatActivity {
     SetAlarmService mSetAlarmService;
     boolean mAlarmStatus = true;
     TextView mTextView;
-    int mAlarmId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_off_alarm);
-
-        mAlarmId = getIntent().getExtras().getInt("alarmId");
 
         mSetAlarmService = new SetAlarmService(OffAlarmActivity.this);
         mTextView = (TextView) findViewById(R.id.text_status);

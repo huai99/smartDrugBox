@@ -10,5 +10,6 @@ public class DataType {
     public static String MedicineOrder = "Medicine-Order";
     public static String Active = "Active";
     public static String PharmacyDetails = "Pharmacy-Details";
+    public static String Alarm = "Alarm";
 
 }

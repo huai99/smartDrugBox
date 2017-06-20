@@ -24,13 +24,11 @@ import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.DaggerU_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.UserMessageQueueRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.U_DependencyInjectionComponent;
-import com.siehuai.smartdrugbox.User.data.AlarmData;
 import com.siehuai.smartdrugbox.User.view.MedicineBox.MedicineBoxActivity;
 import com.siehuai.smartdrugbox.User.view.MessageQueue.U_MessageQueueActivity;
 import com.siehuai.smartdrugbox.User.view.UserViewMedicine.UserViewMedicineActivity;
 import com.siehuai.smartdrugbox.databinding.ActivityUserMainBinding;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -132,9 +130,9 @@ public class U_MainActivity extends U_BaseActivity {
 
     public void initAlarmData(PostsDatabaseHelper helper) {
 
-        ArrayList<AlarmData> alarmArrayList = helper.getAllAlarmFrmDb();
+       /* ArrayList<AlarmData> alarmArrayList = helper.getAllAlarmFrmDb();
 
-        helper.updateAlarmInLocal(alarmArrayList);
+        helper.updateAlarmInLocal(alarmArrayList);*/
     }
 
     @Override

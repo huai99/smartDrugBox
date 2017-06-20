@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.User.controller.AlarmReceiver;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
 
@@ -29,9 +30,8 @@ public class SetAlarmService {
     public void setAlarmOn(AlarmData alarmData) {
         Calendar calendar = Calendar.getInstance();
 
-        int hour = alarmData.getHour();
-        int minute = alarmData.getMinute();
-        int alarmId = (int) alarmData.getAlarmID();
+        int hour = Utils.safeParseInteger(alarmData.getHour());
+        int minute = Utils.safeParseInteger(alarmData.getMinute());
 
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
@@ -41,8 +41,7 @@ public class SetAlarmService {
 
         //Pass in the state of the request, yes for activate alarm
         mIntent.putExtra("extra", "yes");
-        mIntent.putExtra("alarmId", alarmId);
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, alarmId, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, (int) now.getTimeInMillis(), mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (calendar.getTimeInMillis() < now.getTimeInMillis()) {
             mAlarmManager.setExact(
@@ -59,11 +58,13 @@ public class SetAlarmService {
 
     public void cancelAlarm(AlarmData alarmData) {
 
-        int alarmId = (int) alarmData.getAlarmID();
+        Calendar now = Calendar.getInstance();
+
+        int requestCode = (int) now.getTimeInMillis();
 
         turnOffAlarmMusic();
 
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, alarmId, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, requestCode, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (mPendingIntent == null) {
             Log.d("UserReminder", "This pendingIntent is null");
