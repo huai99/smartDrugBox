@@ -39,9 +39,11 @@ public class SetAlarmService {
         //Get the current time
         Calendar now = Calendar.getInstance();
 
+        int id = Utils.safeParseInteger(alarmData.getId());
+
         //Pass in the state of the request, yes for activate alarm
         mIntent.putExtra("extra", "yes");
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, (int) now.getTimeInMillis(), mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent mPendingIntent = PendingIntent.getBroadcast(mContext, id, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (calendar.getTimeInMillis() < now.getTimeInMillis()) {
             mAlarmManager.setExact(
@@ -58,9 +60,7 @@ public class SetAlarmService {
 
     public void cancelAlarm(AlarmData alarmData) {
 
-        Calendar now = Calendar.getInstance();
-
-        int requestCode = (int) now.getTimeInMillis();
+        int requestCode = Utils.safeParseInteger(alarmData.getId());
 
         turnOffAlarmMusic();
 

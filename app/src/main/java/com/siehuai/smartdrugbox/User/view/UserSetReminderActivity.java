@@ -17,6 +17,7 @@ import com.siehuai.smartdrugbox.User.controller.CustomTimePickerDialogListener;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.U_AlarmRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
 
+import java.util.Calendar;
 import java.util.Collection;
 
 public class UserSetReminderActivity extends AppCompatActivity {
@@ -95,7 +96,9 @@ public class UserSetReminderActivity extends AppCompatActivity {
                 } else {
                     minute = String.valueOf(mTimePicker.getCurrentMinute());
                 }
-                AlarmData alarmData = new AlarmData(hour, minute, false, null);
+                int timeInMillis = (int) Calendar.getInstance().getTimeInMillis();
+                String id = String.valueOf(timeInMillis);
+                AlarmData alarmData = new AlarmData(hour, minute, false, id);
                 addAlarm(alarmData);
                 mAlarmDialog.dismiss();
             }

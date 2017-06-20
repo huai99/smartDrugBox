@@ -35,10 +35,10 @@ public class U_AlarmRemoteHelper extends UserRemoteDbHelper {
     @Override
     public void insert(IDbData iDbData) {
         DatabaseReference newRef = mDatabase.push();
-        if (key == null) {
+        if (iDbData.getId() == null) {
             key = newRef.getKey();
+            iDbData.setId(getKey());
         }
-        iDbData.setId(getKey());
         mDatabase.child(iDbData.getId()).setValue(iDbData);
     }
 
