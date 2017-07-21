@@ -55,6 +55,7 @@ public class MainActivity extends BaseActivity {
         } else {
             String userName = String.valueOf(mBinding.editTextUserName.getText());
             Role.PATIENT_USERNAME = userName;
+            Role.CURRENT_ROLE = Role.USER;
             Intent intent = new Intent(MainActivity.this, U_MainActivity.class);
             startActivity(intent);
         }
@@ -66,6 +67,7 @@ public class MainActivity extends BaseActivity {
         } else {
             String userName = String.valueOf(mBinding.editTextUserName.getText());
             Role.PHARMACY_USERNAME = userName;
+            Role.CURRENT_ROLE = Role.PHARMACY;
             Intent intent = new Intent(MainActivity.this, P_MainActivity.class);
             startActivity(intent);
         }
