@@ -1,9 +1,12 @@
 package com.siehuai.smartdrugbox.User.data;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
-public class AlarmData implements IDbData {
+public class AlarmData implements IDbData, Parcelable {
 
     private String hour;
     private String minute;
@@ -54,4 +57,37 @@ public class AlarmData implements IDbData {
     public void setMinute(String minute) {
         this.minute = minute;
     }
+
+    protected AlarmData(Parcel in) {
+        id = in.readString();
+        hour = in.readString();
+        minute = in.readString();
+        status = in.readInt() != 0;
+    }
+
+    public static final Creator<AlarmData> CREATOR = new Creator<AlarmData>() {
+        @Override
+        public AlarmData createFromParcel(Parcel in) {
+            return new AlarmData(in);
+        }
+
+        @Override
+        public AlarmData[] newArray(int size) {
+            return new AlarmData[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(hour);
+        dest.writeString(minute);
+        dest.writeInt(status ? 1 : 0);
+    }
+
 }
