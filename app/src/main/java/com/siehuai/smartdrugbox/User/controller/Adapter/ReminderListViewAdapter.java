@@ -11,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.siehuai.smartdrugbox.Generic.common.Utils;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnCompleteListener;
@@ -211,7 +210,6 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onComplete(Object error) {
                         if (error == null) {
-                            Toast.makeText(mContext, "Delete Successfully", Toast.LENGTH_SHORT).show();
                             if (mSwitch.isChecked()) {
                                 cancelAlarm(alarmData);
                             }
