@@ -88,6 +88,10 @@ public class PharmacyDetailsRemoteHelper extends PharmacyRemoteDbHelper {
     }
 
     public static PharmacyDetailsRemoteHelper getInstance() {
+        if(verifyPharmacy()){
+            instance = new PharmacyDetailsRemoteHelper();
+            return instance;
+        }
         if (instance == null) {
             synchronized (lock) {
                 if (instance == null) {

@@ -91,6 +91,10 @@ public class P_MedicineDetailsRemoteHelper extends PharmacyRemoteDbHelper {
     }
 
     public static P_MedicineDetailsRemoteHelper getInstance() {
+        if(verifyPharmacy()){
+            instance = new P_MedicineDetailsRemoteHelper();
+            return instance;
+        }
         if (instance == null) {
             synchronized (lock) {
                 if (instance == null) {

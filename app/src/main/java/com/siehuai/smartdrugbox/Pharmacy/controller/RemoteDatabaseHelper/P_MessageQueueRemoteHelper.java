@@ -90,6 +90,10 @@ public class P_MessageQueueRemoteHelper extends PharmacyRemoteDbHelper {
     }
 
     public static P_MessageQueueRemoteHelper getInstance() {
+        if(verifyPharmacy()){
+            instance = new P_MessageQueueRemoteHelper();
+            return instance;
+        }
         if (instance == null) {
             synchronized (lock) {
                 if (instance == null) {
