@@ -39,8 +39,11 @@ public class ReminderListViewAdapter extends BaseExpandableListAdapter {
                                    ExpandableListView expandableListView) {
         mContext = context;
         mExpandableListView = expandableListView;
-        mAlarmRemoteHelper = U_AlarmRemoteHelper.getInstance();
         mSetAlarmService = new SetAlarmService(context);
+    }
+
+    public void setAlarmRemoteHelper(U_AlarmRemoteHelper alarmRemoteHelper) {
+        mAlarmRemoteHelper = alarmRemoteHelper;
     }
 
     @Override

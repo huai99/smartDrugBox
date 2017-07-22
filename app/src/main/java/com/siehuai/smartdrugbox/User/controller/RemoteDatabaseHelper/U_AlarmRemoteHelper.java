@@ -25,6 +25,17 @@ public class U_AlarmRemoteHelper extends UserRemoteDbHelper {
         read();
     }
 
+    public U_AlarmRemoteHelper(String medicineBoxId, String compartmentId) {
+        mDatabase = getDatabaseObj()
+                .child(DataType.MedicineBox)
+                .child(DataType.MedicineBoxCompartmentDetails)
+                .child(medicineBoxId)
+                .child("compartmentDetailsMap")
+                .child("Compartment " + compartmentId)
+                .child("alarmDataMap");
+        read();
+    }
+
     @Override
     public void attachOnCompleteListener(DatabaseReference.CompletionListener listener) {
         if (listener != null) {

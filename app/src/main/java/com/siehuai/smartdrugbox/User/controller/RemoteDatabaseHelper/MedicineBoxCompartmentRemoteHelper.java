@@ -120,7 +120,7 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
         });
     }
 
-//    TODO:Another function to handle single value instead of using if-else
+    //    TODO:Another function to handle single value instead of using if-else
     private Iterator<Map<String, Object>> transferDatatoLocalWithoutSerializer(DataSnapshot dataSnapshot, int flag) {
         Iterator<Map<String, Object>> mapObjectIterator = null;
         if (flag == FLAG_READ) {
@@ -165,5 +165,11 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
         } else {
             return instance;
         }
+    }
+
+    public U_AlarmRemoteHelper getAlarmRemoteHelper(CompartmentDetails compartmentDetails) {
+        String medicineBoxId = compartmentDetails.getMedicineBoxId();
+        String compartmentId = compartmentDetails.getId();
+        return new U_AlarmRemoteHelper(medicineBoxId, compartmentId);
     }
 }

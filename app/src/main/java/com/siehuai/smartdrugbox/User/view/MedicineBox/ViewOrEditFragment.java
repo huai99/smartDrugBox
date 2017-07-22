@@ -1,6 +1,7 @@
 package com.siehuai.smartdrugbox.User.view.MedicineBox;
 
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
+import com.siehuai.smartdrugbox.User.view.UserSetReminderActivity;
 import com.siehuai.smartdrugbox.databinding.FragmentViewOrEditBinding;
 
 public class ViewOrEditFragment extends Fragment {
@@ -30,7 +32,9 @@ public class ViewOrEditFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         mCompartmentDetails = bundle.getParcelable("compartmentDetails");
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Compartment " + mCompartmentDetails.getId());
+        ((AppCompatActivity) getActivity()).
+                getSupportActionBar().
+                setTitle("Compartment " + mCompartmentDetails.getId());
     }
 
 
@@ -45,6 +49,8 @@ public class ViewOrEditFragment extends Fragment {
         setUpViewBtn();
 
         setUpEditBtn();
+
+        setUpSetAlarmBtn();
 
         return view;
     }
@@ -79,6 +85,21 @@ public class ViewOrEditFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+    }
+
+    private void setUpSetAlarmBtn() {
+        mBinding.btnSetAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setReminder();
+            }
+        });
+    }
+
+    private void setReminder() {
+        Intent intent = new Intent(getActivity(), UserSetReminderActivity.class);
+        intent.putExtra("compartmentDetails", mCompartmentDetails);
+        startActivity(intent);
     }
 
 }

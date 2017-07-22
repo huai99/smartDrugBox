@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.siehuai.smartdrugbox.Generic.data.IDbData;
 
+import java.util.HashMap;
+
 public class CompartmentDetails implements IDbData, Parcelable {
 
     boolean runOutAlert;
@@ -12,6 +14,8 @@ public class CompartmentDetails implements IDbData, Parcelable {
     MedicineDetails medicineDetails;
     String id;
     String medicineBoxId;
+    HashMap<String, AlarmData> alarmDataMap = new HashMap<>();
+    ;
 
     public CompartmentDetails() {
     }
@@ -22,6 +26,14 @@ public class CompartmentDetails implements IDbData, Parcelable {
         this.runOutAlert = runOutAlert;
         this.fillUpStatus = fillUpStatus;
         this.medicineDetails = medicineDetails;
+    }
+
+    public HashMap<String, AlarmData> getAlarmDataMap() {
+        return alarmDataMap;
+    }
+
+    public void setAlarmDataMap(HashMap<String, AlarmData> alarmDataMap) {
+        this.alarmDataMap = alarmDataMap;
     }
 
     public String getId() {
@@ -70,6 +82,7 @@ public class CompartmentDetails implements IDbData, Parcelable {
         runOutAlert = in.readInt() != 0;
         fillUpStatus = in.readInt() != 0;
         medicineDetails = in.readParcelable(MedicineDetails.class.getClassLoader());
+        alarmDataMap = in.readHashMap(AlarmData.class.getClassLoader());
     }
 
     public static final Creator<CompartmentDetails> CREATOR = new Creator<CompartmentDetails>() {
@@ -95,7 +108,8 @@ public class CompartmentDetails implements IDbData, Parcelable {
         dest.writeString(medicineBoxId);
         dest.writeInt(runOutAlert ? 1 : 0);
         dest.writeInt(fillUpStatus ? 1 : 0);
-        dest.writeParcelable(medicineDetails,flags);
+        dest.writeParcelable(medicineDetails, flags);
+        dest.writeMap(alarmDataMap);
     }
 
 }

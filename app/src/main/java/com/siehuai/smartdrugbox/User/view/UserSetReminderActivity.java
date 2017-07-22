@@ -14,8 +14,10 @@ import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDat
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.Adapter.ReminderListViewAdapter;
 import com.siehuai.smartdrugbox.User.controller.CustomTimePickerDialogListener;
+import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.MedicineBoxCompartmentRemoteHelper;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.U_AlarmRemoteHelper;
 import com.siehuai.smartdrugbox.User.data.AlarmData;
+import com.siehuai.smartdrugbox.User.data.CompartmentDetails;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -28,10 +30,14 @@ public class UserSetReminderActivity extends AppCompatActivity {
     CustomTimePickerDialogListener mCustomTimePickerDialogListener;
     ExpandableListView mExpandableListView;
     U_AlarmRemoteHelper mAlarmRemoteHelper;
+    MedicineBoxCompartmentRemoteHelper mMedicineBoxCompartmentRemoteHelper;
+    CompartmentDetails mCompartmentDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mCompartmentDetails = getIntent().getParcelableExtra("compartmentDetails");
 
         setContentView(R.layout.activity_user_set_reminder);
 
@@ -41,7 +47,11 @@ public class UserSetReminderActivity extends AppCompatActivity {
 
         reminderListViewAdapter = new ReminderListViewAdapter(this, mExpandableListView);
 
-        mAlarmRemoteHelper = U_AlarmRemoteHelper.getInstance();
+        mMedicineBoxCompartmentRemoteHelper = MedicineBoxCompartmentRemoteHelper.getInstance();
+
+        mAlarmRemoteHelper = mMedicineBoxCompartmentRemoteHelper.getAlarmRemoteHelper(mCompartmentDetails);
+
+        reminderListViewAdapter.setAlarmRemoteHelper(mAlarmRemoteHelper);
 
         setupAlarmDataResource();
 
