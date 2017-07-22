@@ -6,9 +6,20 @@ import com.siehuai.smartdrugbox.Generic.data.Role;
 
 public abstract class UserRemoteDbHelper extends RemoteDbHelper {
 
+    static String user;
+
     @Override
     protected DatabaseReference getDatabaseObj() {
         //TODO:Hardcoded username for now
-        return super.getDatabaseObj().child("User").child(Role.PATIENT_USERNAME);
+        user = Role.PATIENT_USERNAME;
+        return super.getDatabaseObj().child("User").child(user);
+    }
+
+    public static String getCurrentUser() {
+        return user;
+    }
+
+    public static boolean verifyUser() {
+        return getCurrentUser().equals(Role.PATIENT_USERNAME);
     }
 }

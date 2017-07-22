@@ -86,6 +86,10 @@ public class UserMessageQueueRemoteHelper extends UserRemoteDbHelper {
     }
 
     public static UserMessageQueueRemoteHelper getInstance() {
+        if (verifyUser()) {
+            instance = new UserMessageQueueRemoteHelper();
+            return instance;
+        }
         if (instance == null) {
             synchronized (lock) {
                 if (instance == null) {

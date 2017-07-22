@@ -153,6 +153,10 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
     }
 
     public static MedicineBoxCompartmentRemoteHelper getInstance() {
+        if (verifyUser()) {
+            instance = new MedicineBoxCompartmentRemoteHelper();
+            return instance;
+        }
         if (instance == null) {
             synchronized (lock) {
                 if (instance == null) {
