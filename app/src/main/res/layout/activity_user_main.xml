@@ -18,13 +18,6 @@
             />
 
         <Button
-            android:id="@+id/btn_setReminder"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/set_reminder"/>
-
-        <Button
             android:id="@+id/btn_orderMed"
             android:layout_width="150dp"
             android:layout_height="wrap_content"

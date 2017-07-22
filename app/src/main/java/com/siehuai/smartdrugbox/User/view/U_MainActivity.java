@@ -53,21 +53,9 @@ public class U_MainActivity extends U_BaseActivity {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_main);
 
-        setReminderBtn();
-
         setSetMedicineBtn();
 
         activateAlarm();
-    }
-
-    public void setReminderBtn() {
-
-        mBinding.btnSetReminder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setReminder();
-            }
-        });
     }
 
     public void setSetMedicineBtn() {
@@ -77,11 +65,6 @@ public class U_MainActivity extends U_BaseActivity {
                 userSetMedicine();
             }
         });
-    }
-
-    public void setReminder() {
-        Intent intent = new Intent(U_MainActivity.this, UserSetReminderActivity.class);
-        startActivity(intent);
     }
 
     public void orderMedicine() {
