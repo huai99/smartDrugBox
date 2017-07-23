@@ -67,9 +67,9 @@ public class MessageQueueListResource implements IListResource {
     public void setColorList() {
         for (Message message : messageList) {
             if (message.isReadStatus()) {
-                mColorList.add(R.color.white);
+                mColorList.add(R.color.grey_200);
             } else {
-                mColorList.add(R.color.grey_400);
+                mColorList.add(R.color.white);
             }
         }
     }
