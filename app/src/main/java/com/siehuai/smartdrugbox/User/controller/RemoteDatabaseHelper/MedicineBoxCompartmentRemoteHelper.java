@@ -70,7 +70,7 @@ public class MedicineBoxCompartmentRemoteHelper extends UserRemoteDbHelper {
 
     @Override
     public void read() {
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 transferDatatoLocalWithoutSerializer(dataSnapshot, FLAG_READ);
