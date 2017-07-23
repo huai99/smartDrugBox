@@ -6,7 +6,7 @@ import com.siehuai.smartdrugbox.Generic.data.Role;
 
 public abstract class UserRemoteDbHelper extends RemoteDbHelper {
 
-    static String user;
+    static String user = Role.DEFAULT_PATIENT_USERNAME;
 
     @Override
     protected DatabaseReference getDatabaseObj() {
