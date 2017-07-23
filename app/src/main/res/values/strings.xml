@@ -9,9 +9,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="on">On</string>
-    <string name="drug_store">Drug Store:</string>
+    <string name="drug_store">Drug Store</string>
     <string name="medicine">Medicine:</string>
-    <string name="pill_number">Pill Number:</string>
+    <string name="pill_number">Pill Number</string>
     <string name="confirm">Confirm</string>
     <string name="example_drugstore">ABC drugstore</string>
     <string name="example_medicine">ABC medicine</string>
