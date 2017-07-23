@@ -3,11 +3,11 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
+        android:id="@+id/fragment_edit_compartment_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:clickable="true"
-        android:id="@+id/fragment_edit_compartment_details"
         tools:context="com.siehuai.smartdrugbox.User.view.MedicineBox.EditCompartmentDetailsFragment">
 
         <ScrollView
@@ -18,8 +18,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="600dp">
 
-                <EditText
-                    android:id="@+id/editText_medicineName"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_medicineName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -28,31 +28,46 @@
                     android:layout_marginEnd="82dp"
                     android:layout_marginRight="82dp"
                     android:layout_marginTop="210dp"
-                    android:ems="10"
-                    android:hint="Medicine Name"
-                    android:inputType="textCapSentences"
-                    android:textColor="@color/grey_500"/>
+                    >
 
-                <EditText
-                    android:id="@+id/editText_drugStore"
+                    <EditText
+                        android:id="@+id/editText_medicineName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Medicine Name"
+                        android:inputType="textCapSentences"
+                        android:textColor="@color/grey_500"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_medicineName"
-                    android:layout_alignStart="@+id/editText_medicineName"
-                    android:layout_below="@+id/editText_medicineName"
+                    android:id="@+id/textInputLayout_drugStore"
+                    android:layout_alignLeft="@+id/textInputLayout_medicineName"
+                    android:layout_alignStart="@+id/textInputLayout_medicineName"
+                    android:layout_below="@+id/textInputLayout_medicineName"
                     android:layout_centerVertical="true"
-                    android:ems="10"
-                    android:hint="@string/drug_store"
-                    android:inputType="text"
-                    android:textColor="@color/grey_500"/>
+                    >
+
+                    <EditText
+                        android:id="@+id/editText_drugStore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/drug_store"
+                        android:inputType="text"
+                        android:textColor="@color/grey_500"/>
+                </android.support.design.widget.TextInputLayout>
+
 
                 <Button
                     android:id="@+id/btn_confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_drugStore"
-                    android:layout_alignStart="@+id/editText_drugStore"
-                    android:layout_below="@+id/editText_drugStore"
+                    android:layout_alignLeft="@+id/textInputLayout_drugStore"
+                    android:layout_alignStart="@+id/textInputLayout_drugStore"
+                    android:layout_below="@+id/textInputLayout_drugStore"
                     android:layout_marginLeft="58dp"
                     android:layout_marginStart="58dp"
                     android:layout_marginTop="54dp"
