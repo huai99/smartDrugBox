@@ -34,7 +34,7 @@ public class GetImgFrmGalleryResponse implements IOnActivityResultResponse {
                 mBitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(targetUri), null, options);
                 int size = mBitmap.getAllocationByteCount();
                 int total = 2;
-                while (size > 190000) {
+                while (size > 380000) {
                     options.inSampleSize = 2 * total;
                     mBitmap = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(targetUri), null, options);
                     size = mBitmap.getAllocationByteCount();
