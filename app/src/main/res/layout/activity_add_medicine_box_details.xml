@@ -16,42 +16,81 @@
                 android:id="@+id/img_newUser"
                 android:layout_width="180dp"
                 android:layout_height="180dp"
-                android:layout_marginTop="80dp"
-                app:srcCompat="@drawable/placeholder"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"/>
-
-            <EditText
-                android:id="@+id/editText_userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/img_newUser"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="@string/name"
-                android:inputType="textCapSentences"
-                android:textColor="@color/grey_500"/>
+                android:layout_marginTop="80dp"
+                app:srcCompat="@drawable/placeholder"/>
 
-
-            <EditText
-                android:id="@+id/editText_emergencyContact"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/editText_userName"
-                android:layout_alignStart="@id/editText_userName"
-                android:layout_below="@id/editText_userName"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="@string/emergency_contact"
-                android:inputType="number"
-                android:textColor="@color/grey_500"/>
+                android:layout_alignLeft="@id/img_newUser"
+                android:layout_below="@+id/img_newUser"
+                >
+
+                <EditText
+                    android:id="@+id/editText_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_newUser"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:ems="10"
+                    android:hint="@string/name"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout_emergencyContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/textInputLayout_userName"
+                android:layout_alignStart="@id/textInputLayout_userName"
+                android:layout_below="@id/textInputLayout_userName"
+                >
+
+                <EditText
+                    android:id="@+id/editText_emergencyContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:ems="10"
+                    android:hint="@string/emergency_contact"
+                    android:inputType="number"
+                    android:textColor="@color/black"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/spinner"
+                android:layout_alignStart="@+id/spinner"
+                android:layout_below="@id/textInputLayout_emergencyContact"
+                >
+
+                <EditText
+                    android:id="@+id/editText_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:hint="@string/address"
+                    android:textColor="@color/black"/>
+
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/editText_userName"
+                android:layout_above="@+id/textInputLayout_userName"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="45dp"
                 android:text="@string/tap_to_change"
@@ -73,28 +112,14 @@
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
-                android:tag="@string/compartment_number"
-                android:layout_below="@+id/editText_address"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/textInputLayout_emergencyContact"
+                android:layout_below="@+id/textInputLayout_address"
                 android:layout_marginEnd="11dp"
+                android:layout_marginRight="11dp"
                 android:layout_marginTop="20dp"
                 android:entries="@array/compartmentNumberArray"
-                android:layout_alignLeft="@id/editText_emergencyContact"
-                android:layout_marginRight="11dp"/>
-
-            <EditText
-                android:id="@+id/editText_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/spinner"
-                android:layout_alignStart="@+id/spinner"
-                android:layout_below="@+id/editText_emergencyContact"
-                android:layout_marginTop="11dp"
-                android:ems="10"
-                android:textColor="@color/grey_500"
-                android:inputType="textPersonName"
-                android:text="@string/address"/>
-
+                android:tag="@string/compartment_number"/>
 
         </RelativeLayout>
 
