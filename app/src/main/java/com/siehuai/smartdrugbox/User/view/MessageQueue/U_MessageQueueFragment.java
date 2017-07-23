@@ -89,9 +89,9 @@ public class U_MessageQueueFragment extends Fragment {
                 listResource.setResourceList(Utils.convertCollectionToArrayList(changedList));
                 adapter.setResourceArrayList(listResource);
                 adapter.notifyDataSetChanged();
+                setAllMessageAsRead(Utils.convertCollectionToArrayList((ArrayList<Message>)listResource.getResourceList()));
             }
         });
-        setAllMessageAsRead(Utils.convertCollectionToArrayList((ArrayList<Message>)listResource.getResourceList()));
         return listResource;
     }
 
