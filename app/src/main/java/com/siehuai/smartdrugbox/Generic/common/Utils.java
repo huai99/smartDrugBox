@@ -60,6 +60,7 @@ public class Utils {
         }
     }
 
+    //TODO: This should be an asyn task
     public static String BitMaptoBase64(Context mContext, Bitmap mBitMap) {
         if (mBitMap == null) {
             mBitMap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.placeholder);
@@ -70,7 +71,7 @@ public class Utils {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-
+    //TODO: This should be an asyn task due to performance issue
     public static Bitmap Base64toBitMap(String encodedImage) {
         try {
             byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
