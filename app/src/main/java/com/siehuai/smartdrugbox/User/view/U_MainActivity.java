@@ -3,6 +3,8 @@ package com.siehuai.smartdrugbox.User.view;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.siehuai.smartdrugbox.Generic.controller.RemoteDatabaseHelper.IDbOnDataChangeListener;
 import com.siehuai.smartdrugbox.Generic.data.Message;
 import com.siehuai.smartdrugbox.Generic.data.NetworkAddress;
+import com.siehuai.smartdrugbox.Generic.view.FragmentDrawer;
 import com.siehuai.smartdrugbox.R;
 import com.siehuai.smartdrugbox.User.controller.DaggerU_DependencyInjectionComponent;
 import com.siehuai.smartdrugbox.User.controller.RemoteDatabaseHelper.UserMessageQueueRemoteHelper;
@@ -43,12 +46,16 @@ public class U_MainActivity extends U_BaseActivity {
 
     MenuItem mMenuItem;
 
+    private FragmentDrawer drawerFragment;
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         U_DependencyInjectionComponent remoteHelperComponent = DaggerU_DependencyInjectionComponent.create();
+
         remoteHelperComponent.inject(this);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_main);
@@ -56,6 +63,21 @@ public class U_MainActivity extends U_BaseActivity {
         setSetMedicineBtn();
 
         activateAlarm();
+
+        mToolbar = (Toolbar) mBinding.drawerLayout.findViewById(R.id.toolbar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        drawerFragment = (FragmentDrawer)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        drawerFragment.setDrawerListener(new FragmentDrawer.FragmentDrawerListener() {
+            @Override
+            public void onDrawerItemSelected(View view, int position) {
+
+            }
+        });
     }
 
     public void setSetMedicineBtn() {

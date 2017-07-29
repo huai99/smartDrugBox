@@ -59,4 +59,6 @@
     <string name="title_activity_message_queue">MessageQueueActivity</string>
     <string name="title_activity_u__message_queue">U_MessageQueueActivity</string>
     <string name="medicine_name">Medicine Name</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

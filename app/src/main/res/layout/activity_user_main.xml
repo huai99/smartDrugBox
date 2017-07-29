@@ -1,36 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+<!-- Coordinator Layout solve the problem of notification bar
+     appearing as transparent !-->
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:context="com.siehuai.smartdrugbox.User.view.U_MainActivity"
+        android:fitsSystemWindows="true"
         >
 
-        <ImageView
-            android:layout_width="256dp"
-            android:layout_height="271dp"
-            android:src="@drawable/user"
-            />
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_orderMed"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/set_medicine"
-            />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.siehuai.smartdrugbox.User.view.U_MainActivity"
+                >
 
-        <Button
-            android:id="@+id/btn_testing"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="Activate alarm"/>
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/toolbar_main"/>
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="256dp"
+                    android:layout_height="271dp"
+                    android:layout_above="@+id/btn_orderMed"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="40dp"
+                    android:src="@drawable/user"/>
+
+                <Button
+                    android:id="@+id/btn_orderMed"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="72dp"
+                    android:text="@string/set_medicine"/>
+
+                <Button
+                    android:id="@+id/btn_testing"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="Activate alarm"/>
+
+            </RelativeLayout>
+
+            <fragment
+                android:id="@+id/fragment_navigation_drawer"
+                android:name="com.siehuai.smartdrugbox.Generic.view.FragmentDrawer"
+                android:layout_width="@dimen/nav_drawer_width"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                app:layout="@layout/fragment_navigation_drawer"
+                tools:layout="@layout/fragment_navigation_drawer"/>
+
+        </android.support.v4.widget.DrawerLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 
 </layout>
