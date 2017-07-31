@@ -29,157 +29,159 @@
                     android:layout_marginTop="36dp"
                     app:srcCompat="@drawable/placeholder"/>
 
-                <EditText
-                    android:id="@+id/editText_pharmacyName"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_pharmacy_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/imageView_medicine"
-                    android:layout_alignStart="@+id/imageView_medicine"
                     android:layout_below="@+id/imageView_medicine"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="80dp"
                     android:layout_marginTop="24dp"
-                    android:background="@color/grey_200"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="none"/>
+                    android:background="@color/grey_100"
+                    >
 
-                <EditText
-                    android:id="@+id/editText_price"
+                    <EditText
+                        android:id="@+id/editText_pharmacy_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/drug_store"
+                        android:inputType="none"
+                        android:paddingTop="10dp"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_medicineName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_pharmacyName"
-                    android:layout_alignStart="@+id/editText_pharmacyName"
-                    android:layout_below="@+id/editText_pharmacyName"
+                    android:layout_alignLeft="@+id/textInputLayout_pharmacy_name"
+                    android:layout_alignStart="@+id/textInputLayout_pharmacy_name"
+                    android:layout_below="@+id/textInputLayout_pharmacy_name"
                     android:layout_marginTop="21dp"
-                    android:background="@color/grey_200"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="none"
-                    />
+                    android:background="@color/grey_100"
+                    >
 
-                <EditText
-                    android:id="@+id/editText_frequencyOfTaking"
+                    <EditText
+                        android:id="@+id/editText_medicineName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/medicine_name"
+                        android:inputType="none"
+                        android:paddingTop="10dp"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_frequency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_price"
-                    android:layout_alignStart="@+id/editText_price"
-                    android:layout_below="@+id/editText_price"
+                    android:layout_alignLeft="@+id/textInputLayout_medicineName"
+                    android:layout_alignStart="@+id/textInputLayout_medicineName"
+                    android:layout_below="@+id/textInputLayout_medicineName"
                     android:layout_marginTop="22dp"
-                    android:background="@color/grey_200"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="none"
-                    />
+                    android:background="@color/grey_100"
+                    >
 
-                <EditText
-                    android:id="@+id/editText_medicineName"
+                    <EditText
+                        android:id="@+id/editText_frequencyOfTaking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/frequency_of_taking"
+                        android:inputType="none"
+                        android:paddingTop="10dp"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_frequencyOfTaking"
-                    android:layout_alignStart="@+id/editText_frequencyOfTaking"
-                    android:layout_below="@+id/editText_frequencyOfTaking"
+                    android:layout_alignLeft="@+id/textInputLayout_frequency"
+                    android:layout_alignStart="@+id/textInputLayout_frequency"
+                    android:layout_below="@+id/textInputLayout_frequency"
                     android:layout_marginTop="25dp"
-                    android:background="@color/grey_200"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="none"
-                    />
+                    android:background="@color/grey_100"
+                    >
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="@dimen/view_medicine_order_details_text_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText_pharmacyName"
-                    android:layout_alignBottom="@+id/editText_pharmacyName"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginStart="22dp"
-                    android:text="Pharmacy Name"
-                    android:textColor="@color/black"/>
+                    <EditText
+                        android:id="@+id/editText_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/price"
+                        android:inputType="none"
+                        android:paddingTop="10dp"
+                        />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="@dimen/view_medicine_order_details_text_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView3"
-                    android:layout_alignStart="@+id/textView3"
-                    android:layout_alignTop="@+id/editText_price"
-                    android:text="Price"
-                    android:textColor="@color/black"/>
+                </android.support.design.widget.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="@dimen/view_medicine_order_details_text_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView4"
-                    android:layout_alignStart="@+id/textView4"
-                    android:layout_alignTop="@+id/editText_frequencyOfTaking"
-                    android:text="Frequency of Taking"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="@dimen/view_medicine_order_details_text_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView5"
-                    android:layout_alignStart="@+id/textView5"
-                    android:layout_alignTop="@+id/editText_medicineName"
-                    android:text="Medicine Name"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/editText_description"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/editText_medicineName"
-                    android:layout_alignRight="@+id/editText_medicineName"
-                    android:layout_below="@+id/editText_medicineName"
+                    android:layout_alignEnd="@+id/textInputLayout_price"
+                    android:layout_alignRight="@+id/textInputLayout_price"
+                    android:layout_below="@+id/textInputLayout_price"
                     android:layout_marginTop="24dp"
-                    android:background="@color/grey_200"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:gravity="top|left"
-                    android:inputType="textMultiLine|none"
-                    android:minLines="6"
-                    android:selectAllOnFocus="false"/>
+                    android:background="@color/grey_100"
+                    >
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="@dimen/view_medicine_order_details_text_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView6"
-                    android:layout_alignStart="@+id/textView6"
-                    android:layout_alignTop="@+id/editText_description"
-                    android:text="Medicine Description"
-                    android:textColor="@color/black"/>
+                    <EditText
+                        android:id="@+id/editText_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:gravity="top|left"
+                        android:hint="@string/description"
+                        android:inputType="textMultiLine|none"
+                        android:minLines="6"
+                        android:paddingTop="10dp"
+                        android:selectAllOnFocus="false"/>
 
-                <EditText
-                    android:id="@+id/editText_moreInfo"
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_moreInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_description"
-                    android:layout_alignStart="@+id/editText_description"
-                    android:layout_below="@+id/editText_description"
+                    android:layout_alignLeft="@+id/textInputLayout_description"
+                    android:layout_alignStart="@+id/textInputLayout_description"
+                    android:layout_below="@+id/textInputLayout_description"
                     android:layout_marginBottom="48dp"
                     android:layout_marginTop="48dp"
-                    android:background="@color/grey_200"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:gravity="top|left"
-                    android:inputType="textMultiLine|none"
-                    android:minLines="6"/>
+                    android:background="@color/grey_100"
+                    >
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="@dimen/view_medicine_order_details_text_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView5"
-                    android:layout_alignStart="@+id/textView5"
-                    android:layout_alignTop="@+id/editText_moreInfo"
-                    android:layout_marginTop="26dp"
-                    android:text="Medicine More Info"
-                    android:textColor="@color/black"/>
+                    <EditText
+                        android:id="@+id/editText_moreInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:gravity="top|left"
+                        android:hint="@string/more_info"
+                        android:inputType="textMultiLine|none"
+                        android:minLines="6"
+                        android:paddingTop="10dp"/>
+
+
+                </android.support.design.widget.TextInputLayout>
 
                 <Button
                     android:id="@+id/btn_sendOrder"

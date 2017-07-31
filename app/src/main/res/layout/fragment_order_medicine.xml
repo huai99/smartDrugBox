@@ -27,159 +27,160 @@
                     android:layout_marginTop="36dp"
                     app:srcCompat="@drawable/placeholder"/>
 
-                <EditText
-                    android:id="@+id/editText_name"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/imageView_medicine"
-                    android:layout_alignStart="@+id/imageView_medicine"
                     android:layout_below="@+id/imageView_medicine"
+                    android:layout_marginLeft="80dp"
                     android:layout_marginTop="24dp"
                     android:background="@color/red_300"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="none"/>
+                    >
 
-                <EditText
-                    android:id="@+id/editText_drugStore"
+                    <EditText
+                        android:id="@+id/editText_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/name"
+                        android:inputType="none"
+                        android:paddingTop="10dp"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_drugStore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_name"
-                    android:layout_alignStart="@+id/editText_name"
-                    android:layout_below="@+id/editText_name"
+                    android:layout_alignLeft="@+id/textInputLayout_name"
+                    android:layout_alignStart="@+id/textInputLayout_name"
+                    android:layout_below="@+id/textInputLayout_name"
                     android:layout_marginTop="21dp"
                     android:background="@color/red_300"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="none"
-                    />
+                    >
 
-                <EditText
-                    android:id="@+id/editText_frequency"
+                    <EditText
+                        android:id="@+id/editText_drugStore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/drug_store"
+                        android:inputType="none"
+                        android:paddingTop="10dp"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_frequency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_drugStore"
-                    android:layout_alignStart="@+id/editText_drugStore"
-                    android:layout_below="@+id/editText_drugStore"
+                    android:layout_alignLeft="@+id/textInputLayout_drugStore"
+                    android:layout_alignStart="@+id/textInputLayout_drugStore"
+                    android:layout_below="@+id/textInputLayout_drugStore"
                     android:layout_marginTop="22dp"
                     android:background="@color/red_300"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="none"
-                    />
+                    >
 
-                <EditText
-                    android:id="@+id/editText_price"
+                    <EditText
+                        android:id="@+id/editText_frequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/frequency_of_taking"
+                        android:inputType="none"
+                        android:paddingTop="10dp"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_frequency"
-                    android:layout_alignStart="@+id/editText_frequency"
-                    android:layout_below="@+id/editText_frequency"
+                    android:layout_alignLeft="@+id/textInputLayout_frequency"
+                    android:layout_alignStart="@+id/textInputLayout_frequency"
+                    android:layout_below="@+id/textInputLayout_frequency"
                     android:layout_marginTop="25dp"
                     android:background="@color/red_300"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:inputType="none"
-                    />
+                    >
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText_name"
-                    android:layout_alignBottom="@+id/editText_name"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginStart="22dp"
-                    android:text="Name"
-                    android:textColor="@color/black"/>
+                    <EditText
+                        android:id="@+id/editText_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/price"
+                        android:inputType="none"
+                        android:paddingTop="10dp"
+                        />
 
-                <TextView
-                    android:id="@+id/textView4"
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView3"
-                    android:layout_alignStart="@+id/textView3"
-                    android:layout_alignTop="@+id/editText_drugStore"
-                    android:layout_marginTop="6dp"
-                    android:text="Drugstore"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView4"
-                    android:layout_alignStart="@+id/textView4"
-                    android:layout_alignTop="@+id/editText_frequency"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/frequency_of_taking"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView5"
-                    android:layout_alignStart="@+id/textView5"
-                    android:layout_alignTop="@+id/editText_price"
-                    android:layout_marginTop="11dp"
-                    android:text="Price"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/editText_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/editText_price"
-                    android:layout_alignRight="@+id/editText_price"
-                    android:layout_below="@+id/editText_price"
+                    android:layout_alignEnd="@+id/textInputLayout_price"
+                    android:layout_alignRight="@+id/textInputLayout_price"
+                    android:layout_below="@+id/textInputLayout_price"
                     android:layout_marginTop="24dp"
                     android:background="@color/red_300"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:gravity="top|left"
-                    android:inputType="textMultiLine|none"
-                    android:minLines="6"
-                    android:selectAllOnFocus="false"/>
+                    >
 
-                <TextView
-                    android:id="@+id/textView8"
+                    <EditText
+                        android:id="@+id/editText_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:gravity="top|left"
+                        android:hint="@string/description"
+                        android:inputType="textMultiLine|none"
+                        android:minLines="6"
+                        android:paddingTop="10dp"
+                        android:selectAllOnFocus="false"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout_moreInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText_description"
-                    android:layout_alignBottom="@+id/editText_description"
-                    android:layout_alignLeft="@+id/textView6"
-                    android:layout_alignStart="@+id/textView6"
-                    android:text="Description"
-                    android:textColor="@color/black"/>
-
-                <EditText
-                    android:id="@+id/editText_moreInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/editText_description"
-                    android:layout_alignStart="@+id/editText_description"
-                    android:layout_below="@+id/editText_description"
+                    android:layout_alignLeft="@+id/textInputLayout_description"
+                    android:layout_alignStart="@+id/textInputLayout_description"
+                    android:layout_below="@+id/textInputLayout_description"
                     android:layout_marginBottom="48dp"
                     android:layout_marginTop="48dp"
                     android:background="@color/red_300"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:gravity="top|left"
-                    android:inputType="textMultiLine|none"
-                    android:minLines="6"/>
+                    >
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView5"
-                    android:layout_alignStart="@+id/textView5"
-                    android:layout_alignTop="@+id/editText_moreInfo"
-                    android:layout_marginTop="26dp"
-                    android:text="More Info"/>
+                    <EditText
+                        android:id="@+id/editText_moreInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:gravity="top|left"
+                        android:hint="@string/more_info"
+                        android:inputType="textMultiLine|none"
+                        android:minLines="6"
+                        android:paddingTop="10dp"/>
+
+
+                </android.support.design.widget.TextInputLayout>
+
 
                 <Button
                     android:id="@+id/refillBtn"
@@ -201,10 +202,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.4"
-            android:visibility="gone"
             android:animateLayoutChanges="true"
             android:background="#000000"
-            android:translationZ="5dp">
+            android:translationZ="5dp"
+            android:visibility="gone">
 
             <ProgressBar
                 style="?android:attr/progressBarStyleLarge"
