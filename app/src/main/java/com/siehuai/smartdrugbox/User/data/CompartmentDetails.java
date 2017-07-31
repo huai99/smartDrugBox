@@ -15,7 +15,6 @@ public class CompartmentDetails implements IDbData, Parcelable {
     String id;
     String medicineBoxId;
     HashMap<String, AlarmData> alarmDataMap = new HashMap<>();
-    ;
 
     public CompartmentDetails() {
     }
