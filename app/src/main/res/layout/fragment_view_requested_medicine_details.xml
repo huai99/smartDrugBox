@@ -15,7 +15,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/imageView_medicine"
@@ -35,6 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView_medicine"
                     android:layout_marginLeft="80dp"
+                    android:layout_marginStart="80dp"
                     android:layout_marginTop="24dp"
                     android:background="@color/grey_100"
                     >
@@ -145,7 +146,7 @@
                         android:background="@android:color/transparent"
                         android:ems="10"
                         android:focusable="false"
-                        android:gravity="top|left"
+                        android:gravity="top|start"
                         android:hint="@string/description"
                         android:inputType="textMultiLine|none"
                         android:minLines="6"
@@ -174,7 +175,7 @@
                         android:background="@android:color/transparent"
                         android:ems="10"
                         android:focusable="false"
-                        android:gravity="top|left"
+                        android:gravity="top|start"
                         android:hint="@string/more_info"
                         android:inputType="textMultiLine|none"
                         android:minLines="6"
@@ -187,13 +188,10 @@
                     android:id="@+id/btn_sendOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/imageView_medicine"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignRight="@+id/imageView_medicine"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="Send order"/>
+                    android:text="@string/send_order"/>
 
             </RelativeLayout>
 
