@@ -27,7 +27,7 @@ in the drugbox and etc. I will introduce the feature in the following section.
 Basically, when users run the application, they can choose to log in as pharmacy or normal user, 
 and there are different functions that they can perform as different roles. 
 <ol>
-<h3>Pharmacy</h3>
+<h2>Pharmacy</h2>
 <li>
     <p><strong>Adding,Updating and Deleting Medicine</strong></p>
     <p>The pharmacy can add new medicine details into the database. They  could specify the details
@@ -57,7 +57,7 @@ and there are different functions that they can perform as different roles.
 </ol>
 
 <ol>
-<h3>User</h3>
+<h2>User</h2>
 <li>
     <p><strong>Set Reminder</strong></p>
     <p>User can set reminder, and the smart drugbox will pick up the alarm that has been set and trigger 
